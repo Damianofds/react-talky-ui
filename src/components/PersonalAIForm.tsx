@@ -7,12 +7,22 @@ interface PersonalAIForm {
 }
 
 const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
-    const [inputValue, setInputValue] = useState<string>('');
+    const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [, setResponses] = useState<string[]>([]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
+    };
+
+    const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        event.target.style.borderColor = '#4ea699';
+        event.target.style.borderWidth = '3px';
+    };
+
+    const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        event.target.style.borderColor = 'gray';
+        event.target.style.borderWidth = '0.1px';
     };
 
     const handleButtonClick = async () => {
@@ -58,7 +68,9 @@ const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
                 <input 
                     type="text" 
                     value={inputValue} 
-                    onChange={handleInputChange} 
+                    onChange={handleInputChange}
+                    onFocus={handleOnFocus}
+                    onBlur={handleOnBlur} 
                     disabled={isLoading}
                     placeholder="Type your question here..."
                     style={{
@@ -69,7 +81,8 @@ const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
                         fontSize: '16px',
                         height: '40px',
                         boxSizing: 'border-box',
-                        marginRight: '10px'
+                        marginRight: '10px',
+                        outline: 'green',
                     }}
                 />
                 <button 
