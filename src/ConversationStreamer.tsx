@@ -8,10 +8,10 @@ import Question from './components/Question';
 
 interface ConversationStreamProps {
     jsonUrl: string;
-    aiMessage: string;
-    aiMessageType: 'question' | 'answer';
     chatHeight: `${number}px`;
     chatWidth: `${number}px` | `${number}vw`;
+    aiMessage?: string;
+    aiMessageType?: 'question' | 'answer' | 'notype';
 }
 
 const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
@@ -57,7 +57,11 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
 
     const currentSentence = (newConversationPresent)
         ? conversation[currentSentenceIndex]
-        : { type: "statement", text: aiMessage };
+        : (aiMessage)
+            ? { type: "statement", text: aiMessage }
+            : { type: "notype", text: "notext" };
+    console.log(newConversationPresent)
+    console.log(currentSentence)
     return (
         <ConversationContext.Provider value={{
             nextSentence: nextSentence,
@@ -87,7 +91,7 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
                         )
                     }
                     {
-                        currentSentence.type === 'statement' && aiMessageType === 'answer' && (    
+                        currentSentence.type === 'statement' && aiMessageType != 'question' && (    
                             <WordStreamer words={currentSentence.text} textAlign='left'/>
                         )
                     }
