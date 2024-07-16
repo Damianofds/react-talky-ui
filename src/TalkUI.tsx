@@ -1,6 +1,6 @@
 import { useState } from "react";
-import PersonalAIForm from "./PersonalAIForm";
-import ConversationStreamer from "../ConversationStreamer";
+import TalkInput from "./components/InputBox";
+import ConversationBox from "./components/ConversationBox";
 
 
 interface TalkUIProps {
@@ -18,9 +18,9 @@ const TalkUI: React.FC<TalkUIProps> = ({  }) => {
 
     return (
         <>
-            <ConversationStreamer jsonUrl='/conversation-personal-ai.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
+            <ConversationBox jsonUrl='/conversation-personal-ai.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
             <br/>
-            <PersonalAIForm messageHandler={handleNewMessage} />
+            <TalkInput messageHandler={handleNewMessage} />
         </>
     );
 };

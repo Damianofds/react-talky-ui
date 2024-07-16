@@ -16,7 +16,7 @@ interface ButtonStreamerProps {
     ]
 }
 
-const ButtonStreamer: React.FC<ButtonStreamerProps> = ({ buttons }) => {
+const ButtonsStreamer: React.FC<ButtonStreamerProps> = ({ buttons }) => {
     const [currentButtons, setCurrentButtons] = useState<React.JSX.Element>();
     const [currentButtonIndex, setCurrentButtonIndex] = useState(0);
     const id = useId();
@@ -65,4 +65,4 @@ const ButtonStreamer: React.FC<ButtonStreamerProps> = ({ buttons }) => {
     );
 }
 
-export default ButtonStreamer;
+export default ButtonsStreamer;

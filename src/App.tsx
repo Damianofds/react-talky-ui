@@ -1,8 +1,8 @@
 import './App.css';
-import ConversationStreamer from './ConversationStreamer';
-import RadioStreamer from './components/RadioStreamer';
-import WordStreamer from './components/WordStreamer';
-import TalkUI from './components/TalkUI';
+import ConversationBox from './components/ConversationBox';
+import RadioStreamer from './components/conversation-items/RadioStreamer';
+import WordStreamer from './components/conversation-items/WordStreamer';
+import TalkUI from './TalkUI';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
         <h2>Q&A Chatbot - talk with an AI in the backend</h2>
         <TalkUI />
         <h2>ConversationStreamer - Static talkflows with form components</h2>
-        <ConversationStreamer jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw'/>
+        <ConversationBox jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw'/>
         <br />
         <h2>Form components</h2>
         <h3>WordStreamer</h3>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import WordStreamer from './WordStreamer';
-import ButtonStreamer from './ButtonStreamer';
+import ButtonsStreamer from './ButtonsStreamer';
 
 interface QuestionFormProps {
     currentSentence: any;
 }
 
-const QuestionForm: React.FC<QuestionFormProps> = ({ currentSentence }) => {
+const ButtonsForm: React.FC<QuestionFormProps> = ({ currentSentence }) => {
 
     const [isWordStreamingFinished, setWordStreamingFinished] = useState(false);
 
@@ -14,11 +14,11 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ currentSentence }) => {
         <>
             <WordStreamer words={currentSentence.text}
                 setStreamingFinished={setWordStreamingFinished} />
-            {isWordStreamingFinished && <ButtonStreamer buttons={
+            {isWordStreamingFinished && <ButtonsStreamer buttons={
                 [currentSentence.yesButton, currentSentence.noButton]}
             />}
         </>
     );
 }
 
-export default QuestionForm;
+export default ButtonsForm;

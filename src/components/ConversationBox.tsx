@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useFetchConversations from './hooks/useFetchConversation';
-import WordStreamer from './components/WordStreamer';
-import QuestionForm from './components/QuestionForm';
-import RadioForm from './components/RadioForm';
+import useFetchConversations from '../hooks/useFetchConversation';
+import WordStreamer from './conversation-items/WordStreamer';
+import ButtonsForm from './conversation-items/ButtonsForm';
+import RadioForm from './conversation-items/RadioForm';
 import { ConversationContext } from "./ConversationContext";
-import Question from './components/Question';
+import Question from './conversation-items/Question';
 
-interface ConversationStreamProps {
+interface ConversationBoxProps {
     jsonUrl: string;
     chatHeight: `${number}px`;
     chatWidth: `${number}px` | `${number}vw`;
@@ -14,7 +14,7 @@ interface ConversationStreamProps {
     aiMessageType?: 'question' | 'answer' | 'notype';
 }
 
-const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
+const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
 
     const [currentJsonUrl, setCurrentJsonUrl] = useState(jsonUrl);
     const conversation = useFetchConversations(currentJsonUrl);
@@ -97,7 +97,7 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
                     }
                     {
                         currentSentence.type === 'question' && (
-                            <QuestionForm currentSentence={currentSentence} />
+                            <ButtonsForm currentSentence={currentSentence} />
                         )
                     }
                     {
@@ -122,4 +122,4 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
     );
 };
 
-export default ConversationStreamer;
+export default ConversationBox;

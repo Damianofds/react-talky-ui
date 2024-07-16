@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
 
-interface PersonalAIForm {
+interface InputBoxProps {
     messageHandler: (newMessage: string, newMessageType: 'question' | 'answer') => void;
 }
 
-const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
+const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [, setResponses] = useState<string[]>([]);
@@ -98,4 +98,4 @@ const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
     
 };
 
-export default PersonalAIForm;
+export default InputBox;

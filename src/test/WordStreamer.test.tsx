@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { expect, test, afterEach, beforeEach, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import WordStreamer from '../components/WordStreamer';
+import WordStreamer from '../components/conversation-items/WordStreamer';
 
 beforeEach(() => {
   vi.useFakeTimers()
