@@ -9,7 +9,7 @@ interface PersonalAIForm {
 const PersonalAIForm: React.FC<PersonalAIForm> = ({messageHandler}) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [responses, setResponses] = useState<string[]>([]);
+    const [, setResponses] = useState<string[]>([]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);

@@ -10,6 +10,6 @@ interface ConversationContextType {
 export const ConversationContext = createContext<ConversationContextType>({
     getCurrentSentenceIndex: () => 0,
     nextSentence: () => {},
-    saveSentence: (sentence: JSX.Element) => {},
-    switchConversation: (newConversationUrl: string) => {},
+    saveSentence: () => {},
+    switchConversation: () => {},
 });

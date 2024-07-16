@@ -43,7 +43,7 @@ afterEach(() => {
 afterAll(() => server.close())
 
 test('renders the Conversation Stream', async () => {
-  render(<ConversationStreamer jsonUrl='/conversation-question.json' chatHeight='500px' chatWidth='300px'/>);
+  render(<ConversationStreamer jsonUrl='/conversation-question.json' chatHeight='500px' chatWidth='300px' aiMessage='' aiMessageType='answer'/>);
   
   const conversationStream = screen.getAllByTestId("tac-ui-root");
 
