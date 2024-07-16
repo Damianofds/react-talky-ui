@@ -18,9 +18,9 @@ function App() {
   return (
     <>
       <div className="App">
-        <h1>react-conversational-ui </h1>
+        <h1>react-talk-ui </h1>
         <div>A react/typescript conversational user interface</div>
-        <div>Build your own talkflow 🚀</div>
+        <div>🌈 Create your talkflow 🗣️</div>
         <h2>ConversationStreamer - Q&A Chatbot</h2>
         <ConversationStreamer jsonUrl='/conversation-personal-ai.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
         <br/>
