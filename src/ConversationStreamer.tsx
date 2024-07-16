@@ -105,8 +105,10 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
                             <p>Now you can talk with an AI !</p>
                         )
                     }
-                    <span>✨</span>
-                    {/* <span className='blinking-cursor'>✨</span> */}
+                    {/* <span className='blinking-cursor'> */}
+                    <span>
+                        &nbsp;<img style={{height:'1em'}} src="/favicon.ico"/>
+                    </span>
                 </div>
             </div>
 

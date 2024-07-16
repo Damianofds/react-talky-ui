@@ -18,7 +18,7 @@ const Question: React.FC<WordStreamerProps> = ({ words }) => {
                 padding: '2%',
                 maxWidth: '75%',
                 textAlign: 'right',
-                backgroundColor: '#B2BEB5'
+                backgroundColor: '#4ea699'
             }}
                 key={words}>
                 {sentence}
