@@ -1,0 +1,28 @@
+{
+	"conversation": [
+		{
+			"type": "statement",
+			"text": "This is a test conversation to test a question form"
+		},
+		{
+			"type": "statement",
+			"text": "It's not super fun but it's better than nothing"
+		},
+		{
+			"type": "statement",
+			"text": "much more better actually"
+		},
+		{
+			"type": "question",
+			"text": "Do you want to test the radio button test conversation??",
+			"yesButton": {
+				"label": "yes",
+				"conversationUrl": "conversation-options.json"
+			},
+			"noButton": {
+				"label": "no",
+				"conversationUrl": "conversation-option1.json"
+			}
+		}
+	]
+}

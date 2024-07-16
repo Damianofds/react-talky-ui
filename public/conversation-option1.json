@@ -1,0 +1,12 @@
+{
+	"conversation": [
+		{
+			"type": "statement",
+			"text": "Hey there! This is the option 1"
+		},
+		{
+			"type": "statement",
+			"text": "I wish you a great sunny day 🌞"
+		}
+	]
+}

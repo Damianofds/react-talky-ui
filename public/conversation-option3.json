@@ -1,0 +1,12 @@
+{
+	"conversation": [
+		{
+			"type": "statement",
+			"text": "Hello, I'm your third option"
+		},
+		{
+			"type": "statement",
+			"text": "I'm the nastier of the 3"
+		}
+	]
+}

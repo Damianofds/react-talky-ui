@@ -1,0 +1,12 @@
+{
+	"conversation": [
+		{
+			"type": "statement",
+			"text": "Hey there! This is a n8n + Supabase demo!"
+		},
+		{
+			"type": "statement",
+			"text": "this tests the ability of sabine.bot of dealing with user own embeddings"
+		}
+	]
+}
