@@ -19,7 +19,7 @@ function App() {
         <br />
         <h2>Form components</h2>
         <h3>WordStreamer</h3>
-        <WordStreamer words='yo yo beba beba beba beba' loopStyle='cycle'/>
+        <WordStreamer words='❓⭐ How do you do your choices ⭐❓' loopStyle='cycle'/>
         <h3>RadioStreamer</h3>
         <div style={{height:'200px'}}>
           <RadioStreamer options={[

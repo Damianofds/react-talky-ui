@@ -43,7 +43,7 @@ const WordStreamer: React.FC<WordStreamerProps> = ({ words, loopStyle='disappear
                 nextSentence();
             }
             if(loopStyle === 'cycle'){
-                setCurrentWords(["➰"]);
+                setCurrentWords([""]);
                 setCurrentWordIndex(0);
             }
             if(loopStyle === 'disappear'){
