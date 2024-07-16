@@ -69,6 +69,7 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
                 height: chatHeight,
                 width: chatWidth,
                 maxWidth: '600px',
+                minWidth: '340px',
                 overflowY: 'auto',
                 border: '1px solid #ccc',
                 padding: '10px',
@@ -105,9 +106,10 @@ const ConversationStreamer: React.FC<ConversationStreamProps> = ({ jsonUrl, chat
                             <p>Now you can talk with an AI !</p>
                         )
                     }
-                    {/* <span className='blinking-cursor'> */}
                     <span>
-                        &nbsp;<img style={{height:'1em'}} src="/favicon.ico"/>
+                        <div className='pulsing-cursor'>
+                            {/* &nbsp;<img style={{height:'1em', top:'80px'}} src="/favicon.ico"/> */}
+                        </div>
                     </span>
                 </div>
             </div>

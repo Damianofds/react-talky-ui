@@ -13,6 +13,14 @@ interface RadioStreamerProps {
         {
             label: string;
             conversationUrl: string;
+        },
+        {
+            label: string;
+            conversationUrl: string;
+        },
+        {
+            label: string;
+            conversationUrl: string;
         }
     ]
 }
