@@ -19,16 +19,16 @@ function App() {
     <>
       <div className="App">
         <h1>react-talk-ui </h1>
-        <div>A react/typescript conversational user interface</div>
+        <div>A react/typescript talkative user interface</div>
         <div>🌈 Create your talkflow 🗣️</div>
-        <h2>ConversationStreamer - Q&A Chatbot</h2>
+        <h2>Q&A Chatbot - talk with an AI in the backend</h2>
         <ConversationStreamer jsonUrl='/conversation-personal-ai.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
         <br/>
         <PersonalAIForm messageHandler={handleNewMessage} />
-        <h2>ConversationStreamer - Static talkflow with forms</h2>
+        <h2>ConversationStreamer - Static talkflows with form components</h2>
         <ConversationStreamer jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
         <br />
-        <h2>Components</h2>
+        <h2>Form components</h2>
         <h3>WordStreamer</h3>
         <WordStreamer words='yo yo beba beba beba beba' loopStyle='cycle'/>
         <h3>RadioStreamer</h3>
