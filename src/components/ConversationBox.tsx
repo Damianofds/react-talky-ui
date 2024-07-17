@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useFetchConversations from '../hooks/useFetchConversation';
-import WordStreamer from './conversation-items/WordStreamer';
-import ButtonsForm from './conversation-items/ButtonsForm';
-import RadioForm from './conversation-items/RadioForm';
+import useFetchConversations from '../hooks/useFetchConversation2';
 import { ConversationContext } from "./ConversationContext";
-import Question from './conversation-items/Question';
+import { ConversationItemConfig } from './conversation-items/ConversationalItemsConfig';
+import AudioItem from './conversation-items/AudioItem';
+import TextItem, { WORD_DELAY } from './conversation-items/TextItem';
 
 interface ConversationBoxProps {
     jsonUrl: string;
@@ -15,28 +14,16 @@ interface ConversationBoxProps {
 }
 
 const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
-
     const [currentJsonUrl, setCurrentJsonUrl] = useState(jsonUrl);
+    const [renderedComponents, setRenderedComponents] = useState<ConversationItemConfig[]>([]);
     const conversation = useFetchConversations(currentJsonUrl);
-    const [displayedSentences, setDisplayedSentences] = useState<JSX.Element[]>([]);
     const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
+    const [currentSentenceLenght, setCurrentSentenceLength] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
-
-    // const conversation = aiAnswer
-    //     ? [...conversationStatic, { type: "statement", text: aiAnswer }]
-    //     : [...conversationStatic];
-
-
-    const getCurrentSentenceIndex = () => {
-        return currentSentenceIndex;
-    }
+    const [components, setComponents] = useState<ConversationItemConfig[]>([]);
 
     const nextSentence = () => {
-        setCurrentSentenceIndex(currentSentenceIndex + 1);
-    }
-
-    const saveSentence = (formTile: JSX.Element) => {
-        setDisplayedSentences([...displayedSentences, formTile]);
+        setCurrentSentenceIndex(prev => prev + 1);
     }
 
     const switchConversation = (newUrl: string) => {
@@ -45,29 +32,68 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
     }
 
     useEffect(() => {
-        if (containerRef.current) {
-            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        const scrollDown = () => {
+            if (containerRef.current) {
+                containerRef.current.scrollTop = containerRef.current.scrollHeight;
+            }
         }
-    }, [displayedSentences]);
+        scrollDown();
+        setTimeout(scrollDown, 500);
+    }, [renderedComponents, currentSentenceIndex]);
 
-    const newConversationPresent: boolean =
-        conversation &&
-        currentSentenceIndex < conversation.length &&
-        conversation.length > 0
+    useEffect(() => {
+        const savedComponents = localStorage.getItem('components');
+        if (savedComponents) {
+            setRenderedComponents(JSON.parse(savedComponents));
+            console.log("pre-loading conversation from browser local storage");
+        }
+        else{
+            setComponents(conversation);
+            console.log("conversation from static chat flow");
+        }
+    }, [conversation]);
 
-    const currentSentence = (newConversationPresent)
-        ? conversation[currentSentenceIndex]
-        : (aiMessage)
-            ? { type: "statement", text: aiMessage }
-            : { type: "notype", text: "notext" };
-    console.log(newConversationPresent)
-    console.log(currentSentence)
+    useEffect(() => {
+        console.log("in use effect - components - " + components.length)
+        if(components.length > 0){
+            // localStorage.setItem('components', JSON.stringify(renderedComponents));
+        }
+
+        const renderNextComponent = () => {
+            let wordsCount : number = 1;
+            if(components[currentSentenceIndex] && components[currentSentenceIndex].type == 'text'){
+                wordsCount = components[currentSentenceIndex].text.split(" ").length;
+            }
+            if (currentSentenceIndex < components.length) {
+                setRenderedComponents((prev) => [...prev, components[currentSentenceIndex]]);
+                setCurrentSentenceIndex(prev => prev + 1);
+            }
+        };
+
+        let wordsCount : number = 10;
+        console.log(components[currentSentenceIndex]);
+        if(components[currentSentenceIndex] && components[currentSentenceIndex].type == 'text'){
+            wordsCount = components[currentSentenceIndex].text.split(" ").length;   
+        }
+        console.log("wordsCount - " + wordsCount);
+        setTimeout(renderNextComponent, wordsCount * WORD_DELAY);
+    }, [components, currentSentenceIndex]);
+        
+    const renderComponent = (component: ConversationItemConfig) => {
+        switch (component.type) {
+            case 'audio':
+            return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
+            case 'text':
+            return <TextItem key={component.id} id={component.id} words={component.text} />;
+            default:
+            return null;
+        }
+    };
+    
     return (
         <ConversationContext.Provider value={{
             nextSentence: nextSentence,
-            saveSentence: saveSentence,
             switchConversation: switchConversation,
-            getCurrentSentenceIndex: getCurrentSentenceIndex,
         }}>
             <div ref={containerRef} data-testid="tac-ui-root" style={{
                 height: chatHeight,
@@ -84,40 +110,10 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
                 fontSize: '20px',
             }}>
                 <div style={{ maxHeight: '100%' }}>
-                    {displayedSentences}
-                    {
-                        currentSentence.type === 'statement' && aiMessageType === 'question' && (
-                            <Question words={currentSentence.text} />
-                        )
-                    }
-                    {
-                        currentSentence.type === 'statement' && aiMessageType != 'question' && (    
-                            <WordStreamer words={currentSentence.text} textAlign='left'/>
-                        )
-                    }
-                    {
-                        currentSentence.type === 'question' && (
-                            <ButtonsForm currentSentence={currentSentence} />
-                        )
-                    }
-                    {
-                        currentSentence.type === 'radio' && (
-                            <RadioForm currentSentence={currentSentence} />
-                        )
-                    }
-                    {
-                        currentSentence.type === 'personal-ai' && (
-                            <p>Now you can talk with an AI !</p>
-                        )
-                    }
-                    <span>
-                        <div className='pulsing-cursor'>
-                            {/* &nbsp;<img style={{height:'1em', top:'80px'}} src="/favicon.ico"/> */}
-                        </div>
-                    </span>
+                    {renderedComponents.map((component) => renderComponent(component))}
+                    <div className='pulsing-cursor' />
                 </div>
             </div>
-
         </ConversationContext.Provider>
     );
 };

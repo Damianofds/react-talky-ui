@@ -14,7 +14,7 @@ const WordStreamer: React.FC<WordStreamerProps> = ({ words, loopStyle='disappear
 
     const [currentWords, setCurrentWords] = useState<string[]>([]);
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
-    const {nextSentence, saveSentence} = useContext(ConversationContext);
+    const {nextSentence} = useContext(ConversationContext);
     const id = useId();
 
     const displaySentence = (sentence: string) => {
@@ -26,16 +26,6 @@ const WordStreamer: React.FC<WordStreamerProps> = ({ words, loopStyle='disappear
             }, WORD_DELAY);
         }
         else {
-            if(textAlign == 'left'){
-                saveSentence(<div style={{textAlign:"left"}} key={id+currentWordIndex}>
-                    {sentence}
-                </div>);
-            }
-            if(textAlign == 'right'){
-                saveSentence(<div><br /><div style={{textAlign:'right', backgroundColor:'gray'}} key={id+currentWordIndex}>
-                    {sentence}
-                </div><br /></div>);
-            }
             if (setStreamingFinished) {
                 setStreamingFinished(true);
             }
@@ -60,11 +50,8 @@ const WordStreamer: React.FC<WordStreamerProps> = ({ words, loopStyle='disappear
         setCurrentWords([]);
         setCurrentWordIndex(0);
     }, [words]);
-    const textAlignStyle: React.CSSProperties = {
-        textAlign: textAlign === 'left' ? 'left' : 'right',
-        display: 'inline-block',
-    };
-    return (<div style={textAlignStyle} data-testid="tac-ui-word-streamer">{currentWords.join(' ')}</div>);
+
+    return (<div style={{display: 'inline-block'}} data-testid="talk-ui-word-streamer">{currentWords.join(' ')}</div>);
 }
 
 export default WordStreamer;

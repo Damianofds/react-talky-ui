@@ -18,7 +18,7 @@ const TalkUI: React.FC<TalkUIProps> = ({  }) => {
 
     return (
         <>
-            <ConversationBox jsonUrl='/conversation-personal-ai.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
+            <ConversationBox jsonUrl='/conversation-audio.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
             <br/>
             <TalkInput messageHandler={handleNewMessage} />
         </>

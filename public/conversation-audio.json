@@ -1,0 +1,36 @@
+{
+	"conversation": [
+		{
+			"id": "1",
+			"type": "text",
+			"text": "Hello! this is the first text message"
+		},
+		{
+			"id": "2",
+			"type": "text",
+			"text": "react-talk-ui is a conversational user interface"
+		},
+		{
+			"id": "3",
+			"type": "audio",
+			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.01.mp3",
+			"audioName": "...able to play audio"
+		},
+		{
+			"id": "4",
+			"type": "text",
+			"text": "which mixes different strem of talk"
+		},
+		{
+			"id": "5",
+			"type": "audio",
+			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.02.mp3",
+			"audioName": "... even 2 audio"
+		},
+		{
+			"id": "6",
+			"type": "text",
+			"text": "is better chat or talk"
+		}
+	]
+}

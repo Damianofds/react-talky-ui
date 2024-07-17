@@ -15,7 +15,7 @@ function App() {
         <h2>Q&A Chatbot - talk with an AI in the backend</h2>
         <TalkUI />
         <h2>ConversationStreamer - Static talkflows with form components</h2>
-        <ConversationBox jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw'/>
+        {/* <ConversationBox jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw'/> */}
         <br />
         <h2>Form components</h2>
         <h3>WordStreamer</h3>
