@@ -41,3 +41,17 @@
     opacity: 0.5;
   }
 }
+
+.loading {
+  width: 80%;
+  padding: 20px;
+  background-color: #ffffff00;
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+  }
+}

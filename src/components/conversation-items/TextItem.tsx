@@ -1,5 +1,4 @@
-import React, { useCallback, useContext, useEffect, useId, useState } from 'react';
-import { ConversationContext } from '../ConversationContext';
+import React, { useCallback, useEffect, useId, useState } from 'react';
 
 export const WORD_DELAY = 100;
 
@@ -13,7 +12,6 @@ const TextItem: React.FC<TextItemProps> = ({ words }) => {
     const [currentWords, setCurrentWords] = useState<string[]>([]);
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const [isDataLoaded, setDataLoaded] = useState(false);
-    const {nextSentence} = useContext(ConversationContext);
     const id = useId();
 
     const displaySentence = useCallback((sentence: string) => {
@@ -49,12 +47,13 @@ const TextItem: React.FC<TextItemProps> = ({ words }) => {
 
     useEffect(() => {
         if (isDataLoaded) {
-            // localStorage.setItem(`text-item-currentWordIndex-${id}`, JSON.stringify(currentWordIndex));
-            // localStorage.setItem(`text-item-currentWords-${id}`, currentWords.join(" "));
+            localStorage.setItem(`text-item-currentWordIndex-${id}`, JSON.stringify(currentWordIndex));
+            localStorage.setItem(`text-item-currentWords-${id}`, currentWords.join(" "));
         }
     }, [currentWordIndex, currentWords, id, isDataLoaded]);
 
-    return (<div key={id}>{currentWords.join(' ')}</div>);
+    const showCursor = currentWordIndex < words.split(" ").length;
+    return (<div key={id}>{currentWords.join(' ')}{showCursor && <div className='pulsing-cursor' />}</div>);
 }
 
 export default TextItem;

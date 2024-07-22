@@ -9,7 +9,7 @@ interface AudioItemProps {
 const AudioItem: React.FC<AudioItemProps> = ({ id, audioUrl, audioName }) => {
   
     return (
-          <div key={id}>
+          <div key={id} className="loading">
             <audio src={audioUrl} controls />
             <div>{audioName}</div>
           </div>      

@@ -18,7 +18,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
     const [renderedComponents, setRenderedComponents] = useState<ConversationItemConfig[]>([]);
     const conversation = useFetchConversations(currentJsonUrl);
     const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
-    const [currentSentenceLenght, setCurrentSentenceLength] = useState(0);
+    const [isWaiting, setWaiting] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const [components, setComponents] = useState<ConversationItemConfig[]>([]);
 
@@ -39,12 +40,13 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
         }
         scrollDown();
         setTimeout(scrollDown, 500);
-    }, [renderedComponents, currentSentenceIndex]);
+    }, [renderedComponents, currentSentenceIndex, showLoader]);
 
     useEffect(() => {
         const savedComponents = localStorage.getItem('components');
         if (savedComponents) {
             setRenderedComponents(JSON.parse(savedComponents));
+            setShowLoader(prev => !prev);
             console.log("pre-loading conversation from browser local storage");
         }
         else{
@@ -56,7 +58,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
     useEffect(() => {
         console.log("in use effect - components - " + components.length)
         if(components.length > 0){
-            // localStorage.setItem('components', JSON.stringify(renderedComponents));
+            localStorage.setItem('components', JSON.stringify(renderedComponents));
         }
 
         const renderNextComponent = () => {
@@ -77,6 +79,10 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
         }
         console.log("wordsCount - " + wordsCount);
         setTimeout(renderNextComponent, wordsCount * WORD_DELAY);
+        if((components.length > 0) && (currentSentenceIndex >= components.length) && !isWaiting){
+            setWaiting(prev => !prev);
+            setTimeout(() => setShowLoader(prev => !prev), wordsCount * WORD_DELAY);
+        }
     }, [components, currentSentenceIndex]);
         
     const renderComponent = (component: ConversationItemConfig) => {
@@ -111,7 +117,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
             }}>
                 <div style={{ maxHeight: '100%' }}>
                     {renderedComponents.map((component) => renderComponent(component))}
-                    <div className='pulsing-cursor' />
+                    {showLoader && <div className='pulsing-cursor' />}
                 </div>
             </div>
         </ConversationContext.Provider>
