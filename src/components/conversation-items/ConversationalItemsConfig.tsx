@@ -1,6 +1,6 @@
-interface BaseConversationItemConfig {
+export interface BaseConversationItemConfig {
     id: string;
-    type: 'audio' | 'text';
+    type: 'audio' | 'text' | 'button';
 }
 
 export interface AudioItemConfig extends BaseConversationItemConfig {
@@ -9,9 +9,15 @@ export interface AudioItemConfig extends BaseConversationItemConfig {
     audioName: string;
 }
 
+export interface ButtonItemConfig extends BaseConversationItemConfig {
+    type: 'button';
+    conversationUrl: string;
+    buttonLabel: string;
+}
+
 export interface TextItemConfig extends BaseConversationItemConfig {
     type: 'text';
     text: string;
 }
 
-export type ConversationItemConfig = AudioItemConfig | TextItemConfig;
+export type ConversationItemConfig = AudioItemConfig | ButtonItemConfig | TextItemConfig;

@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useFetchConversations from '../hooks/useFetchConversation2';
+import useFetchConversations from '../hooks/useFetchConversation';
 import { ConversationContext } from "./ConversationContext";
 import { ConversationItemConfig } from './conversation-items/ConversationalItemsConfig';
 import AudioItem from './conversation-items/AudioItem';
 import TextItem, { WORD_DELAY } from './conversation-items/TextItem';
+import ButtonItem from './conversation-items/ButtonItem';
 
 interface ConversationBoxProps {
     jsonUrl: string;
@@ -44,7 +45,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
 
     useEffect(() => {
         const savedComponents = localStorage.getItem('components');
-        if (savedComponents) {
+        if (savedComponents && conversation.length == 0) {
             setRenderedComponents(JSON.parse(savedComponents));
             setShowLoader(prev => !prev);
             console.log("pre-loading conversation from browser local storage");
@@ -53,10 +54,9 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
             setComponents(conversation);
             console.log("conversation from static chat flow");
         }
-    }, [conversation]);
+    }, [conversation, currentJsonUrl]);
 
     useEffect(() => {
-        console.log("in use effect - components - " + components.length)
         if(components.length > 0){
             localStorage.setItem('components', JSON.stringify(renderedComponents));
         }
@@ -73,11 +73,9 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
         };
 
         let wordsCount : number = 10;
-        console.log(components[currentSentenceIndex]);
         if(components[currentSentenceIndex] && components[currentSentenceIndex].type == 'text'){
             wordsCount = components[currentSentenceIndex].text.split(" ").length;   
         }
-        console.log("wordsCount - " + wordsCount);
         setTimeout(renderNextComponent, wordsCount * WORD_DELAY);
         if((components.length > 0) && (currentSentenceIndex >= components.length) && !isWaiting){
             setWaiting(prev => !prev);
@@ -91,6 +89,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
             return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
             case 'text':
             return <TextItem key={component.id} id={component.id} words={component.text} />;
+            case 'button':
+            return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel}/>;
             default:
             return null;
         }

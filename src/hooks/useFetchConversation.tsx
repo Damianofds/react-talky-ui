@@ -1,27 +1,34 @@
 import { useEffect, useState } from 'react';
-
-interface Sentence {
-    type: "statement" | "question" | "radio" | "personal-ai";
-    text: string;
-    yesButton: {
-        label: string,
-        conversationUrl: string
-    };
-    noButton: {
-        label: string,
-        conversationUrl: string
-    };
-    submitButtonLabel: string;
-}
+import { ConversationItemConfig } from '../components/conversation-items/ConversationalItemsConfig';
 
 const useFetchConversation = (jsonUrl: string) => {
-    const [conversation, setConversation] = useState<Sentence[]>([]);
+
+    const [conversation, setConversation] = useState<ConversationItemConfig[]>([]);
 
     useEffect(() => {
-        fetch(jsonUrl)
-        .then(response => response.json())
-        .then(data => setConversation(data.conversation))
-        .catch(error => console.error('Error fetching conversations:', error));    
+        const fetchConversation = async () => {
+            try {
+                const response = await fetch(jsonUrl);
+                const data = await response.json();
+
+                const processedData = data.conversation.map((item: ConversationItemConfig) => {
+                    const millisec = Date.now();
+                    const rnd = Math.random().toString(36);
+                    const uniqueId = `${item.type}-${millisec}-${rnd}`;
+                    console.log("---------- " + uniqueId);
+                    return {
+                        ...item,
+                        id: uniqueId,
+                    };
+                });
+
+                setConversation(processedData);
+            } catch (error) {
+                console.error('Error fetching conversations:', error);
+            }
+        };
+
+        fetchConversation();
     }, [jsonUrl]);
 
     return conversation;

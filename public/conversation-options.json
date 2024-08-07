@@ -1,7 +1,7 @@
 {
 	"conversation": [
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "This is a test conversation to test a radio group form"
 		},
 		{

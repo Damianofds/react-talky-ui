@@ -20,7 +20,7 @@ const ButtonsStreamer: React.FC<ButtonStreamerProps> = ({ buttons }) => {
     const [currentButtons, setCurrentButtons] = useState<React.JSX.Element>();
     const [currentButtonIndex, setCurrentButtonIndex] = useState(0);
     const id = useId();
-    const {nextSentence, saveSentence, switchConversation} = useContext(ConversationContext);
+    const {nextSentence, switchConversation} = useContext(ConversationContext);
 
     const handleClick = (index: number): React.MouseEventHandler<HTMLButtonElement> => () => {
         switchConversation(buttons[index].conversationUrl);
@@ -49,7 +49,7 @@ const ButtonsStreamer: React.FC<ButtonStreamerProps> = ({ buttons }) => {
         }
         else{
             if(currentButtons){
-                saveSentence(<div key={id}>{currentButtons}</div>);
+                // saveSentence(<div key={id}>{currentButtons}</div>);
                 nextSentence();
             }
         }

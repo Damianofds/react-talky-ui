@@ -1,0 +1,39 @@
+{
+	"conversation": [
+		{
+			"type": "text",
+			"text": "react-talk-ui "
+		},
+		{
+			"type": "text",
+			"text": "is a "
+		},
+		{
+			"type": "text",
+			"text": "user interface"
+		},
+		{
+			"type": "text",
+			"text": "a conversational user interface"
+		},
+		{
+			"type": "text",
+			"text": "react-talk-ui is a conversational user interface"
+		},
+
+		{
+			"type": "text",
+			"text": "you all know what i mean bro?"
+		},
+		{
+			"type": "button",
+			"conversationUrl": "/conversation-option1.json",
+			"buttonLabel": "go to option 1"
+		},
+		{
+			"type": "button",
+			"conversationUrl": "/conversation-option2.json",
+			"buttonLabel": "go to option 2"
+		}
+	]
+}

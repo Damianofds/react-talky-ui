@@ -1,15 +1,15 @@
 {
 	"conversation": [
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "This is a test conversation to test a question form"
 		},
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "It's not super fun but it's better than nothing"
 		},
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "much more better actually"
 		},
 		{

@@ -1,11 +1,11 @@
 {
 	"conversation": [
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "Hello, I'm your third option"
 		},
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "I'm the nastier of the 3"
 		}
 	]

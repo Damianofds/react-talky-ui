@@ -1,12 +1,16 @@
 {
 	"conversation": [
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "Hey there! This is a n8n + Supabase demo!"
 		},
 		{
-			"type": "statement",
+			"type": "text",
 			"text": "this tests the ability of sabine.bot of dealing with user own embeddings"
+		},
+		{
+			"type": "text",
+			"text": "Hey, I'm Sabine, a junior AI assistant. Give me some tasks, it will help me to grow my skills!"
 		}
 	]
 }
