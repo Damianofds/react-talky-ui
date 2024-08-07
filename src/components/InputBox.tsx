@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
 
+const TEST_API_URL = 'http://localhost:5678/webhook-test/9fb54256-f38b-4992-94e5-432cde55075d';
+
 interface InputBoxProps {
     messageHandler: (newMessage: string, newMessageType: 'question' | 'answer') => void;
 }
