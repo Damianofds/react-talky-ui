@@ -17,6 +17,12 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
         setInputValue(event.target.value);
     };
 
+    const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleButtonClick();
+        }
+    };
+
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = '#4ea699';
         event.target.style.borderWidth = '3px';
@@ -75,6 +81,7 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
                     onBlur={handleOnBlur} 
                     disabled={isLoading}
                     placeholder="Type your question here..."
+                    onKeyDown={handleKeyPressed}
                     style={{
                         border: '1px solid #ccc',
                         padding: '10px',
