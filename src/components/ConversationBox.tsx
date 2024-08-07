@@ -5,6 +5,7 @@ import { ConversationItemConfig, TextItemConfig } from './conversation-items/Con
 import AudioItem from './conversation-items/AudioItem';
 import TextItem, { WORD_DELAY } from './conversation-items/TextItem';
 import ButtonItem from './conversation-items/ButtonItem';
+import InputItem from './conversation-items/InputItem';
 
 interface ConversationBoxProps {
     jsonUrl: string;
@@ -14,7 +15,7 @@ interface ConversationBoxProps {
     aiMessageType?: 'question' | 'answer' | 'notype';
 }
 
-const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth }) => {
+const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
     const [currentJsonUrl, setCurrentJsonUrl] = useState(jsonUrl);
     const [isInitialized, setInitialized] = useState(false);
     const [renderedComponents, setRenderedComponents] = useState<ConversationItemConfig[]>([]);
@@ -78,6 +79,14 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
             setTimeout(() => setShowLoader(prev => !prev), wordsCount * WORD_DELAY);
         }
     }, [components, currentSentenceIndex]);
+
+    useEffect(() => {
+        setCurrentSentenceIndex(0);
+        const item = {id: "qa-" + Date.now(), text: aiMessage, type: aiMessageType=='question' ? 'input' :  'text'} as TextItemConfig
+        setComponents([item])
+        console.log(item);
+        setShowLoader(prev => !prev);
+    },[aiMessage]);
         
     const renderComponent = (component: ConversationItemConfig) => {
         switch (component.type) {
@@ -85,13 +94,15 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
             return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
             case 'text':
             return <TextItem key={component.id} id={component.id} words={component.text} />;
+            case 'input':
+            return <InputItem key={component.id} id={component.id} words={component.text} />;
             case 'button':
             return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel}/>;
             default:
             return null;
         }
     };
-    
+
     return (
         <ConversationContext.Provider value={{
             switchConversation: switchConversation,

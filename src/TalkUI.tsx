@@ -16,12 +16,9 @@ const TalkUI: React.FC<TalkUIProps> = ({  }) => {
         setNewMessageType(msgType);
     };
 
-    console.log("--1-> " + newMessage);
-    console.log("--2-> " + newMessageType);
-
     return (
         <>
-            <ConversationBox jsonUrl='/conversation-button.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
+            <ConversationBox jsonUrl='/conversation-option1.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
             <br/>
             <TalkInput messageHandler={handleNewMessage} />
         </>

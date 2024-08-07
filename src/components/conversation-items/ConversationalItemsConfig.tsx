@@ -1,6 +1,6 @@
 export interface BaseConversationItemConfig {
     id: string;
-    type: 'audio' | 'text' | 'button';
+    type: 'audio' | 'text' | 'button' | 'input';
 }
 
 export interface AudioItemConfig extends BaseConversationItemConfig {
@@ -20,4 +20,9 @@ export interface TextItemConfig extends BaseConversationItemConfig {
     text: string;
 }
 
-export type ConversationItemConfig = AudioItemConfig | ButtonItemConfig | TextItemConfig;
+export interface InputItemConfig extends BaseConversationItemConfig {
+    type: 'input';
+    text: string;
+}
+
+export type ConversationItemConfig = AudioItemConfig | ButtonItemConfig | TextItemConfig | InputItemConfig;
