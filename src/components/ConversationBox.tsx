@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useFetchConversations from '../hooks/useFetchConversation';
 import { ConversationContext } from "./ConversationContext";
-import { ConversationItemConfig } from './conversation-items/ConversationalItemsConfig';
+import { ConversationItemConfig, TextItemConfig } from './conversation-items/ConversationalItemsConfig';
 import AudioItem from './conversation-items/AudioItem';
 import TextItem, { WORD_DELAY } from './conversation-items/TextItem';
 import ButtonItem from './conversation-items/ButtonItem';
@@ -14,8 +14,9 @@ interface ConversationBoxProps {
     aiMessageType?: 'question' | 'answer' | 'notype';
 }
 
-const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth, aiMessage, aiMessageType }) => {
+const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, chatWidth }) => {
     const [currentJsonUrl, setCurrentJsonUrl] = useState(jsonUrl);
+    const [isInitialized, setInitialized] = useState(false);
     const [renderedComponents, setRenderedComponents] = useState<ConversationItemConfig[]>([]);
     const conversation = useFetchConversations(currentJsonUrl);
     const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
@@ -24,13 +25,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
     const containerRef = useRef<HTMLDivElement>(null);
     const [components, setComponents] = useState<ConversationItemConfig[]>([]);
 
-    const nextSentence = () => {
-        setCurrentSentenceIndex(prev => prev + 1);
-    }
-
     const switchConversation = (newUrl: string) => {
-        setCurrentSentenceIndex(0);
-        setCurrentJsonUrl(newUrl);
+        setCurrentJsonUrl(newUrl + "?time=" + Date.now());
     }
 
     useEffect(() => {
@@ -45,16 +41,19 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
 
     useEffect(() => {
         const savedComponents = localStorage.getItem('components');
-        if (savedComponents && conversation.length == 0) {
+        if(!isInitialized && savedComponents){
+            console.log("pre-loading conversation from browser local storage");
             setRenderedComponents(JSON.parse(savedComponents));
             setShowLoader(prev => !prev);
-            console.log("pre-loading conversation from browser local storage");
+            setInitialized(prev => !prev);
         }
         else{
-            setComponents(conversation);
             console.log("conversation from static chat flow");
+            setCurrentSentenceIndex(0);
+            setComponents(conversation);
+            setInitialized(prev => prev ? prev : !prev);
         }
-    }, [conversation, currentJsonUrl]);
+    }, [conversation]);
 
     useEffect(() => {
         if(components.length > 0){
@@ -62,10 +61,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
         }
 
         const renderNextComponent = () => {
-            let wordsCount : number = 1;
-            if(components[currentSentenceIndex] && components[currentSentenceIndex].type == 'text'){
-                wordsCount = components[currentSentenceIndex].text.split(" ").length;
-            }
             if (currentSentenceIndex < components.length) {
                 setRenderedComponents((prev) => [...prev, components[currentSentenceIndex]]);
                 setCurrentSentenceIndex(prev => prev + 1);
@@ -74,7 +69,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
 
         let wordsCount : number = 10;
         if(components[currentSentenceIndex] && components[currentSentenceIndex].type == 'text'){
-            wordsCount = components[currentSentenceIndex].text.split(" ").length;   
+            const textComponent = components[currentSentenceIndex] as TextItemConfig;
+            wordsCount = textComponent.text.split(" ").length;   
         }
         setTimeout(renderNextComponent, wordsCount * WORD_DELAY);
         if((components.length > 0) && (currentSentenceIndex >= components.length) && !isWaiting){
@@ -98,7 +94,6 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({ jsonUrl, chatHeight, 
     
     return (
         <ConversationContext.Provider value={{
-            nextSentence: nextSentence,
             switchConversation: switchConversation,
         }}>
             <div ref={containerRef} data-testid="tac-ui-root" style={{

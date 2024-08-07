@@ -34,6 +34,11 @@
 			"type": "button",
 			"conversationUrl": "/conversation-option2.json",
 			"buttonLabel": "go to option 2"
+		},
+		{
+			"type": "button",
+			"conversationUrl": "/conversation-button.json",
+			"buttonLabel": "go to option 3"
 		}
 	]
 }

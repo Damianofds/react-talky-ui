@@ -1,7 +1,6 @@
 import './App.css';
-import ConversationBox from './components/ConversationBox';
 import RadioStreamer from './components/conversation-items/RadioStreamer';
-import WordStreamer from './components/conversation-items/WordStreamer';
+import ClearStorageButton from './components/utils/ClearStorageButton';
 import TalkUI from './TalkUI';
 
 function App() {
@@ -13,13 +12,14 @@ function App() {
         <div>A react/typescript talkative user interface</div>
         <div>🌈 Create your talkflow 🗣️</div>
         <h2>Q&A Chatbot - talk with an AI in the backend</h2>
+        <ClearStorageButton />
         <TalkUI />
         <h2>ConversationStreamer - Static talkflows with form components</h2>
         {/* <ConversationBox jsonUrl='/conversation-options.json' chatHeight='200px' chatWidth='90vw'/> */}
         <br />
         <h2>Form components</h2>
         <h3>WordStreamer</h3>
-        <WordStreamer words='❓⭐ How do you do your choices ⭐❓' loopStyle='cycle'/>
+        {/* <WordStreamer words='❓⭐ How do you do your choices ⭐❓' loopStyle='cycle'/> */}
         <h3>RadioStreamer</h3>
         <div style={{height:'200px'}}>
           <RadioStreamer options={[

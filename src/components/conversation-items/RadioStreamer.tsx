@@ -26,7 +26,7 @@ interface RadioStreamerProps {
 }
 
 const RadioStreamer: React.FC<RadioStreamerProps> = ({ options, submitButtonLabel }) => {
-    const {nextSentence, switchConversation} = useContext(ConversationContext);
+    const {switchConversation} = useContext(ConversationContext);
     const [currentOptions, setCurrentOptions] = useState<React.JSX.Element>();
     const [currentButtonIndex, setCurrentButtonIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(0);
@@ -71,11 +71,6 @@ const RadioStreamer: React.FC<RadioStreamerProps> = ({ options, submitButtonLabe
                     </fieldset>
                 );
             }, RADIO_DELAY);
-        }
-        else{
-            if(currentOptions){
-                nextSentence();
-            }
         }
             
     };

@@ -11,11 +11,11 @@ const useFetchConversation = (jsonUrl: string) => {
                 const response = await fetch(jsonUrl);
                 const data = await response.json();
 
+                console.log(`Loading ${data.conversation.length} new conversation items`);
                 const processedData = data.conversation.map((item: ConversationItemConfig) => {
                     const millisec = Date.now();
                     const rnd = Math.random().toString(36);
                     const uniqueId = `${item.type}-${millisec}-${rnd}`;
-                    console.log("---------- " + uniqueId);
                     return {
                         ...item,
                         id: uniqueId,
