@@ -4,9 +4,10 @@ import ChatBox from "./components/ChatBox";
 
 
 interface TalkUIProps {
+    initTalkURL: string;
 }
 
-const TalkyUI: React.FC<TalkUIProps> = ({  }) => {
+const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
 
     const [newMessage, setNewMessage] = useState<string>("");
     const [newMessageType, setNewMessageType] = useState<'question' | 'answer'>('answer');
@@ -18,7 +19,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({  }) => {
 
     return (
         <>
-            <ChatBox initTalkURL='/conversation-audio.json' chatHeight='200px' chatWidth='90vw' qaMessage={newMessage} qaMessageType={newMessageType}/>
+            <ChatBox initTalkURL={initTalkURL} chatHeight='200px' chatWidth='90vw' qaMessage={newMessage} qaMessageType={newMessageType}/>
             <br/>
             <TalkInput messageHandler={handleNewMessage} />
         </>

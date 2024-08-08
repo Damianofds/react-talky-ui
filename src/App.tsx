@@ -11,7 +11,7 @@ function App() {
         <div>A react/typescript conversational user interface</div>
         <div>📢 Your talky AI buddy 🦜</div>
         <h2>Demo</h2>
-        <TalkyUI />
+        <TalkyUI initTalkURL='/talk-audio.json' />
         <div>
           <ClearStorageButton />
         </div>
