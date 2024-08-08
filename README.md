@@ -1,6 +1,6 @@
-# react-talk-ui
+# react-talky-ui
 
-A conversational UI for the web.
+A `react` + `typescript` conversational UI for the web.
 
 It supports the following chat behaviours in an harmonized chat workflow 
 

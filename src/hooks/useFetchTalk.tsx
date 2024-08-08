@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ConversationItemConfig } from '../components/conversation-items/ConversationalItemsConfig';
+import { ChatItemConfig } from '../components/conversation-items/TalkItemsConfig';
 
-const useFetchConversation = (jsonUrl: string) => {
+const useFetchTalk = (jsonUrl: string) => {
 
-    const [conversation, setConversation] = useState<ConversationItemConfig[]>([]);
+    const [conversation, setConversation] = useState<ChatItemConfig[]>([]);
 
     useEffect(() => {
         const fetchConversation = async () => {
@@ -12,7 +12,7 @@ const useFetchConversation = (jsonUrl: string) => {
                 const data = await response.json();
 
                 console.log(`Loading ${data.conversation.length} new conversation items`);
-                const processedData = data.conversation.map((item: ConversationItemConfig) => {
+                const processedData = data.conversation.map((item: ChatItemConfig) => {
                     const millisec = Date.now();
                     const rnd = Math.random().toString(36);
                     const uniqueId = `${item.type}-${millisec}-${rnd}`;
@@ -34,4 +34,4 @@ const useFetchConversation = (jsonUrl: string) => {
     return conversation;
 };
 
-export default useFetchConversation;
+export default useFetchTalk;

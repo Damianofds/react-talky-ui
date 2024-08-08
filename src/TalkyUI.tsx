@@ -1,12 +1,12 @@
 import { useState } from "react";
 import TalkInput from "./components/InputBox";
-import ConversationBox from "./components/ConversationBox";
+import ChatBox from "./components/ChatBox";
 
 
 interface TalkUIProps {
 }
 
-const TalkUI: React.FC<TalkUIProps> = ({  }) => {
+const TalkyUI: React.FC<TalkUIProps> = ({  }) => {
 
     const [newMessage, setNewMessage] = useState<string>("");
     const [newMessageType, setNewMessageType] = useState<'question' | 'answer'>('answer');
@@ -18,11 +18,11 @@ const TalkUI: React.FC<TalkUIProps> = ({  }) => {
 
     return (
         <>
-            <ConversationBox jsonUrl='/conversation-option1.json' chatHeight='200px' chatWidth='90vw' aiMessage={newMessage} aiMessageType={newMessageType}/>
+            <ChatBox initTalkURL='/conversation-audio.json' chatHeight='200px' chatWidth='90vw' qaMessage={newMessage} qaMessageType={newMessageType}/>
             <br/>
             <TalkInput messageHandler={handleNewMessage} />
         </>
     );
 };
 
-export default TalkUI;
+export default TalkyUI;

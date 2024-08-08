@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node';
 import { render, screen } from '@testing-library/react'
 import { expect, test, afterEach, beforeAll, afterAll, beforeEach, vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
-import ConversationBox from '../components/ConversationBox';
+import ChatBox from '../components/ChatBox';
 
 const server = setupServer(
   http.get('/conversation-question.json', () => {
@@ -43,7 +43,7 @@ afterEach(() => {
 afterAll(() => server.close())
 
 test('renders the Conversation Stream', async () => {
-  render(<ConversationBox jsonUrl='/conversation-question.json' chatHeight='500px' chatWidth='300px' aiMessage='' aiMessageType='answer'/>);
+  render(<ChatBox jsonUrl='/conversation-question.json' chatHeight='500px' chatWidth='300px' qaMessage='' qaMessageType='answer'/>);
   
   const conversationStream = screen.getAllByTestId("tac-ui-root");
 

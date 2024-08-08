@@ -1,17 +1,17 @@
 import './App.css';
 import ClearStorageButton from './components/utils/ClearStorageButton';
-import TalkUI from './TalkUI';
+import TalkyUI from './TalkyUI';
 
 function App() {
 
   return (
     <>
       <div className="App">
-        <h1>react-talk-ui </h1>
-        <div>A react/typescript talkative user interface</div>
-        <div>🌈 Create your talkflow 🗣️</div>
-        <h2>Q&A Chatbot - talk with an AI in the backend</h2>
-        <TalkUI />
+        <h1>react-talky-ui </h1>
+        <div>A react/typescript conversational user interface</div>
+        <div>📢 Your talky AI buddy 🦜</div>
+        <h2>Demo</h2>
+        <TalkyUI />
         <div>
           <ClearStorageButton />
         </div>
