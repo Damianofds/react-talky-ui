@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useFetchTalk from '../hooks/useFetchTalk';
 import { ConversationContext } from "./ConversationContext";
-import { ChatItemConfig, TextItemConfig } from './conversation-items/TalkItemsConfig';
-import AudioItem from './conversation-items/AudioItem';
-import TextItem, { WORD_DELAY } from './conversation-items/TextItem';
-import ButtonItem from './conversation-items/ButtonItem';
-import InputItem from './conversation-items/InputItem';
+import { ChatItemConfig, TextItemConfig } from './chat-items/TalkItemsConfig';
+import AudioItem from './chat-items/AudioItem';
+import TextItem, { WORD_DELAY } from './chat-items/TextItem';
+import ButtonItem from './chat-items/ButtonItem';
+import InputItem from './chat-items/InputItem';
 import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
 
 interface ChatBoxProps {

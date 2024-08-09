@@ -9,7 +9,7 @@ function App() {
       <div className="App">
         <h1>react-talky-ui </h1>
         <div>A react/typescript conversational user interface</div>
-        <div>📢 Your talky AI buddy 🦜</div>
+        <div>The frontend for your AI buddy 🦜</div>
         <h2>Demo</h2>
         <TalkyUI initTalkURL='/talk-audio.json' />
         <div>

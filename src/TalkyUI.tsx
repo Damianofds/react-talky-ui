@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TalkInput from "./components/InputBox";
+import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
 
 
@@ -21,7 +21,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
         <>
             <ChatBox initTalkURL={initTalkURL} chatHeight='200px' chatWidth='90vw' qaMessage={newMessage} qaMessageType={newMessageType}/>
             <br/>
-            <TalkInput messageHandler={handleNewMessage} />
+            <InputBox messageHandler={handleNewMessage} />
         </>
     );
 };

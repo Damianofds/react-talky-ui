@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useFetchAnswer from '../hooks/useFetchAIAnswer';
 
 const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
 
@@ -10,16 +11,20 @@ interface InputBoxProps {
 
 const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
     const [inputValue, setInputValue] = useState('');
+    const [question, setQuestion] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [, setResponses] = useState<string[]>([]);
+    const {answer, fetchData} = useFetchAnswer(question);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
     };
 
     const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleButtonClick();
+        if (event.key === 'Enter' && inputValue != '') {
+            setQuestion(inputValue);
+            messageHandler(inputValue, 'question');
+            setIsLoading(true);
         }
     };
 
@@ -35,34 +40,21 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
 
     const handleButtonClick = async () => {
         if(isLoading){
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: inputValue }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setResponses(prevResponses => [...prevResponses, data.text]);
-                messageHandler(data.response.text, 'answer');
-
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                setIsLoading(false);
-                setInputValue('');
-            }
+            fetchData();
         }
         else{
-            messageHandler(inputValue, 'question');
+            setQuestion(inputValue);
+            messageHandler(question, 'question');
             setIsLoading(true);
         }
     };
+
+    useEffect(() => {
+        setResponses(prevResponses => [...prevResponses, answer]);
+        messageHandler(answer, 'answer');
+        setIsLoading(false);
+        setInputValue('');
+    }, [answer]);
 
     useEffect(() => {
         if(isLoading){
