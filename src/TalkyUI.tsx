@@ -19,7 +19,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
 
     return (
         <>
-            <ChatBox initTalkURL={initTalkURL} chatHeight='200px' chatWidth='90vw' qaMessage={inputBoxText} qaMessageType={inputBoxType}/>
+            <ChatBox initTalkURL={initTalkURL} qaMessage={inputBoxText} qaMessageType={inputBoxType}/>
             <br/>
             <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="qa"/>
         </>

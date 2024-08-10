@@ -62,7 +62,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
 
     return (
         <div>
-            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+            <div style={{ display: 'flex' }}>
                 <input 
                     type="text" 
                     value={inputValue} 

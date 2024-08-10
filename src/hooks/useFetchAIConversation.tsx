@@ -11,7 +11,11 @@ const useFetchAIConversation = (question: string) => {
         const completion = await openai.chat.completions.create({
             messages: [{ role: "system", content: question }],
             model: "gpt-4o-mini",
+            // stream: true,
         });
+        // for await (const chunk of stream) {
+        //     setAnswer(() => chunk.choices[0]?.delta?.content || "");
+        // }
         setAnswer(completion.choices[0].message.content || "Ops, I didn't get it... can you repeat please?");
     };
 

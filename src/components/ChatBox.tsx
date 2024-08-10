@@ -10,13 +10,11 @@ import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
 
 interface ChatBoxProps {
     initTalkURL: string;
-    chatHeight: `${number}px`;
-    chatWidth: `${number}px` | `${number}vw`;
     qaMessage?: string;
     qaMessageType?: 'question' | 'answer' | 'notype' | 'conversationAnswer';
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, chatHeight, chatWidth, qaMessage, qaMessageType }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const [isChatInitialized, setChatInitialized] = useState(false);
     const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
@@ -109,18 +107,17 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, chatHeight, chatWidth, q
             switchConversation: switchTalk,
         }}>
             <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
-                height: chatHeight,
-                width: chatWidth,
-                maxWidth: '600px',
-                minWidth: '340px',
+                height: "60%",
+                width: "94%",
                 overflowY: 'auto',
-                border: '1px solid #ccc',
-                padding: '10px',
+                // border: '1px solid #ccc',
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 fontSize: '20px',
+                paddingLeft: '3%',
+                paddingRight: '3%',
             }}>
                 <div style={{ maxHeight: '100%' }}>
                     {renderedChatItems.map((component) => renderComponent(component))}
