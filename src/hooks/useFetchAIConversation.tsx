@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { useState } from 'react';
-const openai = new OpenAI({ dangerouslyAllowBrowser: true });
+const OPENAI_API_KEY = import.meta.env.TALKY_OPENAI_API_KEY;
+const openai = new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
 const useFetchAIConversation = (question: string) => {
 

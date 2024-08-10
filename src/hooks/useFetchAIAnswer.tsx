@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
+// const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
+const API_URL = import.meta.env.TALKY_QA_API_URL;
 // const TEST_API_URL = 'http://localhost:5678/webhook-test/9fb54256-f38b-4992-94e5-432cde55075d';
 
 const useFetchAIAnswer = (question: string) => {

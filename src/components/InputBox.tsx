@@ -88,6 +88,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     onClick={processQuestion} 
                     disabled={isLoading || !inputValue}
                     style={{ flex: '1', height: '40px' }}
+                    title='or press enter'
                 >
                     {isLoading ? 'Loading...' : 'Send'}
                 </button>
