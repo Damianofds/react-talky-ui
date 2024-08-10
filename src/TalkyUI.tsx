@@ -2,17 +2,18 @@ import { useState } from "react";
 import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
 
-
 interface TalkUIProps {
     initTalkURL: string;
 }
 
+type MessageType = 'question' | 'answer' | 'conversationAnswer';
+
 const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
 
     const [inputBoxText, setInputBoxText] = useState<string>("");
-    const [inputBoxType, setInputBoxType] = useState<'question' | 'answer' | 'conversationAnswer'>('answer');
+    const [inputBoxType, setInputBoxType] = useState<MessageType>('answer');
     
-    const setInputBoxContent = (msg: string, msgType: 'question' | 'answer' | 'conversationAnswer') => {
+    const setInputBoxContent = (msg: string, msgType: MessageType) => {
         setInputBoxText(msg);
         setInputBoxType(msgType);
     };
