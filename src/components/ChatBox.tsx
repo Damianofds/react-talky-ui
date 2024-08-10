@@ -13,7 +13,7 @@ interface ChatBoxProps {
     chatHeight: `${number}px`;
     chatWidth: `${number}px` | `${number}vw`;
     qaMessage?: string;
-    qaMessageType?: 'question' | 'answer' | 'notype';
+    qaMessageType?: 'question' | 'answer' | 'notype' | 'conversationAnswer';
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, chatHeight, chatWidth, qaMessage, qaMessageType }) => {

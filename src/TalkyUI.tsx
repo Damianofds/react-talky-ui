@@ -9,19 +9,19 @@ interface TalkUIProps {
 
 const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
 
-    const [newMessage, setNewMessage] = useState<string>("");
-    const [newMessageType, setNewMessageType] = useState<'question' | 'answer'>('answer');
+    const [inputBoxText, setInputBoxText] = useState<string>("");
+    const [inputBoxType, setInputBoxType] = useState<'question' | 'answer' | 'conversationAnswer'>('answer');
     
-    const handleNewMessage = (msg: string, msgType: 'question' | 'answer') => {
-        setNewMessage(msg);
-        setNewMessageType(msgType);
+    const setInputBoxContent = (msg: string, msgType: 'question' | 'answer' | 'conversationAnswer') => {
+        setInputBoxText(msg);
+        setInputBoxType(msgType);
     };
 
     return (
         <>
-            <ChatBox initTalkURL={initTalkURL} chatHeight='200px' chatWidth='90vw' qaMessage={newMessage} qaMessageType={newMessageType}/>
+            <ChatBox initTalkURL={initTalkURL} chatHeight='200px' chatWidth='90vw' qaMessage={inputBoxText} qaMessageType={inputBoxType}/>
             <br/>
-            <InputBox messageHandler={handleNewMessage} />
+            <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="qa"/>
         </>
     );
 };

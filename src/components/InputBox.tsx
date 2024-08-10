@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-// import useFetchAnswer from '../hooks/useFetchAIAnswer';
-import useFetchAnswer from '../hooks/useFetchConversation';
+import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
 
 interface InputBoxProps {
-    messageHandler: (newMessage: string, newMessageType: 'question' | 'answer') => void;
+    inputRetriever: (newMessage: string, newMessageType: 'question' | 'answer' | 'conversationAnswer') => void;
+    conversationRouteKeyword: string;
+    qaRouteKeyword: string;
 }
 
-const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
+const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword}) => {
     const [inputValue, setInputValue] = useState('');
     const [question, setQuestion] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [, setResponses] = useState<string[]>([]);
-    const {answer, fetchData} = useFetchAnswer(question);
+    const {answer, keywordRouting} = useRouteInputBoxValue(question);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -20,7 +21,7 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
     const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && inputValue != '') {
             setQuestion(inputValue);
-            messageHandler(inputValue, 'question');
+            inputRetriever(inputValue, 'question');
             setIsLoading(true);
         }
     };
@@ -35,27 +36,27 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
         event.target.style.borderWidth = '0.1px';
     };
 
-    const handleButtonClick = async () => {
+    const processQuestion = async () => {
         if(isLoading){
-            fetchData();
+            keywordRouting(question, conversationRouteKeyword, qaRouteKeyword);
         }
         else{
             setQuestion(inputValue);
-            messageHandler(question, 'question');
+            inputRetriever(question, 'question');
             setIsLoading(true);
         }
     };
 
     useEffect(() => {
         setResponses(prevResponses => [...prevResponses, answer]);
-        messageHandler(answer, 'answer');
+        inputRetriever(answer, 'answer');
         setIsLoading(false);
         setInputValue('');
     }, [answer]);
 
     useEffect(() => {
         if(isLoading){
-            handleButtonClick();
+            processQuestion();
         }
     }, [isLoading]);
 
@@ -84,7 +85,7 @@ const InputBox: React.FC<InputBoxProps> = ({messageHandler}) => {
                     }}
                 />
                 <button 
-                    onClick={handleButtonClick} 
+                    onClick={processQuestion} 
                     disabled={isLoading || !inputValue}
                     style={{ flex: '1', height: '40px' }}
                 >

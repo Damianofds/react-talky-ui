@@ -3,11 +3,11 @@ import { useState } from 'react';
 const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
 // const TEST_API_URL = 'http://localhost:5678/webhook-test/9fb54256-f38b-4992-94e5-432cde55075d';
 
-const useFetchAnswer = (question: string) => {
+const useFetchAIAnswer = (question: string) => {
 
-    const [answer, setAnswer] = useState('');
+    const [aiAnswer, setAnswer] = useState('');
 
-    const fetchData = async () => {
+    const fetchAIAnswer = async () => {
         fetch(API_URL, {
             method: "POST",
             headers: {
@@ -20,7 +20,7 @@ const useFetchAnswer = (question: string) => {
         .catch(error => console.error('Error fetching conversations:', error));
     };
 
-    return {answer, fetchData};
+    return {aiAnswer, fetchAIAnswer};
 };
 
-export default useFetchAnswer;
+export default useFetchAIAnswer;
