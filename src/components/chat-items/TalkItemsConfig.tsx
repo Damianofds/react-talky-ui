@@ -18,6 +18,7 @@ export interface ButtonItemConfig extends BaseChatItemConfig {
 export interface StreamItemConfig extends BaseChatItemConfig {
     type: 'stream';
     text: string;
+    isCompleted: boolean;
 }
 
 export interface InputItemConfig extends BaseChatItemConfig {

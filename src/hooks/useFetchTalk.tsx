@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChatItemConfig } from '../components/chat-items/TalkItemsConfig';
+import { ChatItemConfig, StreamItemConfig } from '../components/chat-items/TalkItemsConfig';
 
 const useFetchTalk = (jsonUrl: string) => {
 
@@ -34,19 +34,24 @@ const useFetchTalk = (jsonUrl: string) => {
     }, [jsonUrl]);
 
     useEffect(() => {
-        let i = 0;
-        const intervalId = setInterval(() => {
-            if(conversation.length > 0 && i >= conversation.length){
-                clearInterval(intervalId);
-            }
-            else{
-                setTalkCurrentItem(conversation[i]);
-                if(i == conversation.length-1){
-                    setLastItem(true);
+        if(conversation && conversation.length >= 1){
+            let i = 0;
+            const intervalId = setInterval(() => {
+                if(conversation.length > 0 && i >= conversation.length){
+                    clearInterval(intervalId);
                 }
-                i++;
-            }
-        }, 100);
+                else{
+                    setTalkCurrentItem(conversation[i]);
+                    if((conversation[i] as ChatItemConfig).type == 'stream'){
+                        (conversation[i] as StreamItemConfig).isCompleted = true;
+                    }
+                    if(i == conversation.length-1){
+                        setLastItem(true);
+                    }
+                    i++;
+                }
+            }, 100);
+        }
     }, [conversation]);    
 
     return {talkCurrentItem, isLastItem};

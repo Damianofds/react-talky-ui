@@ -22,22 +22,33 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
 
+    const loadInitTalk = (talkCurrentItem: ChatItemConfig) => {
+        if(isStreamingStarted){
+            setRenderedChatItems(prev => [...prev.slice(0, -1)]);
+        }
+        setRenderedChatItems(prev => [...prev, talkCurrentItem]);
+        setStreamingStarted(() => true);
+        if(talkCurrentItem.type == 'stream' && talkCurrentItem.isCompleted){
+            setStreamingStarted(() => false);
+        }
+        if(isLastItem){
+            setChatBoxInitialized(() => true);
+            localStorage.setItem('components', JSON.stringify([...renderedChatItems, talkCurrentItem]));
+        }
+    };
+
     useEffect(() => {
-        // console.log(!isChatBoxInitialized && chatHistory);
-        console.log(!isChatBoxInitialized);
-        console.log(talkCurrentItem);
-        if(!isChatBoxInitialized && chatHistory){
+        const previousChatPresent = !isChatBoxInitialized && chatHistory;
+        if(previousChatPresent){
             console.log("Loading user chat history...");
             setRenderedChatItems(JSON.parse(chatHistory));
             setChatBoxInitialized(() => true);
         }
         else{
-            console.log("Loading init talk...");
-            if(!isChatBoxInitialized && talkCurrentItem){
-                setRenderedChatItems(prev => [...prev, talkCurrentItem]);
-                if(isLastItem){
-                    setChatBoxInitialized(() => true);
-                }
+            const isEverythingReady = !isChatBoxInitialized && talkCurrentItem;
+            if(isEverythingReady){
+                console.log("Loading init talk...");
+                loadInitTalk(talkCurrentItem);
             }
         }
     }, [talkCurrentItem]);
@@ -60,8 +71,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
                 }
                 setRenderedChatItems(prev => [...prev, item]);
-                setStreamingStarted(() => true);
-            }else{
+                if(item.isCompleted){
+                    setStreamingStarted(() => false);
+                }
+                else{
+                    setStreamingStarted(() => true);
+                }
+            }
+            else{
                 setRenderedChatItems(prev => [...prev, item]);
                 setStreamingStarted(() => false);
             }
