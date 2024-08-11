@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useFetchTalk from '../hooks/useFetchTalk';
 import { ConversationContext } from "./ConversationContext";
-import { ChatItemConfig, TextItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig, StreamItemConfig, TextItemConfig } from './chat-items/TalkItemsConfig';
 import AudioItem from './chat-items/AudioItem';
 import TextItem, { WORD_DELAY } from './chat-items/TextItem';
 import ButtonItem from './chat-items/ButtonItem';
 import InputItem from './chat-items/InputItem';
 import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
+import StreamItem from './chat-items/StreamItem';
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -25,6 +26,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType
     const [showLoader, setShowLoader] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [chatItems, setChatItems] = useState<ChatItemConfig[]>([]);
+    const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
 
     const switchTalk = (newUrl: string) => {
         setCurrentTalkURL(newUrl + "?time=" + Date.now());
@@ -80,11 +82,18 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType
     }, [chatItems, currentTalkIndex]);
 
     useEffect(() => {
-        setCurrentTalkIndex(0);
-        const item = {id: "qa-" + Date.now(), text: qaMessage, type: qaMessageType=='question' ? 'input' :  'text'} as TextItemConfig
-        setChatItems([item])
-        console.log(item);
-        setShowLoader(prev => !prev);
+        const item = {id: "qa-" + Date.now(), text: qaMessage, type: qaMessageType=='question' ? 'input' :  'stream'} as StreamItemConfig
+        if(qaMessageType=='answer'){
+            if(isStreamingStarted){
+                setRenderedChatItems(prev => [...prev.slice(0, -1)])
+            }
+            setRenderedChatItems(prev => [...prev, item])
+            setStreamingStarted(() => true);
+        }else{
+            setRenderedChatItems(prev => [...prev, item])
+            setStreamingStarted(() => false);
+        } 
+        localStorage.setItem('components', JSON.stringify(renderedChatItems));
     },[qaMessage]);
         
     const renderComponent = (component: ChatItemConfig) => {
@@ -93,6 +102,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType
             return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
             case 'text':
             return <TextItem key={component.id} id={component.id} words={component.text} />;
+            case 'stream':
+            return <StreamItem key={component.id} id={component.id} words={component.text} />;
             case 'input':
             return <InputItem key={component.id} id={component.id} words={component.text} />;
             case 'button':

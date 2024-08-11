@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// const API_URL = 'http://localhost:5678/webhook/9fb54256-f38b-4992-94e5-432cde55075d';
 const API_URL = import.meta.env.TALKY_QA_API_URL;
-// const TEST_API_URL = 'http://localhost:5678/webhook-test/9fb54256-f38b-4992-94e5-432cde55075d';
 
 const useFetchAIAnswer = (question: string) => {
 
     const [aiAnswer, setAnswer] = useState('');
+    const [text, setText] = useState('');
 
     const fetchAIAnswer = async () => {
         fetch(API_URL, {
@@ -17,9 +16,24 @@ const useFetchAIAnswer = (question: string) => {
             body: JSON.stringify({message: question})
         })
         .then(response => response.json())
-        .then(data => setAnswer(data.response.text))
+        .then(data => setText(data.response.text))
         .catch(error => console.error('Error fetching conversations:', error));
     };
+
+    useEffect(() => {
+        setAnswer(() => '');
+        const textArray = text.split(" ");
+        let counter = 0;
+        const intervalId = setInterval(() => {
+            if(counter >= textArray.length){
+                clearInterval(intervalId);
+            }
+            else{
+                setAnswer(prev => prev + " " + textArray[counter]);
+                counter++;
+            }
+        }, 100);
+    },[text]);
 
     return {aiAnswer, fetchAIAnswer};
 };

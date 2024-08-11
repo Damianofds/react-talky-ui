@@ -8,15 +8,18 @@ const useFetchAIConversation = (question: string) => {
     const [aiConversation, setAnswer] = useState('');
 
     const fetchAIConversation = async () => {
-        const completion = await openai.chat.completions.create({
+        const stream = await openai.chat.completions.create({
             messages: [{ role: "system", content: question }],
             model: "gpt-4o-mini",
-            // stream: true,
+            stream: true,
         });
-        // for await (const chunk of stream) {
-        //     setAnswer(() => chunk.choices[0]?.delta?.content || "");
-        // }
-        setAnswer(completion.choices[0].message.content || "Ops, I didn't get it... can you repeat please?");
+        setAnswer('');
+        for await (const chunk of stream) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            const newToken = chunk.choices[0]?.delta?.content || "";
+            console.log(newToken);
+            setAnswer(prev => prev + newToken);
+        }
     };
 
     return { aiConversation, fetchAIConversation };
