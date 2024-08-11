@@ -1,11 +1,11 @@
 {
 	"conversation": [
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "Hello, I'm your third option"
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "I'm the nastier of the 3"
 		}
 	]

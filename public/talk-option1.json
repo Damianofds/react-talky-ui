@@ -1,11 +1,11 @@
 {
 	"conversation": [
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "Hey there! This is the option 1"
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "I wish you a great sunny day 🌞"
 		}
 	]

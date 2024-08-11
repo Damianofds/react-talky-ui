@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
+import { ChatItemConfig} from './chat-items/TalkItemsConfig';
 
 interface InputBoxProps {
-    inputRetriever: (newMessage: string, newMessageType: 'question' | 'answer' | 'conversationAnswer') => void;
+    inputRetriever: (answer: ChatItemConfig) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
 }
 
 const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword}) => {
     const [inputValue, setInputValue] = useState('');
-    const [question, setQuestion] = useState('');
+    const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [, setResponses] = useState<string[]>([]);
-    const {answer, keywordRouting} = useRouteInputBoxValue(question);
+    // const [, setResponses] = useState<string[]>([]);
+    const {answer, keywordRouting} = useRouteInputBoxValue(input);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -20,8 +21,8 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
 
     const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && inputValue != '') {
-            setQuestion(inputValue);
-            inputRetriever(inputValue, 'question');
+            setInput(inputValue);
+            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'input'});
             setIsLoading(true);
         }
     };
@@ -36,27 +37,29 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
         event.target.style.borderWidth = '0.1px';
     };
 
-    const processQuestion = async () => {
+    const processInput = async () => {
         if(isLoading){
-            keywordRouting(question, conversationRouteKeyword, qaRouteKeyword);
+            keywordRouting(input, conversationRouteKeyword, qaRouteKeyword);
         }
         else{
-            setQuestion(inputValue);
-            inputRetriever(question, 'question');
+            setInput(inputValue);
+            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'input'});
             setIsLoading(true);
         }
     };
 
     useEffect(() => {
-        setResponses(prevResponses => [...prevResponses, answer]);
-        inputRetriever(answer, 'answer');
+        // setResponses(prevResponses => [...prevResponses, answer]);
+        if(answer){
+            inputRetriever(answer);
+        }
         setIsLoading(false);
         setInputValue('');
     }, [answer]);
 
     useEffect(() => {
         if(isLoading){
-            processQuestion();
+            processInput();
         }
     }, [isLoading]);
 
@@ -85,7 +88,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     }}
                 />
                 <button 
-                    onClick={processQuestion} 
+                    onClick={processInput} 
                     disabled={isLoading || !inputValue}
                     style={{ flex: '1', height: '40px' }}
                     title='or press enter'

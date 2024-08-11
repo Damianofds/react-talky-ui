@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import { StreamItemConfig } from '../components/chat-items/TalkItemsConfig';
 
 const API_URL = import.meta.env.TALKY_QA_API_URL;
 
 const useFetchAIAnswer = (question: string) => {
 
-    const [aiAnswer, setAnswer] = useState('');
+    const [aiAnswer, setAnswer] = useState<StreamItemConfig>({id: "init-" + Date.now(), text: '', type: 'stream'});
     const [text, setText] = useState('');
 
     const fetchAIAnswer = async () => {
@@ -21,15 +22,18 @@ const useFetchAIAnswer = (question: string) => {
     };
 
     useEffect(() => {
-        setAnswer(() => '');
+        setAnswer({id: "init-" + Date.now(), text: '', type: 'stream'});
         const textArray = text.split(" ");
         let counter = 0;
         const intervalId = setInterval(() => {
-            if(counter >= textArray.length){
+            if(textArray.length > 0 && counter >= textArray.length){
                 clearInterval(intervalId);
             }
             else{
-                setAnswer(prev => prev + " " + textArray[counter]);
+                setAnswer((prev) => ({
+                    ...prev,
+                    text: prev.text + " " + textArray[counter]
+                }));
                 counter++;
             }
         }, 100);

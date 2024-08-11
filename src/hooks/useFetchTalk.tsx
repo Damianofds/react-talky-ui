@@ -4,6 +4,8 @@ import { ChatItemConfig } from '../components/chat-items/TalkItemsConfig';
 const useFetchTalk = (jsonUrl: string) => {
 
     const [conversation, setConversation] = useState<ChatItemConfig[]>([]);
+    const [talkCurrentItem, setTalkCurrentItem] = useState<ChatItemConfig>();
+    const [isLastItem, setLastItem] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchConversation = async () => {
@@ -31,7 +33,23 @@ const useFetchTalk = (jsonUrl: string) => {
         fetchConversation();
     }, [jsonUrl]);
 
-    return conversation;
+    useEffect(() => {
+        let i = 0;
+        const intervalId = setInterval(() => {
+            if(conversation.length > 0 && i >= conversation.length){
+                clearInterval(intervalId);
+            }
+            else{
+                setTalkCurrentItem(conversation[i]);
+                if(i == conversation.length-1){
+                    setLastItem(true);
+                }
+                i++;
+            }
+        }, 100);
+    }, [conversation]);    
+
+    return {talkCurrentItem, isLastItem};
 };
 
 export default useFetchTalk;

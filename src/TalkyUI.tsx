@@ -1,26 +1,25 @@
 import { useState } from "react";
 import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
+import { ChatItemConfig } from "./components/chat-items/TalkItemsConfig";
 
 interface TalkUIProps {
     initTalkURL: string;
 }
 
-type MessageType = 'question' | 'answer' | 'conversationAnswer';
+export type MessageType = 'input' | 'stream';
 
 const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL }) => {
 
-    const [inputBoxText, setInputBoxText] = useState<string>("");
-    const [inputBoxType, setInputBoxType] = useState<MessageType>('answer');
+    const [inputBoxText, setInputBoxText] = useState<ChatItemConfig>();
     
-    const setInputBoxContent = (msg: string, msgType: MessageType) => {
+    const setInputBoxContent = (msg: ChatItemConfig, ) => {
         setInputBoxText(msg);
-        setInputBoxType(msgType);
     };
 
     return (
         <>
-            <ChatBox initTalkURL={initTalkURL} qaMessage={inputBoxText} qaMessageType={inputBoxType}/>
+            <ChatBox initTalkURL={initTalkURL} message={inputBoxText}/>
             <br/>
             <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="qa"/>
         </>

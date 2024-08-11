@@ -1,36 +1,46 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useFetchTalk from '../hooks/useFetchTalk';
-import { ConversationContext } from "./ConversationContext";
-import { ChatItemConfig, StreamItemConfig, TextItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig } from './chat-items/TalkItemsConfig';
 import AudioItem from './chat-items/AudioItem';
-import TextItem, { WORD_DELAY } from './chat-items/TextItem';
 import ButtonItem from './chat-items/ButtonItem';
 import InputItem from './chat-items/InputItem';
-import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
 import StreamItem from './chat-items/StreamItem';
+import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
+import useFetchTalk from '../hooks/useFetchTalk';
 
 interface ChatBoxProps {
     initTalkURL: string;
-    qaMessage?: string;
-    qaMessageType?: 'question' | 'answer' | 'notype' | 'conversationAnswer';
+    message?: ChatItemConfig;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
-    const [isChatInitialized, setChatInitialized] = useState(false);
-    const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
-    const currentTalk = useFetchTalk(currentTalkURL);
+    const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
-    const [currentTalkIndex, setCurrentTalkIndex] = useState(0);
-    const [isWaiting, setWaiting] = useState(false);
+    const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
     const [showLoader, setShowLoader] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
-    const [chatItems, setChatItems] = useState<ChatItemConfig[]>([]);
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
+    const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
 
-    const switchTalk = (newUrl: string) => {
-        setCurrentTalkURL(newUrl + "?time=" + Date.now());
-    }
+    useEffect(() => {
+        // console.log(!isChatBoxInitialized && chatHistory);
+        console.log(!isChatBoxInitialized);
+        console.log(talkCurrentItem);
+        if(!isChatBoxInitialized && chatHistory){
+            console.log("Loading user chat history...");
+            setRenderedChatItems(JSON.parse(chatHistory));
+            setChatBoxInitialized(() => true);
+        }
+        else{
+            console.log("Loading init talk...");
+            if(!isChatBoxInitialized && talkCurrentItem){
+                setRenderedChatItems(prev => [...prev, talkCurrentItem]);
+                if(isLastItem){
+                    setChatBoxInitialized(() => true);
+                }
+            }
+        }
+    }, [talkCurrentItem]);
 
     useEffect(() => {
         const scrollDown = () => {
@@ -40,68 +50,29 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType
         }
         scrollDown();
         setTimeout(scrollDown, 500);
-    }, [renderedChatItems, currentTalkIndex, showLoader]);
-
+    }, [renderedChatItems, showLoader]);
+    
     useEffect(() => {
-        if(!isChatInitialized && chatHistory){
-            console.log("Loading user chat history...");
-            setRenderedChatItems(JSON.parse(chatHistory));
-            setShowLoader(prev => !prev);
-            setChatInitialized(prev => !prev);
-        }
-        else{
-            console.log("Loading init talk...");
-            setCurrentTalkIndex(0);
-            setChatItems(currentTalk);
-            setChatInitialized(prev => prev ? prev : !prev);
-        }
-    }, [currentTalk]);
-
-    useEffect(() => {
-        if(chatItems.length > 0){
-            localStorage.setItem('components', JSON.stringify(renderedChatItems));
-        }
-
-        const renderNextComponent = () => {
-            if (currentTalkIndex < chatItems.length) {
-                setRenderedChatItems((prev) => [...prev, chatItems[currentTalkIndex]]);
-                setCurrentTalkIndex(prev => prev + 1);
+        const item = message;
+        if(item){    
+            if(item.type=='stream'){
+                if(isStreamingStarted){
+                    setRenderedChatItems(prev => [...prev.slice(0, -1)]);
+                }
+                setRenderedChatItems(prev => [...prev, item]);
+                setStreamingStarted(() => true);
+            }else{
+                setRenderedChatItems(prev => [...prev, item]);
+                setStreamingStarted(() => false);
             }
-        };
-
-        let wordsCount : number = 10;
-        if(chatItems[currentTalkIndex] && chatItems[currentTalkIndex].type == 'text'){
-            const textComponent = chatItems[currentTalkIndex] as TextItemConfig;
-            wordsCount = textComponent.text.split(" ").length;   
         }
-        setTimeout(renderNextComponent, wordsCount * WORD_DELAY);
-        if((chatItems.length > 0) && (currentTalkIndex >= chatItems.length) && !isWaiting){
-            setWaiting(prev => !prev);
-            setTimeout(() => setShowLoader(prev => !prev), wordsCount * WORD_DELAY);
-        }
-    }, [chatItems, currentTalkIndex]);
-
-    useEffect(() => {
-        const item = {id: "qa-" + Date.now(), text: qaMessage, type: qaMessageType=='question' ? 'input' :  'stream'} as StreamItemConfig
-        if(qaMessageType=='answer'){
-            if(isStreamingStarted){
-                setRenderedChatItems(prev => [...prev.slice(0, -1)])
-            }
-            setRenderedChatItems(prev => [...prev, item])
-            setStreamingStarted(() => true);
-        }else{
-            setRenderedChatItems(prev => [...prev, item])
-            setStreamingStarted(() => false);
-        } 
         localStorage.setItem('components', JSON.stringify(renderedChatItems));
-    },[qaMessage]);
+    },[message]);
         
     const renderComponent = (component: ChatItemConfig) => {
         switch (component.type) {
             case 'audio':
             return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
-            case 'text':
-            return <TextItem key={component.id} id={component.id} words={component.text} />;
             case 'stream':
             return <StreamItem key={component.id} id={component.id} words={component.text} />;
             case 'input':
@@ -114,28 +85,24 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, qaMessage, qaMessageType
     };
 
     return (
-        <ConversationContext.Provider value={{
-            switchConversation: switchTalk,
+        <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
+            height: "60%",
+            width: "94%",
+            overflowY: 'auto',
+            // border: '1px solid #ccc',
+            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            fontSize: '20px',
+            paddingLeft: '3%',
+            paddingRight: '3%',
         }}>
-            <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
-                height: "60%",
-                width: "94%",
-                overflowY: 'auto',
-                // border: '1px solid #ccc',
-                textAlign: 'left',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-                fontSize: '20px',
-                paddingLeft: '3%',
-                paddingRight: '3%',
-            }}>
-                <div style={{ maxHeight: '100%' }}>
-                    {renderedChatItems.map((component) => renderComponent(component))}
-                    {showLoader && <div className='pulsing-cursor' />}
-                </div>
+            <div style={{ maxHeight: '100%' }}>
+                {renderedChatItems.map((component) => renderComponent(component))}
+                {showLoader && <div className='pulsing-cursor' />}
             </div>
-        </ConversationContext.Provider>
+        </div>
     );
 };
 

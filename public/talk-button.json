@@ -1,28 +1,28 @@
 {
 	"conversation": [
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "react-talk-ui "
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "is a "
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "user interface"
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "a conversational user interface"
 		},
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "react-talk-ui is a conversational user interface"
 		},
 
 		{
-			"type": "text",
+			"type": "stream",
 			"text": "you all know what i mean bro?"
 		},
 		{

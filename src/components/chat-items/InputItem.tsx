@@ -6,7 +6,6 @@ interface TextItemProps {
 const InputItem: React.FC<TextItemProps> = ({ words }) => {
 
     return (<div style={{
-                            // textAlign:"right",
                             maxWidth: '50%',
                             marginLeft: '50%',
                             backgroundColor: '#4ea699',
