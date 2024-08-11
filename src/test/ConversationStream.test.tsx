@@ -43,7 +43,7 @@ afterEach(() => {
 afterAll(() => server.close())
 
 test('renders the Conversation Stream', async () => {
-  render(<ChatBox initTalkURL='/conversation-question.json' qaMessage='' qaMessageType='answer'/>);
+  render(<ChatBox initTalkURL='/conversation-question.json' message={undefined}/>);
   
   const conversationStream = screen.getAllByTestId("tac-ui-root");
 

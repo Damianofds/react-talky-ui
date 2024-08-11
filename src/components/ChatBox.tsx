@@ -13,11 +13,11 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
-    const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
+    const [currentTalkURL, /*setCurrentTalkURL*/] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
     const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
-    const [showLoader, setShowLoader] = useState(false);
+    const [showLoader, /*setShowLoader*/] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
@@ -50,7 +50,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
         }
         scrollDown();
         setTimeout(scrollDown, 500);
-    }, [renderedChatItems, showLoader]);
+    }, [renderedChatItems]);
     
     useEffect(() => {
         const item = message;
