@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig, StreamItemConfig } from './chat-items/TalkItemsConfig';
 import AudioItem from './chat-items/AudioItem';
 import ButtonItem from './chat-items/ButtonItem';
 import InputItem from './chat-items/InputItem';
@@ -59,7 +59,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     const handleAIMessage = () => {
         const item = message;
-        if(item){ 
+        if(item && !((item as StreamItemConfig).text=='  undefined')){ 
             if(item.type=='stream'){
                 if(isStreamingStarted){
                     setOrigin(item.origin);
