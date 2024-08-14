@@ -17,7 +17,7 @@ function App() {
           maxWidth: '800px',
           height: '55vh'
         }}>
-          <TalkyUI initTalkURL='/talk-sabine.json' />
+          <TalkyUI initTalkURL='/talk-audio.json' />
         </div>
         {/* <br/> */}
         <div>

@@ -23,18 +23,21 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
 
     const loadInitTalk = (talkCurrentItem: ChatItemConfig) => {
+        // console.log(talkCurrentItem)
         if(isStreamingStarted){
             setRenderedChatItems(prev => [...prev.slice(0, -1)]);
         }
         setRenderedChatItems(prev => [...prev, talkCurrentItem]);
         setStreamingStarted(() => true);
         if(talkCurrentItem.type == 'stream' && talkCurrentItem.isCompleted){
+            console.log("STREAMING STOP")
             setStreamingStarted(() => false);
+            if(isLastItem){
+                setChatBoxInitialized(() => true);
+                localStorage.setItem('components', JSON.stringify([...renderedChatItems.slice(0,-1), talkCurrentItem]));   
+            }
         }
-        if(isLastItem){
-            setChatBoxInitialized(() => true);
-            localStorage.setItem('components', JSON.stringify([...renderedChatItems, talkCurrentItem]));
-        }
+  
     };
 
     useEffect(() => {
@@ -42,7 +45,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
         if(previousChatPresent){
             console.log("Loading user chat history...");
             setRenderedChatItems(JSON.parse(chatHistory));
-            setChatBoxInitialized(() => true);
+            setChatBoxInitialized(true);
         }
         else{
             const isEverythingReady = !isChatBoxInitialized && talkCurrentItem;

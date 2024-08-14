@@ -36,19 +36,31 @@ const useFetchTalk = (jsonUrl: string) => {
     useEffect(() => {
         if(conversation && conversation.length >= 1){
             let i = 0;
+            let j = 0;
             const intervalId = setInterval(() => {
                 if(conversation.length > 0 && i >= conversation.length){
                     clearInterval(intervalId);
                 }
                 else{
-                    setTalkCurrentItem(conversation[i]);
                     if((conversation[i] as ChatItemConfig).type == 'stream'){
-                        (conversation[i] as StreamItemConfig).isCompleted = true;
+                        const streamItem = (conversation[i] as StreamItemConfig);
+                        const tokens = streamItem.text.split(" ");
+                        if(j <= tokens.length-1){
+                            setTalkCurrentItem({id: conversation[i].id, text: tokens.slice(0, j).join(' '), type: 'stream', isCompleted: false});
+                            j++;
+                        } else {
+                            setTalkCurrentItem({id: conversation[i].id, text: tokens.join(' '), type: 'stream', isCompleted: true});
+                            j=0;
+                            i++;
+                        }
                     }
-                    if(i == conversation.length-1){
+                    else{
+                        setTalkCurrentItem(conversation[i]);
+                        i++;
+                    }
+                    if(i == conversation.length){
                         setLastItem(true);
                     }
-                    i++;
                 }
             }, 100);
         }
