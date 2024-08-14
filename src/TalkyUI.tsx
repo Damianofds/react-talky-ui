@@ -5,14 +5,13 @@ import { ChatItemConfig } from "./components/chat-items/TalkItemsConfig";
 
 interface TalkUIProps {
     initTalkURL: string;
-    font?: string;
     fontSize?: string;
     themeColor?: string;
 }
 
 export type MessageType = 'input' | 'stream';
 
-const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, themeColor }) => {
+const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, fontSize='20px', themeColor='#4ea699' }) => {
 
     const [inputBoxText, setInputBoxText] = useState<ChatItemConfig>();
     
@@ -22,9 +21,9 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, themeColor }) => {
 
     return (
         <>
-            <ChatBox initTalkURL={initTalkURL} message={inputBoxText} themeColor={themeColor} />
+            <ChatBox initTalkURL={initTalkURL} message={inputBoxText} themeColor={themeColor} fontSize={fontSize} />
             <br/>
-            <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="qa" themeColor={themeColor} />
+            <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="qa" themeColor={themeColor} fontSize={fontSize}/>
         </>
     );
 };

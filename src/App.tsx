@@ -19,9 +19,9 @@ function App() {
         }}>
           <TalkyUI initTalkURL='/talk-button.json' 
             //themeColor='red'
+            // fontSize='15px'
           />
         </div>
-        {/* <br/> */}
         <div>
           <ClearStorageButton />
         </div>

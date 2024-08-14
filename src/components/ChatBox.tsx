@@ -11,10 +11,11 @@ import { ConversationContext } from './ConversationContext';
 interface ChatBoxProps {
     initTalkURL: string;
     message?: ChatItemConfig;
+    fontSize?: string;
     themeColor?: string;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, themeColor }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, themeColor }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
@@ -141,12 +142,11 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, themeColor }) =
                 height: "60%",
                 width: "94%",
                 overflowY: 'auto',
-                // border: '1px solid #ccc',
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
-                fontSize: '20px',
+                fontSize: fontSize,
                 paddingLeft: '3%',
                 paddingRight: '3%',
             }}>

@@ -6,10 +6,11 @@ interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
+    fontSize?: string;
     themeColor?: string;
 }
 
-const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, themeColor='#4ea699'}) => {
+const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, fontSize, themeColor=''}) => {
     const [inputValue, setInputValue] = useState('');
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -79,7 +80,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         padding: '10px',
                         textAlign: 'left',
                         flex: '9',
-                        fontSize: '16px',
+                        fontSize: fontSize,
                         height: '40px',
                         boxSizing: 'border-box',
                         marginRight: '10px',
