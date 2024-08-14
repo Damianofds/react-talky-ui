@@ -1,5 +1,4 @@
 import './App.css';
-import ClearStorageButton from './components/utils/ClearStorageButton';
 import TalkyUI from './TalkyUI';
 
 function App() {
@@ -22,9 +21,6 @@ function App() {
             //themeColor='red'
             // fontSize='15px'
           />
-        </div>
-        <div>
-          <ClearStorageButton />
         </div>
       </div>
     </>

@@ -10,7 +10,7 @@ const useFetchAIAnswer = (question: string) => {
         text: '',
         type: 'stream',
         isCompleted: false,
-        origin: 'qa',
+        origin: 'internal-qa',
     });
     const [text, setText] = useState('');
 
@@ -32,7 +32,7 @@ const useFetchAIAnswer = (question: string) => {
             text: '',
             type: 'stream',
             isCompleted: false,
-            origin: 'qa',
+            origin: 'internal-qa',
         });
         const textArray = text.split(" ");
         let counter = 0;
@@ -44,7 +44,7 @@ const useFetchAIAnswer = (question: string) => {
                     text: prev.text,
                     type: 'stream',
                     isCompleted: true,
-                    origin: 'qa',
+                    origin: 'internal-qa',
                 }));
             }
             else{

@@ -7,6 +7,8 @@ import StreamItem from './chat-items/StreamItem';
 import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
 import useFetchTalk from '../hooks/useFetchTalk';
 import { ConversationContext } from './ConversationContext';
+import ClearStorageButton from './utils/ClearStorageButton';
+import OriginVisualizer from './utils/OriginVisualizer';
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -147,20 +149,21 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
             </div>
             <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
                 height: "100%",
-                // width: "94%",
                 overflowY: 'auto',
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 fontSize: fontSize,
-                // paddingLeft: '3%',
-                // paddingRight: '3%',
             }}>
                 <div style={{ maxHeight: '100%' }}>
                     {renderedChatItems.map((component) => renderComponent(component))}
-                    {showLoader && <div style={{backgroundColor: themeColor}} className='pulsing-cursor' />}
+                    {showLoader && <div><div style={{backgroundColor: themeColor}} className='pulsing-cursor' /><br/></div>}
                 </div>
+            </div>
+            <div style={{height:'30px', display: 'flex', justifyContent: 'flex-end', marginTop:'5px' }}>
+                <span style={{ width: '150px', textAlign: 'left' }}><OriginVisualizer origin={origin || 'N/A'}/></span>
+                <span style={{ width: '100px', textAlign: 'left' }}><ClearStorageButton color={themeColor || ''}/></span>
             </div>
         </ConversationContext.Provider>
     );
