@@ -144,9 +144,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
         <ConversationContext.Provider value={{
             switchConversation: switchTalk,
         }}>
-            <div>
-                origin: {origin}
-            </div>
             <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
                 height: "100%",
                 overflowY: 'auto',
