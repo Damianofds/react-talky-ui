@@ -6,6 +6,7 @@ import InputItem from './chat-items/InputItem';
 import StreamItem from './chat-items/StreamItem';
 import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
 import useFetchTalk from '../hooks/useFetchTalk';
+import { ConversationContext } from './ConversationContext';
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -13,7 +14,7 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
-    const [currentTalkURL, /*setCurrentTalkURL*/] = useState(initTalkURL);
+    const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
     const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
@@ -21,6 +22,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
+    const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
+
+    const switchTalk = (newTalkURL: string) => {
+        console.log(newTalkURL);
+        setCurrentTalkURL(newTalkURL);
+        setTalkSwitched(true);
+    }
 
     const loadInitTalk = (talkCurrentItem: ChatItemConfig) => {
         if(isStreamingStarted){
@@ -37,10 +45,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
                 localStorage.setItem('components', JSON.stringify([...renderedChatItems.slice(0,-1), talkCurrentItem]));   
             }
         }
+        if(talkCurrentItem.type != 'stream'){
+            if(isLastItem){
+                setChatBoxInitialized(() => true);
+                localStorage.setItem('components', JSON.stringify([...renderedChatItems]));   
+            }
+        }
   
     };
 
-    useEffect(() => {
+    const loadFromHistoryOrInitTalk = () => {
         const previousChatPresent = !isChatBoxInitialized && chatHistory;
         if(previousChatPresent){
             console.log("Loading user chat history...");
@@ -48,25 +62,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
             setChatBoxInitialized(true);
         }
         else{
-            const isEverythingReady = !isChatBoxInitialized && talkCurrentItem;
-            if(isEverythingReady){
+            if(talkCurrentItem && (!isChatBoxInitialized || isTalkSwitched)){
                 console.log("Loading init talk...");
                 loadInitTalk(talkCurrentItem);
             }
         }
-    }, [talkCurrentItem]);
+    };
 
-    useEffect(() => {
-        const scrollDown = () => {
-            if (chatBoxRef.current) {
-                chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-            }
-        }
-        scrollDown();
-        setTimeout(scrollDown, 500);
-    }, [renderedChatItems]);
-    
-    useEffect(() => {
+    const handleAIMessages = () => {
         const item = message;
         if(item){    
             if(item.type=='stream'){
@@ -87,6 +90,24 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
             }
         }
         localStorage.setItem('components', JSON.stringify(renderedChatItems));
+    };
+
+    const scrollDownChat = () => {
+        if (chatBoxRef.current) {
+            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+        }
+    };
+
+    useEffect(() => {
+        loadFromHistoryOrInitTalk();
+    }, [talkCurrentItem]);
+
+    useEffect(() => {
+        setTimeout(scrollDownChat, 500);
+    }, [renderedChatItems]);
+    
+    useEffect(() => {
+        handleAIMessages();
     },[message]);
         
     const renderComponent = (component: ChatItemConfig) => {
@@ -105,24 +126,28 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     };
 
     return (
-        <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
-            height: "60%",
-            width: "94%",
-            overflowY: 'auto',
-            // border: '1px solid #ccc',
-            textAlign: 'left',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            fontSize: '20px',
-            paddingLeft: '3%',
-            paddingRight: '3%',
+        <ConversationContext.Provider value={{
+            switchConversation: switchTalk,
         }}>
-            <div style={{ maxHeight: '100%' }}>
-                {renderedChatItems.map((component) => renderComponent(component))}
-                {showLoader && <div className='pulsing-cursor' />}
+            <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
+                height: "60%",
+                width: "94%",
+                overflowY: 'auto',
+                // border: '1px solid #ccc',
+                textAlign: 'left',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                fontSize: '20px',
+                paddingLeft: '3%',
+                paddingRight: '3%',
+            }}>
+                <div style={{ maxHeight: '100%' }}>
+                    {renderedChatItems.map((component) => renderComponent(component))}
+                    {showLoader && <div className='pulsing-cursor' />}
+                </div>
             </div>
-        </div>
+        </ConversationContext.Provider>
     );
 };
 

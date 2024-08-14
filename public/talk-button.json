@@ -20,24 +20,23 @@
 			"type": "stream",
 			"text": "react-talk-ui is a conversational user interface"
 		},
-
 		{
 			"type": "stream",
 			"text": "you all know what i mean bro?"
 		},
 		{
 			"type": "button",
-			"conversationUrl": "/conversation-option1.json",
+			"conversationUrl": "/talk-option1.json",
 			"buttonLabel": "go to option 1"
 		},
 		{
 			"type": "button",
-			"conversationUrl": "/conversation-option2.json",
+			"conversationUrl": "/talk-option2.json",
 			"buttonLabel": "go to option 2"
 		},
 		{
 			"type": "button",
-			"conversationUrl": "/conversation-button.json",
+			"conversationUrl": "/talk-option3.json",
 			"buttonLabel": "go to option 3"
 		}
 	]
