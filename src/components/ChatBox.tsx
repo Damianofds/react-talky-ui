@@ -18,14 +18,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
     const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
-    const [showLoader, /*setShowLoader*/] = useState(false);
+    const [showLoader, setShowLoader] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
 
     const switchTalk = (newTalkURL: string) => {
-        console.log(newTalkURL);
         setCurrentTalkURL(newTalkURL);
         setTalkSwitched(true);
     }
@@ -51,7 +50,31 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
                 localStorage.setItem('components', JSON.stringify([...renderedChatItems]));   
             }
         }
-  
+    };
+
+    const handleAIMessage = () => {
+        const item = message;
+        if(item){    
+            if(item.type=='stream'){
+                if(isStreamingStarted){
+                    setRenderedChatItems(prev => [...prev.slice(0, -1)]);
+                }
+                setRenderedChatItems(prev => [...prev, item]);
+                if(item.isCompleted){
+                    setStreamingStarted(() => false);
+                    setShowLoader(true);
+                }
+                else{
+                    setStreamingStarted(() => true);
+                }
+            }
+            else{
+                setRenderedChatItems(prev => [...prev, item]);
+                setStreamingStarted(() => false);
+                setShowLoader(true);
+            }
+        }
+        localStorage.setItem('components', JSON.stringify(renderedChatItems));
     };
 
     const loadFromHistoryOrInitTalk = () => {
@@ -69,29 +92,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
         }
     };
 
-    const handleAIMessages = () => {
-        const item = message;
-        if(item){    
-            if(item.type=='stream'){
-                if(isStreamingStarted){
-                    setRenderedChatItems(prev => [...prev.slice(0, -1)]);
-                }
-                setRenderedChatItems(prev => [...prev, item]);
-                if(item.isCompleted){
-                    setStreamingStarted(() => false);
-                }
-                else{
-                    setStreamingStarted(() => true);
-                }
-            }
-            else{
-                setRenderedChatItems(prev => [...prev, item]);
-                setStreamingStarted(() => false);
-            }
-        }
-        localStorage.setItem('components', JSON.stringify(renderedChatItems));
-    };
-
     const scrollDownChat = () => {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
@@ -107,9 +107,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
     }, [renderedChatItems]);
     
     useEffect(() => {
-        handleAIMessages();
+        if(message){
+            setShowLoader(false);
+            handleAIMessage();
+        }
     },[message]);
-        
+
+    useEffect(() => {
+        setShowLoader(true);
+    },[isChatBoxInitialized]);
+
     const renderComponent = (component: ChatItemConfig) => {
         switch (component.type) {
             case 'audio':
