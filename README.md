@@ -14,5 +14,5 @@ This template provides a minimal setup to get React working in Vite with HMR and
 
 # Showcase
 
-![](https://github.com/Damianofds/react-talk-ui/blob/main/react-talk-ui.gif.html)
+![](https://github.com/Damianofds/react-talk-ui/blob/main/react-talk-ui.gif)
 
