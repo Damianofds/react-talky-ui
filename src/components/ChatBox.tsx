@@ -11,9 +11,10 @@ import { ConversationContext } from './ConversationContext';
 interface ChatBoxProps {
     initTalkURL: string;
     message?: ChatItemConfig;
+    themeColor?: string;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, themeColor }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const chatHistory = useLoadUserChatHistory();
@@ -124,9 +125,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
             case 'stream':
             return <StreamItem key={component.id} id={component.id} words={component.text} />;
             case 'input':
-            return <InputItem key={component.id} id={component.id} words={component.text} />;
+            return <InputItem key={component.id} id={component.id} words={component.text} themeColor={themeColor} />;
             case 'button':
-            return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel}/>;
+            return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel} themeColor={themeColor}/>;
             default:
             return null;
         }
@@ -151,7 +152,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message }) => {
             }}>
                 <div style={{ maxHeight: '100%' }}>
                     {renderedChatItems.map((component) => renderComponent(component))}
-                    {showLoader && <div className='pulsing-cursor' />}
+                    {showLoader && <div style={{backgroundColor: themeColor}} className='pulsing-cursor' />}
                 </div>
             </div>
         </ConversationContext.Provider>

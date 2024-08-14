@@ -6,13 +6,13 @@ interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
+    themeColor?: string;
 }
 
-const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword}) => {
+const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, themeColor='#4ea699'}) => {
     const [inputValue, setInputValue] = useState('');
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    // const [, setResponses] = useState<string[]>([]);
     const {answer, keywordRouting} = useRouteInputBoxValue(input);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
     };
 
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.style.borderColor = '#4ea699';
+        event.target.style.borderColor = themeColor;
         event.target.style.borderWidth = '3px';
     };
 
@@ -49,7 +49,6 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
     };
 
     useEffect(() => {
-        // setResponses(prevResponses => [...prevResponses, answer]);
         if(answer){
             inputRetriever(answer);
         }
