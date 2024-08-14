@@ -2,19 +2,12 @@
 	"conversation": [
 		{
 			"type": "stream",
-			"text": "Hey there!"
+			"text": "Enjoy listening 🎺🎶"
 		},
 		{
-			"type": "stream",
-			"text": "I wish you a great sunny day 🌞"
-		},
-		{
-			"type": "stream",
-			"text": "Keep on chilling"
-		},
-		{
-			"type": "stream",
-			"text": "and enjoy your time"
+			"type": "audio",
+			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.01.mp3",
+			"audioName": "...able to play audio"
 		}
 	]
 }

@@ -17,7 +17,7 @@ function App() {
           height: '35vh',
           minHeight: '350px',
         }}>
-          <TalkyUI initTalkURL='/talk-button.json' 
+          <TalkyUI initTalkURL='/talk-showcase.json' 
             //themeColor='red'
             // fontSize='15px'
           />

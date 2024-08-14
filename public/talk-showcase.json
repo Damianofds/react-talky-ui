@@ -1,0 +1,26 @@
+{
+	"conversation": [
+		{
+			"type": "stream",
+			"text": "Hey there! This is the react-talky-ui demo!"
+		},
+		{
+			"type": "stream",
+			"text": "a react + typescript Conversational User Interface"
+		},
+		{
+			"type": "stream",
+			"text": "the frontend lib for your building AI agent 🦜"
+		},
+		{
+			"type": "button",
+			"conversationUrl": "/talk-option1.json",
+			"buttonLabel": "Let's play some music!"
+		},
+		{
+			"type": "button",
+			"conversationUrl": "/talk-option2.json",
+			"buttonLabel": "let's chat with an AI"
+		}
+	]
+}

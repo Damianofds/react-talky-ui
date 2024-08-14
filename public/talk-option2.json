@@ -2,11 +2,15 @@
 	"conversation": [
 		{
 			"type": "stream",
-			"text": "Hey I'm the second option"
+			"text": "You can talk with gpt-4o-mini or with your own personal vector store"
 		},
 		{
 			"type": "stream",
-			"text": "Have a shiny day ✨"
+			"text": "Watch out the origin label"
+		},
+		{
+			"type": "stream",
+			"text": "just type something 👇"
 		}
 	]
 }
