@@ -35,30 +35,30 @@ const useFetchTalk = (jsonUrl: string) => {
 
     useEffect(() => {
         if(conversation && conversation.length >= 1){
-            let i = 0;
-            let j = 0;
+            let itemCounter = 0;
+            let tokenCounter = 0;
             const intervalId = setInterval(() => {
-                if(conversation.length > 0 && i >= conversation.length){
+                if(conversation.length > 0 && itemCounter >= conversation.length){
                     clearInterval(intervalId);
                 }
                 else{
-                    if((conversation[i] as ChatItemConfig).type == 'stream'){
-                        const streamItem = (conversation[i] as StreamItemConfig);
+                    if((conversation[itemCounter] as ChatItemConfig).type == 'stream'){
+                        const streamItem = (conversation[itemCounter] as StreamItemConfig);
                         const tokens = streamItem.text.split(" ");
-                        if(j <= tokens.length-1){
-                            setTalkCurrentItem({id: conversation[i].id, text: tokens.slice(0, j).join(' '), type: 'stream', isCompleted: false});
-                            j++;
+                        if(tokenCounter <= tokens.length-1){
+                            setTalkCurrentItem({id: conversation[itemCounter].id, text: tokens.slice(0, tokenCounter).join(' '), type: 'stream', isCompleted: false});
+                            tokenCounter++;
                         } else {
-                            setTalkCurrentItem({id: conversation[i].id, text: tokens.join(' '), type: 'stream', isCompleted: true});
-                            j=0;
-                            i++;
+                            setTalkCurrentItem({id: conversation[itemCounter].id, text: tokens.join(' '), type: 'stream', isCompleted: true});
+                            tokenCounter=0;
+                            itemCounter++;
                         }
                     }
                     else{
-                        setTalkCurrentItem(conversation[i]);
-                        i++;
+                        setTalkCurrentItem(conversation[itemCounter]);
+                        itemCounter++;
                     }
-                    if(i == conversation.length){
+                    if(itemCounter == conversation.length){
                         setLastItem(true);
                     }
                 }
