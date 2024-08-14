@@ -9,7 +9,7 @@ const AudioItem: React.FC<AudioItemProps> = ({ id, audioUrl, audioName }) => {
     return (
           <div key={id} className="loading">
             <audio src={audioUrl} controls />
-            {/* <div>{audioName}</div> */}
+            <input type="hidden" src={audioName}/>
           </div>      
     );
 };
