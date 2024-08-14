@@ -25,13 +25,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
+    const [origin, setOrigin] = useState<string>();
 
     const switchTalk = (newTalkURL: string) => {
         setCurrentTalkURL(newTalkURL);
         setTalkSwitched(true);
     }
 
-    const loadInitTalk = (talkCurrentItem: ChatItemConfig) => {
+    const loadStaticTalk = (talkCurrentItem: ChatItemConfig) => {
         if(isStreamingStarted){
             setRenderedChatItems(prev => [...prev.slice(0, -1)]);
         }
@@ -56,9 +57,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     const handleAIMessage = () => {
         const item = message;
-        if(item){    
+        if(item){ 
             if(item.type=='stream'){
                 if(isStreamingStarted){
+                    setOrigin(item.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
                 }
                 setRenderedChatItems(prev => [...prev, item]);
@@ -85,11 +87,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
             console.log("Loading user chat history...");
             setRenderedChatItems(JSON.parse(chatHistory));
             setChatBoxInitialized(true);
+            setOrigin('history');
         }
         else{
             if(talkCurrentItem && (!isChatBoxInitialized || isTalkSwitched)){
                 console.log("Loading init talk...");
-                loadInitTalk(talkCurrentItem);
+                loadStaticTalk(talkCurrentItem);
+                setOrigin('static-talk');
             }
         }
     };
@@ -138,17 +142,20 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
         <ConversationContext.Provider value={{
             switchConversation: switchTalk,
         }}>
+            <div>
+                origin: {origin}
+            </div>
             <div ref={chatBoxRef} data-testid="tac-ui-root" style={{
-                height: "60%",
-                width: "94%",
+                height: "100%",
+                // width: "94%",
                 overflowY: 'auto',
                 textAlign: 'left',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'flex-end',
                 fontSize: fontSize,
-                paddingLeft: '3%',
-                paddingRight: '3%',
+                // paddingLeft: '3%',
+                // paddingRight: '3%',
             }}>
                 <div style={{ maxHeight: '100%' }}>
                     {renderedChatItems.map((component) => renderComponent(component))}

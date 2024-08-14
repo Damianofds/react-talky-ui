@@ -46,10 +46,20 @@ const useFetchTalk = (jsonUrl: string) => {
                         const streamItem = (conversation[itemCounter] as StreamItemConfig);
                         const tokens = streamItem.text.split(" ");
                         if(tokenCounter <= tokens.length-1){
-                            setTalkCurrentItem({id: conversation[itemCounter].id, text: tokens.slice(0, tokenCounter).join(' '), type: 'stream', isCompleted: false});
+                            setTalkCurrentItem({id: conversation[itemCounter].id, 
+                                text: tokens.slice(0, tokenCounter).join(' '),
+                                type: 'stream',
+                                isCompleted: false,
+                                origin: 'static'
+                            });
                             tokenCounter++;
                         } else {
-                            setTalkCurrentItem({id: conversation[itemCounter].id, text: tokens.join(' '), type: 'stream', isCompleted: true});
+                            setTalkCurrentItem({id: conversation[itemCounter].id,
+                                text: tokens.join(' '),
+                                type: 'stream',
+                                isCompleted: true,
+                                origin: 'static'
+                            });
                             tokenCounter=0;
                             itemCounter++;
                         }

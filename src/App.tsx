@@ -10,12 +10,13 @@ function App() {
         <h1>react-talky-ui </h1>
         <div>A react/typescript conversational user interface</div>
         <div>The frontend for your AI buddy 🦜</div>
-        <h2>Demo</h2>
+        <br/>
         <div style={{
           width: '80vw',
           minWidth: '355px',
           maxWidth: '800px',
-          height: '55vh'
+          height: '35vh',
+          minHeight: '350px',
         }}>
           <TalkyUI initTalkURL='/talk-button.json' 
             //themeColor='red'
