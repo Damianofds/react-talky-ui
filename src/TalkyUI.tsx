@@ -21,7 +21,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, fontSize='20px', themeCol
     return (
         <>
             <ChatBox initTalkURL={initTalkURL} message={inputBoxText} themeColor={themeColor} fontSize={fontSize} />
-            <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="tell me about my" themeColor={themeColor} fontSize={fontSize}/>
+            <InputBox inputRetriever={setInputBoxContent} conversationRouteKeyword="conversation" qaRouteKeyword="embeddings" themeColor={themeColor} fontSize={fontSize}/>
             <br />
         </>
     );
