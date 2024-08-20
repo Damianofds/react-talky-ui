@@ -54,11 +54,21 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = themeColor;
         event.target.style.borderWidth = '3px';
+        console.log(event.type)
     };
 
     const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = 'gray';
         event.target.style.borderWidth = '0.1px';
+    };
+    
+    const handleOnMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event.target as HTMLButtonElement).style.borderColor = themeColor;
+    };
+    
+    const handleOnMouseLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
+        (event.target as HTMLButtonElement).style.borderColor = 'gray';
+        (event.target as HTMLButtonElement).style.borderWidth = '0.1px';
     };
 
     const processInput = async () => {
@@ -96,7 +106,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     onFocus={handleOnFocus}
                     onBlur={handleOnBlur} 
                     disabled={isLoading}
-                    placeholder="Type your question here..."
+                    placeholder="&nbsp;Type your question here..."
                     onKeyDown={handleKeyPressed}
                     style={{
                         border: '1px solid #ccc',
@@ -108,12 +118,22 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         boxSizing: 'border-box',
                         marginRight: '10px',
                         outline: 'green',
+                        borderRadius: '20px'
                     }}
                 />
                 <button 
                     onClick={processInput} 
                     disabled={isLoading || !inputValue}
-                    style={{ flex: '1', height: '40px' }}
+                    onMouseEnter={handleOnMouseEnter}
+                    onMouseLeave={handleOnMouseLeave}
+                    style={{
+                        border: '1px solid #ccc',
+                        flex: '1',
+                        height: '40px',
+                        borderRadius: '20px',
+                        boxSizing: 'border-box',
+                        marginRight: '10px',
+                    }}
                     title='or press enter'
                 >
                     {isLoading ? 'Loading...' : 'Send'}
