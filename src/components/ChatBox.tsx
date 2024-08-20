@@ -4,7 +4,7 @@ import AudioItem from './chat-items/AudioItem';
 import ButtonItem from './chat-items/ButtonItem';
 import InputItem from './chat-items/InputItem';
 import StreamItem from './chat-items/StreamItem';
-import useLoadUserChatHistory from '../hooks/useUserHistoryLoader';
+import useLocalChat from '../hooks/useLocalChat';
 import useFetchTalk from '../hooks/useFetchTalk';
 import { ConversationContext } from './ConversationContext';
 import ClearStorageButton from './utils/ClearStorageButton';
@@ -20,7 +20,7 @@ interface ChatBoxProps {
 const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, themeColor }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
-    const chatHistory = useLoadUserChatHistory();
+    const localChat = useLocalChat();
     const [renderedChatItems, setRenderedChatItems] = useState<ChatItemConfig[]>([]);
     const [showLoader, setShowLoader] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
@@ -84,10 +84,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     };
 
     const loadFromHistoryOrInitTalk = () => {
-        const previousChatPresent = !isChatBoxInitialized && chatHistory;
+        const previousChatPresent = !isChatBoxInitialized && localChat && localChat.loadEntireChat().length > 0//.loadHistory().length > 0
         if(previousChatPresent){
             console.log("Loading user chat history...");
-            setRenderedChatItems(JSON.parse(chatHistory));
+            setRenderedChatItems(JSON.parse(localChat.loadEntireChat()));
             setChatBoxInitialized(true);
             setOrigin('history');
         }
