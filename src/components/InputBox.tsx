@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
 import { ChatItemConfig} from './chat-items/TalkItemsConfig';
+import { CirclularStack, get } from './utils/CircularStack';
 
 interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -8,13 +9,15 @@ interface InputBoxProps {
     qaRouteKeyword: string;
     fontSize?: string;
     themeColor?: string;
+    inputBoxHistory: CirclularStack<string>;
 }
 
-const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, fontSize, themeColor=''}) => {
+const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, fontSize, themeColor='', inputBoxHistory}) => {
     const [inputValue, setInputValue] = useState('');
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const {answer, keywordRouting} = useRouteInputBoxValue(input);
+    const [inputBoxHistoryCurrentIndex, setInputBoxHistoryCurrentIndex] = useState(0);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
@@ -25,6 +28,26 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
             setInput(inputValue);
             inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'input'});
             setIsLoading(true);
+        }
+        if (event.key === 'ArrowUp') {
+            const newValue =  get(inputBoxHistory, inputBoxHistoryCurrentIndex);
+            setInputValue(newValue || '');
+            if(inputBoxHistoryCurrentIndex < inputBoxHistory.items.length){
+                setInputBoxHistoryCurrentIndex(inputBoxHistoryCurrentIndex+1);
+            }
+            else{
+                setInputBoxHistoryCurrentIndex(0);
+            }
+        }
+        if (event.key === 'ArrowDown') {
+            const newValue =  get(inputBoxHistory, inputBoxHistoryCurrentIndex);
+            setInputValue(newValue || '');
+            if(inputBoxHistoryCurrentIndex >= 0){
+                setInputBoxHistoryCurrentIndex(inputBoxHistoryCurrentIndex-1);
+            }
+            else{
+                setInputBoxHistoryCurrentIndex(inputBoxHistory.items.length-1);
+            }
         }
     };
 

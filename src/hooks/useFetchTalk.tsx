@@ -12,8 +12,6 @@ const useFetchTalk = (jsonUrl: string) => {
             try {
                 const response = await fetch(jsonUrl);
                 const data = await response.json();
-
-                console.log(`Loading ${data.conversation.length} new conversation items`);
                 const processedData = data.conversation.map((item: ChatItemConfig) => {
                     const millisec = Date.now();
                     const rnd = Math.random().toString(36);
