@@ -158,8 +158,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
                     {showLoader && <div><div style={{backgroundColor: themeColor}} className='pulsing-cursor' /><br/></div>}
                 </div>
             </div>
-            <div style={{height:'30px', display: 'flex', justifyContent: 'flex-end', marginTop:'5px' }}>
-                <span style={{ width: '150px', textAlign: 'left' }}><OriginVisualizer origin={origin || 'N/A'}/></span>
+            <div style={{height:'30px', display: 'flex', justifyContent: 'flex-start', marginTop:'5px' }}>
+                <span style={{ width: '150px', textAlign: 'left', marginLeft:'5%' }}><OriginVisualizer origin={origin || 'N/A'}/></span>
                 <span style={{ width: '100px', textAlign: 'left' }}><ClearStorageButton color={themeColor || ''}/></span>
             </div>
         </ConversationContext.Provider>
