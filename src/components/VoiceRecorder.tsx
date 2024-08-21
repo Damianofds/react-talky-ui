@@ -7,7 +7,6 @@ interface VoiceRecorderProps {
 
 const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
   const [recording, setRecording] = useState<boolean>(false);
-  const [audioURL, setAudioURL] = useState<string | null>(null);
   const audioStreamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -47,7 +46,6 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
 
         const newAudioURL = URL.createObjectURL(audioBlob);
         inputRetriever({id: "init-" + Date.now(), type: 'audio', audioUrl: newAudioURL, audioName: 'yo yo beba'});
-        setAudioURL(newAudioURL);
       };
     }
   };
