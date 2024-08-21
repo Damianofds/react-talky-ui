@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
 import { ChatItemConfig} from './chat-items/TalkItemsConfig';
 import { CirclularStack, get } from './utils/CircularStack';
+import VoiceRecorder from './VoiceRecorder';
 
 interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -138,6 +139,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                 >
                     {isLoading ? 'Loading...' : 'Send'}
                 </button>
+                <VoiceRecorder inputRetriever={inputRetriever}/>
             </div>
         </div>
     );

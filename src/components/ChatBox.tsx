@@ -128,7 +128,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     const renderComponent = (component: ChatItemConfig) => {
         switch (component.type) {
             case 'audio':
-            return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
+            return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} themeColor={themeColor || ''}/>;
             case 'stream':
             return <StreamItem key={component.id} id={component.id} words={component.text} />;
             case 'input':

@@ -16,7 +16,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, fontSize='20px', themeCol
 
     const [inputBoxText, setInputBoxText] = useState<ChatItemConfig>();
     const [inputBoxHistory, setInputBoxHistory] = useState<CirclularStack<string>>(createCircularStack(5));
-    
+
     const setInputBoxContent = (msg: ChatItemConfig, ) => {
         setInputBoxText(msg);
     };
