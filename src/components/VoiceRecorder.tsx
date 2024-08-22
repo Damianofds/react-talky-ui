@@ -15,32 +15,21 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
 
   const startRecording = async () => {
     try {
-        console.log('1')
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log('2')
       audioStreamRef.current = stream;
-      console.log('3')
       const recorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
-      console.log('4')
       mediaRecorderRef.current = recorder;
-      console.log('5')
-      audioChunksRef.current = [];
-      console.log('6')
+      audioChunksRef.current = [];  
       setRecording(true);
-      console.log('7')
-
+    
       recorder.ondataavailable = (e) => {
-        console.log('if-1')
         if (e.data.size > 0) {
-            console.log('if-2')
             audioChunksRef.current.push(e.data);
         }
       };
-      console.log('8')
       recorder.start();
-      console.log('9')
       window.addEventListener('mouseup', stopRecording);
-      console.log('10')
+      window.addEventListener('touchend', stopRecording);
     } catch (err) {
       alert('mic doesn\'t work :(');
       console.error('Error accessing microphone:', err);
@@ -50,7 +39,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
   const handleMouseDown = () => {
     recordingTimeoutRef.current = window.setTimeout(() => {
       startRecording();
-    }, 200);
+    }, 100);
   };
 
   const stopRecording = () => {
@@ -70,25 +59,30 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
         const newAudioURL = URL.createObjectURL(audioBlob);
         inputRetriever({id: "init-" + Date.now(), type: 'audio', audioUrl: newAudioURL, audioName: 'recording-'+Date.now()});
         window.removeEventListener('mouseup', stopRecording);
+        window.removeEventListener('touchend', stopRecording);
       };
     }
   };
 
   return (
-    <div>
+    <div style={{position:'relative', width: '50px'}}>  
       <button
         className= {recording ? 'pulsing-record-button' : ''}
         style={{
+          position: 'absolute',
+          left: '0%',
           padding: '10px',
           border: `3px solid red`,
           borderColor: 'red',
           marginRight: '1vw',
           color: 'red',
           borderRadius: '25px',
-          outline: 'none'
+          outline: 'none',
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={stopRecording}
+        onTouchStart={handleMouseDown}
+        onTouchEnd={stopRecording}
       >
         🎙️
       </button>

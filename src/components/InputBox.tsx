@@ -99,7 +99,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
 
     return (
         <div>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', position: 'relative' }}>
                 <input 
                     type="text" 
                     value={inputValue} 
@@ -107,7 +107,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     onFocus={handleOnFocus}
                     onBlur={handleOnBlur} 
                     disabled={isLoading}
-                    placeholder="&nbsp;Type your question here..."
+                    placeholder="Type your question!"
                     onKeyDown={handleKeyPressed}
                     style={{
                         border: '3px solid #ccc',
@@ -117,34 +117,42 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         fontSize: fontSize,
                         height: '45px',
                         width: '100%',
-                        maxWidth: '700px',
                         boxSizing: 'border-box',
                         marginRight: '1vw',
                         outline: 'green',
-                        borderRadius: '20px'
+                        borderRadius: '20px',
+                        paddingLeft: '20px',
                     }}
                 />
-                {inputValue && <button 
-                    onClick={processInput}
-                    onMouseEnter={handleOnMouseEnter}
-                    onMouseLeave={handleOnMouseLeave}
-                    style={{
-                        border: `3px solid ${themeColor}`,
-                        padding: '10px',
-                        color: 'red',
-                        borderRadius: '25px',
-                        outline: 'none',
-                        marginRight: '1vw',
-                    }}
-                    title='or press enter'
-                >
-                    {isLoading ? '⌛' : '➡️'}
-                </button>}
-                {isLoading || !inputValue && <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor}/>}
+                {inputValue && 
+                <div style={{ position: 'relative', width: '50px' }}>
+                    <button 
+                        onClick={processInput}
+                        onMouseEnter={handleOnMouseEnter}
+                        onMouseLeave={handleOnMouseLeave}
+                        style={{
+                            position: 'absolute',
+                            left: '0%',
+                            padding: '10px',
+                            marginRight: '1vw',
+                            border: `3px solid ${themeColor}`,
+                            color: 'red',
+                            borderRadius: '25px',
+                            outline: 'none',
+                        }}
+                        title='or press enter'
+                    >
+                        {isLoading ? '⌛' : '➡️'}
+                    </button>
+                </div>
+                }
+                {isLoading || !inputValue && 
+                    <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor}/>
+                }
                 <button
                     style={{
-                        border: `3px solid ${themeColor}`,
-                        padding: '10px',
+                        border: `3px solid purple`,
+                        padding: '9px',
                         color: themeColor,
                         borderRadius: '25px',
                         outline: 'none',
