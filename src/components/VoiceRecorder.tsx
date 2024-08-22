@@ -3,6 +3,7 @@ import { ChatItemConfig } from './chat-items/TalkItemsConfig';
 
 interface VoiceRecorderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
+    themeColor: string;
 }
 
 const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
@@ -55,16 +56,17 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
       <button
         style={{
           padding: '10px',
-        //   backgroundColor: recording ? 'green' : 'red',
-        //   color: 'white',
+          border: `3px solid red`,
           borderColor: recording ? 'white' : 'red',
+          marginRight: '1vw',
+          color: 'red',
           borderRadius: '25px',
           outline: 'none'
         }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
-        {recording ? '⬜' : '🟥'}
+        🎙️
       </button>
     </div>
   );

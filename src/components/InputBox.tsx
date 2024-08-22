@@ -54,13 +54,13 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
 
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = themeColor;
-        event.target.style.borderWidth = '3px';
+        // event.target.style.borderWidth = '1px';
         console.log(event.type)
     };
 
     const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = 'gray';
-        event.target.style.borderWidth = '0.1px';
+        // event.target.style.borderWidth = '0.1px';
     };
     
     const handleOnMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +69,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
     
     const handleOnMouseLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
         (event.target as HTMLButtonElement).style.borderColor = 'gray';
-        (event.target as HTMLButtonElement).style.borderWidth = '0.1px';
+        // (event.target as HTMLButtonElement).style.borderWidth = '0.1px';
     };
 
     const processInput = async () => {
@@ -110,36 +110,51 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     placeholder="&nbsp;Type your question here..."
                     onKeyDown={handleKeyPressed}
                     style={{
-                        border: '1px solid #ccc',
+                        border: '3px solid #ccc',
                         padding: '10px',
                         textAlign: 'left',
                         flex: '9',
                         fontSize: fontSize,
-                        height: '40px',
+                        height: '45px',
+                        width: '100%',
+                        maxWidth: '300px',
                         boxSizing: 'border-box',
-                        marginRight: '10px',
+                        marginRight: '1vw',
                         outline: 'green',
                         borderRadius: '20px'
                     }}
                 />
-                <button 
-                    onClick={processInput} 
-                    disabled={isLoading || !inputValue}
+                {inputValue && <button 
+                    onClick={processInput}
                     onMouseEnter={handleOnMouseEnter}
                     onMouseLeave={handleOnMouseLeave}
                     style={{
-                        border: '1px solid #ccc',
-                        flex: '1',
-                        height: '40px',
-                        borderRadius: '20px',
-                        boxSizing: 'border-box',
-                        marginRight: '10px',
+                        border: `3px solid ${themeColor}`,
+                        padding: '10px',
+                        color: 'red',
+                        borderRadius: '25px',
+                        outline: 'none',
+                        marginRight: '1vw',
                     }}
                     title='or press enter'
                 >
-                    {isLoading ? 'Loading...' : 'Send'}
+                    {isLoading ? '⌛' : '➡️'}
+                </button>}
+                {isLoading || !inputValue && <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor}/>}
+                <button
+                    style={{
+                        border: `3px solid ${themeColor}`,
+                        padding: '10px',
+                        color: themeColor,
+                        borderRadius: '25px',
+                        outline: 'none',
+                        marginRight: '1vw',
+                    }}
+                    onMouseDown={()=>true}
+                    onMouseUp={()=>true}
+                    >
+                    ➕
                 </button>
-                <VoiceRecorder inputRetriever={inputRetriever}/>
             </div>
         </div>
     );
