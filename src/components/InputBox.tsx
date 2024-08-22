@@ -117,7 +117,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         fontSize: fontSize,
                         height: '45px',
                         width: '100%',
-                        maxWidth: '300px',
+                        maxWidth: '700px',
                         boxSizing: 'border-box',
                         marginRight: '1vw',
                         outline: 'green',

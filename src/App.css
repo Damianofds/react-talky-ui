@@ -16,6 +16,16 @@
   margin-left: 40px;
 }
 
+.pulsing-record-button {
+  width: 65px;
+  height: 65px;
+  background-color: red;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  display: inline-block;
+  margin-left: 40px;
+}
+
 @keyframes pulse {
   0% {
       transform: scale(1);
@@ -28,17 +38,6 @@
   100% {
       transform: scale(1);
       opacity: 1;
-  }
-}
-
-
-.blinking-cursor {
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.5;
   }
 }
 
