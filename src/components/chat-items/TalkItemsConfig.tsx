@@ -1,6 +1,6 @@
 export interface BaseChatItemConfig {
     id: string;
-    type: 'audio' | 'button' | 'input' | 'stream';
+    type: 'audio' | 'button' | 'stream' | 'audio-input' | 'text-input';
 }
 
 export interface AudioItemConfig extends BaseChatItemConfig {
@@ -22,9 +22,15 @@ export interface StreamItemConfig extends BaseChatItemConfig {
     origin: string;
 }
 
-export interface InputItemConfig extends BaseChatItemConfig {
-    type: 'input';
+export interface TextInputItemConfig extends BaseChatItemConfig {
+    type: 'text-input';
     text: string;
 }
 
-export type ChatItemConfig = AudioItemConfig | ButtonItemConfig | StreamItemConfig | InputItemConfig;
+export interface AudioInputItemConfig extends BaseChatItemConfig {
+    type: 'audio-input';
+    audioUrl: string;
+    audioName: string;
+}
+
+export type ChatItemConfig = AudioItemConfig | ButtonItemConfig | StreamItemConfig | TextInputItemConfig | AudioInputItemConfig;

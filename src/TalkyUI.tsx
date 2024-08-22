@@ -21,7 +21,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({ initTalkURL, fontSize='20px', themeCol
         setInputBoxText(msg);
     };
 
-    if(inputBoxText?.type == 'input'){
+    if(inputBoxText?.type == 'text-input'){
         console.log("inputBoxText: - " + inputBoxText.text)
         if(get(inputBoxHistory, 0) != inputBoxText.text){
             setInputBoxHistory(push(inputBoxHistory, inputBoxText.text));

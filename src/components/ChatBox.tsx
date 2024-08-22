@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatItemConfig, StreamItemConfig } from './chat-items/TalkItemsConfig';
-import AudioItem from './chat-items/AudioItem';
+import UserAudioItem from './chat-items/UserAudioItem';
 import ButtonItem from './chat-items/ButtonItem';
-import InputItem from './chat-items/InputItem';
+import UserTextItem from './chat-items/UserTextItem';
 import StreamItem from './chat-items/StreamItem';
 import useLocalChat from '../hooks/useLocalChat';
 import useFetchTalk from '../hooks/useFetchTalk';
 import { ConversationContext } from './ConversationContext';
 import ClearStorageButton from './utils/ClearStorageButton';
 import OriginVisualizer from './utils/OriginVisualizer';
+import AudioItem from './chat-items/AudioItem';
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -84,7 +85,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     };
 
     const loadFromHistoryOrInitTalk = () => {
-        const previousChatPresent = !isChatBoxInitialized && localChat && localChat.loadEntireChat().length > 0//.loadHistory().length > 0
+        const previousChatPresent = !isChatBoxInitialized && localChat && localChat.loadEntireChat().length > 0
         if(previousChatPresent){
             console.log("Loading user chat history...");
             setRenderedChatItems(JSON.parse(localChat.loadEntireChat()));
@@ -113,7 +114,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     useEffect(() => {
         setTimeout(scrollDownChat, 0);
-    }, [renderedChatItems, message, talkCurrentItem]);
+    }, [renderedChatItems, message]);
     
     useEffect(() => {
         if(message){
@@ -128,12 +129,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     const renderComponent = (component: ChatItemConfig) => {
         switch (component.type) {
+            case 'audio-input':
+            return <UserAudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} themeColor={themeColor || ''}/>;
             case 'audio':
-            return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} themeColor={themeColor || ''}/>;
+            return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
             case 'stream':
             return <StreamItem key={component.id} id={component.id} words={component.text} />;
-            case 'input':
-            return <InputItem key={component.id} id={component.id} words={component.text} themeColor={themeColor} />;
+            case 'text-input':
+            return <UserTextItem key={component.id} id={component.id} words={component.text} themeColor={themeColor} />;
             case 'button':
             return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel} themeColor={themeColor}/>;
             default:

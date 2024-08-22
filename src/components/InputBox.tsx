@@ -27,7 +27,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
     const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && inputValue != '') {
             setInput(inputValue);
-            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'input'});
+            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'text-input'});
             setIsLoading(true);
         }
         if (event.key === 'ArrowUp') {
@@ -78,7 +78,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
         }
         else{
             setInput(inputValue);
-            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'input'});
+            inputRetriever({id: "init-" + Date.now(), text: inputValue, type: 'text-input'});
             setIsLoading(true);
         }
     };
@@ -159,7 +159,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         marginRight: '1vw',
                         height: '45px',
                     }}
-                    onMouseDown={()=>true}
+                    onMouseDown={() => alert('COMING SOON - Document upload')}
                     onMouseUp={()=>true}
                     >
                     ➕

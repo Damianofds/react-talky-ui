@@ -57,7 +57,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
         const newAudioURL = URL.createObjectURL(audioBlob);
-        inputRetriever({id: "init-" + Date.now(), type: 'audio', audioUrl: newAudioURL, audioName: 'recording-'+Date.now()});
+        inputRetriever({id: "init-" + Date.now(), type: 'audio-input', audioUrl: newAudioURL, audioName: 'recording-'+Date.now()});
         window.removeEventListener('mouseup', stopRecording);
         window.removeEventListener('touchend', stopRecording);
       };
