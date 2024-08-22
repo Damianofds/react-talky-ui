@@ -149,6 +149,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                         borderRadius: '25px',
                         outline: 'none',
                         marginRight: '1vw',
+                        height: '45px',
                     }}
                     onMouseDown={()=>true}
                     onMouseUp={()=>true}

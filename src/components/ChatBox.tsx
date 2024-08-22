@@ -102,7 +102,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     const scrollDownChat = () => {
         if (chatBoxRef.current) {
-            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+            console.log(chatBoxRef.current.scrollHeight-200);
+            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight-200;
         }
     };
 
@@ -111,8 +112,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     }, [talkCurrentItem]);
 
     useEffect(() => {
-        setTimeout(scrollDownChat, 500);
-    }, [renderedChatItems]);
+        setTimeout(scrollDownChat, 0);
+    }, [renderedChatItems, message, talkCurrentItem]);
     
     useEffect(() => {
         if(message){
