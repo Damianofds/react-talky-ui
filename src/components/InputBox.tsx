@@ -3,6 +3,9 @@ import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
 import { ChatItemConfig} from './chat-items/TalkItemsConfig';
 import { CirclularStack, get } from './utils/CircularStack';
 import VoiceRecorder from './VoiceRecorder';
+import Upload from './icons/Upload';
+import Send from './icons/Send';
+import SandClock from './icons/SandClock';
 
 interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -54,22 +57,11 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
 
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = themeColor;
-        // event.target.style.borderWidth = '1px';
         console.log(event.type)
-    };
-
-    const handleOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.style.borderColor = 'gray';
-        // event.target.style.borderWidth = '0.1px';
     };
     
     const handleOnMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
         (event.target as HTMLButtonElement).style.borderColor = themeColor;
-    };
-    
-    const handleOnMouseLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
-        (event.target as HTMLButtonElement).style.borderColor = 'gray';
-        // (event.target as HTMLButtonElement).style.borderWidth = '0.1px';
     };
 
     const processInput = async () => {
@@ -105,7 +97,6 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     value={inputValue} 
                     onChange={handleInputChange}
                     onFocus={handleOnFocus}
-                    onBlur={handleOnBlur} 
                     disabled={isLoading}
                     placeholder="Type your question!"
                     onKeyDown={handleKeyPressed}
@@ -129,20 +120,20 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     <button 
                         onClick={processInput}
                         onMouseEnter={handleOnMouseEnter}
-                        onMouseLeave={handleOnMouseLeave}
                         style={{
                             position: 'absolute',
                             left: '0%',
-                            padding: '10px',
+                            padding: '6px',
+                            paddingLeft: '9px',
+                            paddingRight: '9px',
                             marginRight: '1vw',
                             border: `3px solid ${themeColor}`,
-                            color: 'red',
                             borderRadius: '25px',
                             outline: 'none',
                         }}
                         title='or press enter'
                     >
-                        {isLoading ? '⌛' : '➡️'}
+                        {isLoading ? <SandClock color={themeColor} /> : <Send color={themeColor}/>}
                     </button>
                 </div>
                 }
@@ -162,7 +153,7 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                     onMouseDown={() => alert('COMING SOON - Document upload')}
                     onMouseUp={()=>true}
                     >
-                    ➕
+                    <Upload color='purple' />
                 </button>
             </div>
         </div>

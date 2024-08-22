@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ChatItemConfig } from './chat-items/TalkItemsConfig';
+import Record from './icons/Record';
 
 interface VoiceRecorderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -71,7 +72,9 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
         style={{
           position: 'absolute',
           left: '0%',
-          padding: '10px',
+          padding: '6px',
+          paddingLeft: '9px',
+          paddingRight: '9px',
           border: `3px solid red`,
           borderColor: 'red',
           marginRight: '1vw',
@@ -84,7 +87,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
         onTouchStart={handleMouseDown}
         onTouchEnd={stopRecording}
       >
-        🎙️
+        <Record color={recording ? 'white' : 'red'} height='23px'/>
       </button>
     </div>
   );
