@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Upload from './icons/Upload';
 import { ChatItemConfig } from './chat-items/TalkItemsConfig';
 

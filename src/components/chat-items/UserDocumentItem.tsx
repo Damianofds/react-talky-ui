@@ -1,3 +1,5 @@
+import PdfIcon from "../icons/PDF";
+
 interface UserDocumentItemProps {
     id: string;
     isPdf: boolean;
@@ -14,23 +16,29 @@ interface UserDocumentItemProps {
         
       }}>
         {documentUrl && !isPdf && (
-                <figure>
-                    <img src={documentUrl} alt="Thumbnail" style={{ width: '200px', height: 'auto', border: `3px solid ${themeColor}`, }} />
-                    <figcaption>{documentName}</figcaption>
-                </figure>
+            <figure>
+              <img src={documentUrl} alt="Thumbnail" style={{ 
+                width: 'auto',
+                height: '170px',
+                border: `3px solid ${themeColor}`,
+              }} />
+              <figcaption>{documentName}</figcaption>
+            </figure>
         )}
         {isPdf && (
-            <p style={{
-                height: 'auto', 
-                border: `3px solid ${themeColor}`,
-                width: '200px',
+            <figure>
+              <div style={{
+                height: '170px', 
+                // border: `3px solid ${themeColor}`,
+                // width: '200px',
                 marginLeft: 'auto',
                 overflow: 'hidden'
-            }}>
-                <p>{documentName}</p>
-            </p>
+              }}>
+                <PdfIcon width="100" height="200" color="red"/>
+              </div>
+              <figcaption>{documentName}</figcaption>
+            </figure>
         )}
-        <span>{documentName}</span>
       </div>
     );
   };
