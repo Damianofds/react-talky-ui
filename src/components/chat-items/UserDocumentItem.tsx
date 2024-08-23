@@ -9,7 +9,7 @@ interface UserDocumentItemProps {
   }
   
   const UserDocumentItem: React.FC<UserDocumentItemProps> = ({ id, isPdf, documentUrl, documentName, themeColor='' }) => {
-  
+    const document = (documentUrl) ? documentUrl : localStorage.getItem(id) || 'undefined';
     return (
       <div key={id}  style={{
         textAlign: 'right',
@@ -17,7 +17,7 @@ interface UserDocumentItemProps {
       }}>
         {documentUrl && !isPdf && (
             <figure>
-              <img src={documentUrl} alt="Thumbnail" style={{ 
+              <img src={document} alt="Thumbnail" style={{ 
                 width: 'auto',
                 height: '170px',
                 border: `3px solid ${themeColor}`,
@@ -28,9 +28,7 @@ interface UserDocumentItemProps {
         {isPdf && (
             <figure>
               <div style={{
-                height: '170px', 
-                // border: `3px solid ${themeColor}`,
-                // width: '200px',
+                height: '170px',
                 marginLeft: 'auto',
                 overflow: 'hidden'
               }}>

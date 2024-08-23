@@ -15,12 +15,47 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
         const file = event.target.files?.[0];
         if (file) {
             if (file.type === 'application/pdf') {
-                inputRetriever({id: "init-" + Date.now(), type: 'document-input', isPdf: true, documentUrl: '', documentName: file.name});
+                inputRetriever({
+                    id: "init-" + Date.now(),
+                    type: 'document-input',
+                    isPdf: true,
+                    documentUrl: '',
+                    documentName: file.name
+                });
             } else if (file.type.startsWith('image/')) {
-                const imageUrl = URL.createObjectURL(file);
-                inputRetriever({id: "init-" + Date.now(), type: 'document-input', isPdf: false, documentUrl: imageUrl, documentName: file.name});
+                const documentId = "saved-thumbnail-" + Date.now()
+                resizeImage(file, 100, 140, (resizedBase64) => {
+                    localStorage.setItem(documentId, resizedBase64);
+                    inputRetriever({
+                        id: documentId,
+                        type: 'document-input',
+                        isPdf: false,
+                        documentUrl: resizedBase64,
+                        documentName: file.name
+                    });
+                });
             }
-        }
+        };
+    }
+
+    const resizeImage = (file: File, width: number, height: number, callback: (resizedBase64: string) => void) => {
+        const reader = new FileReader();
+        reader.onload = (event: ProgressEvent<FileReader>) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const resizedBase64 = canvas.toDataURL(file.type);
+                    callback(resizedBase64);
+                }
+            };
+            img.src = event.target?.result as string;
+        };
+        reader.readAsDataURL(file);
     };
 
     const handleButtonClick = () => {
