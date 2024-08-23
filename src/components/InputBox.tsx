@@ -3,9 +3,9 @@ import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
 import { ChatItemConfig} from './chat-items/TalkItemsConfig';
 import { CirclularStack, get } from './utils/CircularStack';
 import VoiceRecorder from './VoiceRecorder';
-import Upload from './icons/Upload';
 import Send from './icons/Send';
 import SandClock from './icons/SandClock';
+import DocumentUploader from './DocumentUploader';
 
 interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -138,23 +138,9 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                 </div>
                 }
                 {isLoading || !inputValue && 
-                    <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor}/>
+                    <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor} />
                 }
-                <button
-                    style={{
-                        border: `3px solid purple`,
-                        padding: '9px',
-                        color: themeColor,
-                        borderRadius: '25px',
-                        outline: 'none',
-                        marginRight: '1vw',
-                        height: '45px',
-                    }}
-                    onMouseDown={() => alert('COMING SOON - Document upload')}
-                    onMouseUp={()=>true}
-                    >
-                    <Upload color='purple' />
-                </button>
+                <DocumentUploader inputRetriever={inputRetriever} themeColor={themeColor} />
             </div>
         </div>
     );

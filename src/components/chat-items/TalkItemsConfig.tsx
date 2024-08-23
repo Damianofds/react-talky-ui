@@ -1,6 +1,6 @@
 export interface BaseChatItemConfig {
     id: string;
-    type: 'audio' | 'button' | 'stream' | 'audio-input' | 'text-input';
+    type: 'audio' | 'button' | 'stream' | 'audio-input' | 'text-input' | 'document-input';
 }
 
 export interface AudioItemConfig extends BaseChatItemConfig {
@@ -33,4 +33,11 @@ export interface AudioInputItemConfig extends BaseChatItemConfig {
     audioName: string;
 }
 
-export type ChatItemConfig = AudioItemConfig | ButtonItemConfig | StreamItemConfig | TextInputItemConfig | AudioInputItemConfig;
+export interface DocumentInputItemConfig extends BaseChatItemConfig {
+    type: 'document-input';
+    isPdf: boolean;
+    documentUrl: string;
+    documentName: string;
+}
+
+export type ChatItemConfig = AudioItemConfig | ButtonItemConfig | StreamItemConfig | TextInputItemConfig | AudioInputItemConfig | DocumentInputItemConfig;

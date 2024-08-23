@@ -10,6 +10,7 @@ import { ConversationContext } from './ConversationContext';
 import ClearStorageButton from './utils/ClearStorageButton';
 import OriginVisualizer from './utils/OriginVisualizer';
 import AudioItem from './chat-items/AudioItem';
+import UserDocumentItem from './chat-items/UserDocumentItem';
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -103,7 +104,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
 
     const scrollDownChat = () => {
         if (chatBoxRef.current) {
-            console.log(chatBoxRef.current.scrollHeight-200);
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight-200;
         }
     };
@@ -137,6 +137,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
             return <StreamItem key={component.id} id={component.id} words={component.text} />;
             case 'text-input':
             return <UserTextItem key={component.id} id={component.id} words={component.text} themeColor={themeColor} />;
+            case 'document-input':
+            return <UserDocumentItem key={component.id} id={component.id} isPdf={component.isPdf} documentUrl={component.documentUrl} documentName={component.documentName} themeColor={themeColor} />;
             case 'button':
             return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel} themeColor={themeColor}/>;
             default:
