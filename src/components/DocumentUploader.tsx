@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import Upload from './icons/Upload';
 import { ChatItemConfig } from './chat-items/TalkItemsConfig';
+import useFileUpload from '../hooks/useFileUpload';
 
 interface DocumentUploaderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -10,8 +11,9 @@ interface DocumentUploaderProps {
 const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const { uploadStatus, uploadFile } = useFileUpload();
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             if (file.type === 'application/pdf') {
@@ -35,6 +37,7 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
                     });
                 });
             }
+            await uploadFile(file);
         };
     }
 
@@ -86,6 +89,12 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
                 ref={fileInputRef}
                 onChange={handleFileChange} 
             />
+
+            {/* <div style={{ marginTop: '10px' }}>
+                {uploadStatus.progress > 0 && <p>Upload Progress: {uploadStatus.progress}%</p>}
+                {uploadStatus.success && <p>Upload Successful!</p>}
+                {uploadStatus.error && <p>Error: {uploadStatus.error}</p>}
+            </div> */}
         </div>
     );
 };

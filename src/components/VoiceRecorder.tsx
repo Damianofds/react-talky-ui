@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ChatItemConfig } from './chat-items/TalkItemsConfig';
 import Record from './icons/Record';
+import useAudioUpload from '../hooks/useAudioUpload';
 
 interface VoiceRecorderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -13,6 +14,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordingTimeoutRef = useRef<number | null>(null);
+  const { uploadStatus, uploadAudio } = useAudioUpload();
 
   const startRecording = async () => {
     try {
@@ -54,10 +56,11 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
 
       audioStreamRef.current?.getTracks().forEach((track) => track.stop());
 
-      recorder.onstop = () => {
+      recorder.onstop = async () => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-
         const newAudioURL = URL.createObjectURL(audioBlob);
+        const audioFile = new File([audioBlob], 'recording.webm', { type: 'audio/webm' });
+        await uploadAudio(audioFile);
         inputRetriever({id: "init-" + Date.now(), type: 'audio-input', audioUrl: newAudioURL, audioName: 'recording-'+Date.now()});
         window.removeEventListener('mouseup', stopRecording);
         window.removeEventListener('touchend', stopRecording);
@@ -89,6 +92,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
       >
         <Record color={recording ? 'white' : 'red'} height='23px'/>
       </button>
+
+      {/* <div style={{ marginTop: '10px' }}>
+                {uploadStatus.progress > 0 && <p>Upload Progress: {uploadStatus.progress}%</p>}
+                {uploadStatus.success && <p>Upload Successful!</p>}
+                {uploadStatus.error && <p>Error: {uploadStatus.error}</p>}
+            </div> */}
     </div>
   );
 };
