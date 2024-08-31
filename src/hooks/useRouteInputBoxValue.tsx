@@ -6,7 +6,7 @@ const useRouteInputBoxValue = (inputBoxValue: string) => {
 
     const {aiConversation, fetchAIConversation} = useFetchAIConversation(inputBoxValue);
     const {aiAnswer, fetchAIAnswer} = useFetchAIAnswer(inputBoxValue);
-    const [currentChatRoute, setCurrentChatRoute] = useState<'conversation' | 'qa'>('conversation');
+    const [currentChatRoute, setCurrentChatRoute] = useState<'conversation' | 'qa'>('qa');
 
     const keywordRouting = (text: string, conversationKeyword: string, qaKeyword: string) => {
         const isKeywordPresent = (text: string, conversationKeyword: string) => new RegExp(`\\b${conversationKeyword}\\b`, 'i').test(text);
@@ -22,7 +22,9 @@ const useRouteInputBoxValue = (inputBoxValue: string) => {
         }
     }
 
-    const answer = (currentChatRoute == 'conversation') ? aiConversation : aiAnswer
+    const answer = (currentChatRoute == 'conversation') ? aiConversation : aiAnswer;
+    // console.log("--- answer");
+    // console.log(answer);
     return {answer, keywordRouting};
 };
 

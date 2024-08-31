@@ -47,13 +47,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
         if(talkCurrentItem.type == 'stream' && talkCurrentItem.isCompleted){
             setStreamingStarted(() => false);
             if(isLastItem){
-                setChatBoxInitialized(() => true);
+                setChatBoxInitialized(true);
                 localStorage.setItem('components', JSON.stringify([...renderedChatItems.slice(0,-1), talkCurrentItem]));   
             }
         }
         if(talkCurrentItem.type != 'stream'){
             if(isLastItem){
-                setChatBoxInitialized(() => true);
+                setChatBoxInitialized(true);
                 localStorage.setItem('components', JSON.stringify([...renderedChatItems]));   
             }
         }
@@ -117,7 +117,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     }, [renderedChatItems, message]);
     
     useEffect(() => {
-        if(message){
+        if(message && (message as StreamItemConfig).text != ''){
             setShowLoader(false);
             handleAIMessage();
         }

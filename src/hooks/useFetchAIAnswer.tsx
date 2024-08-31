@@ -43,27 +43,29 @@ const useFetchAIAnswer = (question: string) => {
             isCompleted: false,
             origin: 'internal-qa',
         });
-        const textArray = text.split(" ");
+        const textArray = text != '' ? text.split(" ") : [];
         let counter = 0;
-        const intervalId = setInterval(() => {
-            if(textArray.length > 0 && counter >= textArray.length){
-                clearInterval(intervalId);
-                setAnswer(prev => ({
-                    id: "stream-" + Date.now(),
-                    text: prev.text,
-                    type: 'stream',
-                    isCompleted: true,
-                    origin: 'internal-qa',
-                }));
-            }
-            else{
-                setAnswer((prev) => ({
-                    ...prev,
-                    text: prev.text + " " + textArray[counter]
-                }));
-                counter++;
-            }
-        }, 100);
+        if(textArray.length > 0){
+            const intervalId = setInterval(() => {
+                if(counter >= textArray.length){
+                    clearInterval(intervalId);
+                    setAnswer(prev => ({
+                        id: "stream-" + Date.now(),
+                        text: prev.text,
+                        type: 'stream',
+                        isCompleted: true,
+                        origin: 'internal-qa',
+                    }));
+                }
+                else{
+                    setAnswer((prev) => ({
+                        ...prev,
+                        text: prev.text + " " + textArray[counter]
+                    }));
+                    counter++;
+                }
+            }, 100);
+        }
     },[text]);
 
     return {aiAnswer, fetchAIAnswer};

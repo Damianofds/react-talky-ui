@@ -45,12 +45,14 @@ const useFetchAIConversation = (question: string) => {
                     text: prev.text + newToken
                 }));
             }
-            setAnswer(prev => ({id: "stream-" + Date.now(),
-                text: prev.text,
-                type: 'stream',
-                isCompleted: true,
-                origin:'gpt-4o-mini',
-            }));
+            setAnswer(prev => ({
+                    id: "stream-" + Date.now(),
+                    text: prev.text,
+                    type: 'stream',
+                    isCompleted: true,
+                    origin:'gpt-4o-mini',
+                }
+            ));
         }
     };
 
