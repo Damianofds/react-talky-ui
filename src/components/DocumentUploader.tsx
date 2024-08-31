@@ -11,7 +11,7 @@ interface DocumentUploaderProps {
 const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const { uploadStatus, uploadFile } = useFileUpload();
+    const { /*uploadStatus,*/ uploadFile } = useFileUpload();
 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];

@@ -14,7 +14,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordingTimeoutRef = useRef<number | null>(null);
-  const { uploadStatus, uploadAudio } = useAudioUpload();
+  const { /*uploadStatus,*/ uploadAudio } = useAudioUpload();
 
   const startRecording = async () => {
     try {
