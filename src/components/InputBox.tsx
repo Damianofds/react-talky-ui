@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useRouteInputBoxValue from '../hooks/useRouteInputBoxValue';
-import { ChatItemConfig} from './chat-items/TalkItemsConfig';
+import { ChatItemConfig} from './chat-items/ChatItemConfig';
 import { CirclularStack, get } from './utils/CircularStack';
 import VoiceRecorder from './VoiceRecorder';
 import Send from './icons/Send';
@@ -9,6 +9,7 @@ import DocumentUploader from './DocumentUploader';
 
 interface InputBoxProps {
     inputRetriever: (answer: ChatItemConfig) => void;
+    successSetter: (id: string) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
     fontSize?: string;
@@ -16,7 +17,7 @@ interface InputBoxProps {
     inputBoxHistory: CirclularStack<string>;
 }
 
-const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKeyword, qaRouteKeyword, fontSize, themeColor='', inputBoxHistory}) => {
+const InputBox: React.FC<InputBoxProps> = ({inputRetriever, successSetter, conversationRouteKeyword, qaRouteKeyword, fontSize, themeColor='', inputBoxHistory}) => {
     const [inputValue, setInputValue] = useState('');
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -138,9 +139,9 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, conversationRouteKey
                 </div>
                 }
                 {isLoading || !inputValue && 
-                    <VoiceRecorder inputRetriever={inputRetriever} themeColor={themeColor} />
+                    <VoiceRecorder inputRetriever={inputRetriever} successSetter={successSetter} themeColor={themeColor} />
                 }
-                <DocumentUploader inputRetriever={inputRetriever} themeColor={themeColor} />
+                <DocumentUploader inputRetriever={inputRetriever} successSetter={successSetter} themeColor={themeColor} />
             </div>
         </div>
     );

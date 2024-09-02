@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StreamItemConfig } from '../components/chat-items/TalkItemsConfig';
+import { StreamItemConfig } from '../components/chat-items/ChatItemConfig';
 import { isPlaceholderSettingsValue} from '../components/utils/FunctionUtilities';
 
 const API_URL = import.meta.env.TALKY_QA_API_URL;

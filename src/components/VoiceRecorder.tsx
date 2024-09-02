@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
-import { ChatItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
 import Record from './icons/Record';
 import useAudioUpload from '../hooks/useAudioUpload';
 
 interface VoiceRecorderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
+    successSetter: (id: string) => void;
     themeColor: string;
 }
 
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
+const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever, successSetter}) => {
   const [recording, setRecording] = useState<boolean>(false);
   const audioStreamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -60,10 +61,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
         const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
         const newAudioURL = URL.createObjectURL(audioBlob);
         const audioFile = new File([audioBlob], 'recording.webm', { type: 'audio/webm' });
-        await uploadAudio(audioFile);
-        inputRetriever({id: "init-" + Date.now(), type: 'audio-input', audioUrl: newAudioURL, audioName: 'recording-'+Date.now()});
+        const documentId = "init-" + Date.now();
+        inputRetriever({id: documentId, type: 'audio-input', audioUrl: newAudioURL, audioName: 'recording-'+Date.now(), status: UploadStatus.PROCESSING});
         window.removeEventListener('mouseup', stopRecording);
         window.removeEventListener('touchend', stopRecording);
+        await uploadAudio(audioFile);
+        successSetter(documentId);
       };
     }
   };
@@ -92,12 +95,6 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({inputRetriever}) => {
       >
         <Record color={recording ? 'white' : 'red'} height='23px'/>
       </button>
-
-      {/* <div style={{ marginTop: '10px' }}>
-                {uploadStatus.progress > 0 && <p>Upload Progress: {uploadStatus.progress}%</p>}
-                {uploadStatus.success && <p>Upload Successful!</p>}
-                {uploadStatus.error && <p>Error: {uploadStatus.error}</p>}
-            </div> */}
     </div>
   );
 };

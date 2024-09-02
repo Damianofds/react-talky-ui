@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatItemConfig, StreamItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig, StreamItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
 import UserAudioItem from './chat-items/UserAudioItem';
 import ButtonItem from './chat-items/ButtonItem';
 import UserTextItem from './chat-items/UserTextItem';
@@ -15,11 +15,12 @@ import UserDocumentItem from './chat-items/UserDocumentItem';
 interface ChatBoxProps {
     initTalkURL: string;
     message?: ChatItemConfig;
+    updateStatus?: string | undefined,
     fontSize?: string;
     themeColor?: string;
 }
 
-const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, themeColor }) => {
+const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, fontSize, themeColor }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const {talkCurrentItem, isLastItem} = useFetchTalk(currentTalkURL);
     const localChat = useLocalChat();
@@ -87,6 +88,19 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
         saveLocalChatHistory(renderedChatItems);
     };
 
+    const updateEntryStatus = (id: string) => {
+        const updatedRenderedChatItems = renderedChatItems.map((item) => {
+            if (item.id === id) {
+                return {
+                    ...item,
+                    status: UploadStatus.SUCCESS
+                };
+            }
+            return item;
+        });
+        setRenderedChatItems(updatedRenderedChatItems);
+    };
+
     const loadFromHistoryOrInitTalk = () => {
         const previousChatPresent = !isChatBoxInitialized && localChat && loadLocalChat().length > 0
         if(previousChatPresent){
@@ -126,13 +140,19 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     },[message]);
 
     useEffect(() => {
+        if(updateStatus){
+            updateEntryStatus(updateStatus);
+        }
+    },[updateStatus]);
+
+    useEffect(() => {
         setShowLoader(true);
     },[isChatBoxInitialized]);
 
     const renderComponent = (component: ChatItemConfig) => {
         switch (component.type) {
             case 'audio-input':
-            return <UserAudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} themeColor={themeColor || ''}/>;
+            return <UserAudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} themeColor={themeColor || ''} status={component.status}/>;
             case 'audio':
             return <AudioItem key={component.id} id={component.id} audioUrl={component.audioUrl} audioName={component.audioName} />;
             case 'stream':
@@ -140,7 +160,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
             case 'text-input':
             return <UserTextItem key={component.id} id={component.id} words={component.text} themeColor={themeColor} />;
             case 'document-input':
-            return <UserDocumentItem key={component.id} id={component.id} isPdf={component.isPdf} documentUrl={component.documentUrl} documentName={component.documentName} themeColor={themeColor} />;
+            return <UserDocumentItem key={component.id} id={component.id} isPdf={component.isPdf} documentUrl={component.documentUrl} documentName={component.documentName} themeColor={themeColor} status={component.status}/>;
             case 'button':
             return <ButtonItem key={component.id} id={component.id}  conversationUrl={component.conversationUrl} buttonLabel={component.buttonLabel} themeColor={themeColor}/>;
             default:

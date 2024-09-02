@@ -3,6 +3,10 @@ export interface BaseChatItemConfig {
     type: 'audio' | 'button' | 'stream' | 'audio-input' | 'text-input' | 'document-input';
 }
 
+export interface BaseUploadItemConfig extends BaseChatItemConfig {
+    status: UploadStatus; 
+}
+
 export interface AudioItemConfig extends BaseChatItemConfig {
     type: 'audio';
     audioUrl: string;
@@ -27,17 +31,23 @@ export interface TextInputItemConfig extends BaseChatItemConfig {
     text: string;
 }
 
-export interface AudioInputItemConfig extends BaseChatItemConfig {
+export interface AudioInputItemConfig extends BaseUploadItemConfig {
     type: 'audio-input';
     audioUrl: string;
     audioName: string;
 }
 
-export interface DocumentInputItemConfig extends BaseChatItemConfig {
+export interface DocumentInputItemConfig extends BaseUploadItemConfig {
     type: 'document-input';
     isPdf: boolean;
     documentUrl: string;
     documentName: string;
+}
+
+export enum UploadStatus {
+    PROCESSING = 'processing',
+    SUCCESS = 'success',
+    FAILURE = 'failure',
 }
 
 export type ChatItemConfig = AudioItemConfig | ButtonItemConfig | StreamItemConfig | TextInputItemConfig | AudioInputItemConfig | DocumentInputItemConfig;

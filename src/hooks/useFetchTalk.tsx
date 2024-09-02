@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChatItemConfig, StreamItemConfig } from '../components/chat-items/TalkItemsConfig';
+import { ChatItemConfig, StreamItemConfig } from '../components/chat-items/ChatItemConfig';
 
 const useFetchTalk = (jsonUrl: string) => {
 

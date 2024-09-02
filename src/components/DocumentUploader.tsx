@@ -1,15 +1,16 @@
 import React, { useRef } from 'react';
 import Upload from './icons/Upload';
-import { ChatItemConfig } from './chat-items/TalkItemsConfig';
+import { ChatItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
 import useFileUpload from '../hooks/useFileUpload';
 import useLocalChat from '../hooks/useLocalChat';
 
 interface DocumentUploaderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
+    successSetter: (id: string) => void;
     themeColor: string;
 }
 
-const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => {
+const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever, successSetter}) => {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { /*uploadStatus,*/ uploadFile } = useFileUpload();
@@ -19,16 +20,17 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            const documentId = "saved-thumbnail-" + Date.now();
             if (file.type === 'application/pdf') {
                 inputRetriever({
-                    id: "init-" + Date.now(),
+                    id: documentId,
                     type: 'document-input',
                     isPdf: true,
                     documentUrl: '',
-                    documentName: file.name
+                    documentName: file.name,
+                    status: UploadStatus.PROCESSING
                 });
             } else if (file.type.startsWith('image/')) {
-                const documentId = "saved-thumbnail-" + Date.now()
                 resizeImage(file, 100, 140, (resizedBase64) => {
                     saveBinaryLocalChat(documentId, resizedBase64);
                     inputRetriever({
@@ -36,11 +38,13 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
                         type: 'document-input',
                         isPdf: false,
                         documentUrl: resizedBase64,
-                        documentName: file.name
+                        documentName: file.name,
+                        status: UploadStatus.PROCESSING
                     });
                 });
             }
             await uploadFile(file);
+            successSetter(documentId);
         };
     }
 
@@ -92,12 +96,6 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
                 ref={fileInputRef}
                 onChange={handleFileChange} 
             />
-
-            {/* <div style={{ marginTop: '10px' }}>
-                {uploadStatus.progress > 0 && <p>Upload Progress: {uploadStatus.progress}%</p>}
-                {uploadStatus.success && <p>Upload Successful!</p>}
-                {uploadStatus.error && <p>Error: {uploadStatus.error}</p>}
-            </div> */}
         </div>
     );
 };

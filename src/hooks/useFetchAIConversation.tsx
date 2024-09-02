@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { useState } from 'react';
-import { StreamItemConfig } from "../components/chat-items/TalkItemsConfig";
+import { StreamItemConfig } from "../components/chat-items/ChatItemConfig";
 import { isPlaceholderSettingsValue, talkyDelay } from "../components/utils/FunctionUtilities";
 const OPENAI_API_KEY = import.meta.env.TALKY_OPENAI_API_KEY;
 

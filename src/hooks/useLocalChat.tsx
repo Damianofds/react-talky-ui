@@ -1,4 +1,4 @@
-import { ChatItemConfig } from "../components/chat-items/TalkItemsConfig";
+import { ChatItemConfig } from "../components/chat-items/ChatItemConfig";
 
 const useLocalChat = () => {
 
