@@ -30,6 +30,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
     const [isChatBoxInitialized, setChatBoxInitialized] = useState<boolean>(false);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
     const [origin, setOrigin] = useState<string>();
+    const {loadLocalChat, saveLocalChatHistory} = useLocalChat();
+
 
     const switchTalk = (newTalkURL: string) => {
         setCurrentTalkURL(newTalkURL);
@@ -48,13 +50,13 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
             setStreamingStarted(() => false);
             if(isLastItem){
                 setChatBoxInitialized(true);
-                localStorage.setItem('components', JSON.stringify([...renderedChatItems.slice(0,-1), talkCurrentItem]));   
+                saveLocalChatHistory([...renderedChatItems.slice(0,-1), talkCurrentItem]);   
             }
         }
         if(talkCurrentItem.type != 'stream'){
             if(isLastItem){
                 setChatBoxInitialized(true);
-                localStorage.setItem('components', JSON.stringify([...renderedChatItems]));   
+                saveLocalChatHistory([...renderedChatItems]);
             }
         }
     };
@@ -82,14 +84,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, fontSize, theme
                 setShowLoader(true);
             }
         }
-        localStorage.setItem('components', JSON.stringify(renderedChatItems));
+        saveLocalChatHistory(renderedChatItems);
     };
 
     const loadFromHistoryOrInitTalk = () => {
-        const previousChatPresent = !isChatBoxInitialized && localChat && localChat.loadEntireChat().length > 0
+        const previousChatPresent = !isChatBoxInitialized && localChat && loadLocalChat().length > 0
         if(previousChatPresent){
             console.log("Loading user chat history...");
-            setRenderedChatItems(JSON.parse(localChat.loadEntireChat()));
+            setRenderedChatItems(JSON.parse(loadLocalChat()));
             setChatBoxInitialized(true);
             setOrigin('history');
         }

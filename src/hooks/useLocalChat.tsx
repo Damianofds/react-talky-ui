@@ -1,7 +1,14 @@
+import { ChatItemConfig } from "../components/chat-items/TalkItemsConfig";
+
 const useLocalChat = () => {
 
-    const loadEntireChat = () => {
-        const savedComponents = localStorage.getItem('components');
+    enum Storage {
+        HISTORY = 'chat-history',
+        THUMBNAIL = 'chat-thumbnail',
+    }
+
+    const loadLocalChat = () => {
+        const savedComponents = localStorage.getItem(Storage.HISTORY);
         if(!savedComponents){
             return '';
         }
@@ -10,7 +17,23 @@ const useLocalChat = () => {
         return (isEmptyArray) ? '' : savedComponents;
     }
 
-    return {loadEntireChat}
+    const saveLocalChatHistory = (renderedChatItems: ChatItemConfig[]) => {
+        localStorage.setItem(Storage.HISTORY, JSON.stringify([...renderedChatItems]));   
+    }
+
+    const saveBinaryLocalChat = (id: string, blob: string) => {
+        localStorage.setItem(id, blob);   
+    }
+
+    const getLocalChatEntry = (id: string) => {
+        return localStorage.getItem(id);   
+    }
+
+    const clearLocalChat = () => {
+        localStorage.clear();
+    }
+
+    return {loadLocalChat, saveLocalChatHistory, saveBinaryLocalChat, getLocalChatEntry, clearLocalChat}
 };
 
 export default useLocalChat;

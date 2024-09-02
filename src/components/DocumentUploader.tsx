@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Upload from './icons/Upload';
 import { ChatItemConfig } from './chat-items/TalkItemsConfig';
 import useFileUpload from '../hooks/useFileUpload';
+import useLocalChat from '../hooks/useLocalChat';
 
 interface DocumentUploaderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -12,6 +13,8 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { /*uploadStatus,*/ uploadFile } = useFileUpload();
+    const {saveBinaryLocalChat} = useLocalChat();
+
 
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -27,7 +30,7 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever}) => 
             } else if (file.type.startsWith('image/')) {
                 const documentId = "saved-thumbnail-" + Date.now()
                 resizeImage(file, 100, 140, (resizedBase64) => {
-                    localStorage.setItem(documentId, resizedBase64);
+                    saveBinaryLocalChat(documentId, resizedBase64);
                     inputRetriever({
                         id: documentId,
                         type: 'document-input',

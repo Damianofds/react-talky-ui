@@ -1,3 +1,4 @@
+import useLocalChat from "../../hooks/useLocalChat";
 import PdfIcon from "../icons/PDF";
 
 interface UserDocumentItemProps {
@@ -9,7 +10,10 @@ interface UserDocumentItemProps {
   }
   
   const UserDocumentItem: React.FC<UserDocumentItemProps> = ({ id, isPdf, documentUrl, documentName, themeColor='' }) => {
-    const document = (documentUrl) ? documentUrl : localStorage.getItem(id) || 'undefined';
+
+    const {getLocalChatEntry} = useLocalChat();
+    const document = (documentUrl) ? documentUrl : getLocalChatEntry(id) || 'undefined';
+    
     return (
       <div key={id}  style={{
         textAlign: 'right',
