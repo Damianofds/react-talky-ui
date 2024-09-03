@@ -7,7 +7,7 @@ const API_URL = import.meta.env.TALKY_QA_API_URL;
 const useFetchAIAnswer = (question: string) => {
 
     const [aiAnswer, setAnswer] = useState<StreamItemConfig>({
-        id: "stream-" + Date.now(),
+        id: "qa-" + Date.now(),
         text: '',
         type: 'stream',
         isCompleted: false,
@@ -37,20 +37,20 @@ const useFetchAIAnswer = (question: string) => {
     };
 
     useEffect(() => {
-        setAnswer({id: "stream-" + Date.now(),
+        setAnswer({id: "qa-" + Date.now(),
             text: '',
             type: 'stream',
             isCompleted: false,
             origin: 'internal-qa',
         });
         const textArray = text != '' ? text.split(" ") : [];
-        let counter = 0;
+        let counter = -1;
         if(textArray.length > 0){
             const intervalId = setInterval(() => {
                 if(counter >= textArray.length){
                     clearInterval(intervalId);
                     setAnswer(prev => ({
-                        id: "stream-" + Date.now(),
+                        id: "qa-" + Date.now(),
                         text: prev.text,
                         type: 'stream',
                         isCompleted: true,

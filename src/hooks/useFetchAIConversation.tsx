@@ -10,7 +10,7 @@ const openai = new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: tru
 const useFetchAIConversation = (question: string) => {
 
     const [aiConversation, setAnswer] = useState<StreamItemConfig>({
-        id: "stream-" + Date.now(),
+        id: "conversation-" + Date.now(),
         text: '', type: 'stream',
         isCompleted: false,
         origin: 'gpt-4o-mini'
@@ -31,7 +31,7 @@ const useFetchAIConversation = (question: string) => {
                 model: "gpt-4o-mini",
                 stream: true,
             });
-            setAnswer({id: "stream-" + Date.now(),
+            setAnswer({id: "conversation-" + Date.now(),
                 text: '',
                 type: 'stream',
                 isCompleted: false,
@@ -46,7 +46,7 @@ const useFetchAIConversation = (question: string) => {
                 }));
             }
             setAnswer(prev => ({
-                    id: "stream-" + Date.now(),
+                    id: "conversation-" + Date.now(),
                     text: prev.text,
                     type: 'stream',
                     isCompleted: true,

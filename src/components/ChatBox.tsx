@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatItemConfig, StreamItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
+import { BaseUploadItemConfig, ChatItemConfig, StreamItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
 import UserAudioItem from './chat-items/UserAudioItem';
 import ButtonItem from './chat-items/ButtonItem';
 import UserTextItem from './chat-items/UserTextItem';
@@ -54,7 +54,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, f
                 saveLocalChatHistory([...renderedChatItems.slice(0,-1), talkCurrentItem]);   
             }
         }
-        if(talkCurrentItem.type != 'stream'){
+        if(talkCurrentItem.type != 'stream'){ // TODO this branch was probably never tested cause we have only streams in static talks for now
             if(isLastItem){
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([...renderedChatItems]);
@@ -64,28 +64,29 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, f
 
     const handleAIMessage = () => {
         const item = message;
-        if(item && !((item as StreamItemConfig).text=='  undefined')){ 
+        if(item && !((item as StreamItemConfig).text=='  undefined')){  // TODO This really sucks
             if(item.type=='stream'){
                 if(isStreamingStarted){
                     setOrigin(item.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
-                }
+                } 
                 setRenderedChatItems(prev => [...prev, item]);
+                saveLocalChatHistory(renderedChatItems);
                 if(item.isCompleted){
-                    setStreamingStarted(() => false);
+                    setStreamingStarted(false);
                     setShowLoader(true);
                 }
                 else{
-                    setStreamingStarted(() => true);
+                    setStreamingStarted(true);
                 }
             }
             else{
                 setRenderedChatItems(prev => [...prev, item]);
-                setStreamingStarted(() => false);
+                saveLocalChatHistory(renderedChatItems);
+                setStreamingStarted(false);
                 setShowLoader(true);
             }
         }
-        saveLocalChatHistory(renderedChatItems);
     };
 
     const updateEntryStatus = (id: string) => {
@@ -99,6 +100,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, f
             return item;
         });
         setRenderedChatItems(updatedRenderedChatItems);
+        saveLocalChatHistory(updatedRenderedChatItems);
     };
 
     const loadFromHistoryOrInitTalk = () => {
@@ -133,7 +135,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, f
     }, [renderedChatItems, message]);
     
     useEffect(() => {
-        if(message && (message as StreamItemConfig).text != ''){
+        
+        const messageIsNotEmpty = message && ((message as StreamItemConfig).text != '' || (message as BaseUploadItemConfig).status == 'processing')
+        if(messageIsNotEmpty){
             setShowLoader(false);
             handleAIMessage();
         }

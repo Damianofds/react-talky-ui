@@ -58,7 +58,6 @@ const InputBox: React.FC<InputBoxProps> = ({inputRetriever, successSetter, conve
 
     const handleOnFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.style.borderColor = themeColor;
-        console.log(event.type)
     };
     
     const handleOnMouseEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
