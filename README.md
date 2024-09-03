@@ -1,5 +1,7 @@
 # react-talky-ui
 
++ [![cov](https://damianofds.github.io/react-vecty-ui/badges/coverage.svg)](https://github.com/damianofds/react-vecty-ui/actions)
+
 A `react` + `typescript` conversational UI for the web.
 
 It supports the following chat behaviours in an harmonized chat workflow 
