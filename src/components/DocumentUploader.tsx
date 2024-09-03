@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
-import Upload from './icons/Upload';
-import { ChatItemConfig, UploadStatus } from './chat-items/ChatItemConfig';
-import useFileUpload from '../hooks/useFileUpload';
-import useLocalChat from '../hooks/useLocalChat';
+import React, { useRef } from "react";
+import Upload from "./icons/Upload";
+import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
+import useFileUpload from "../hooks/useFileUpload";
+import useLocalChat from "../hooks/useLocalChat";
 
 interface DocumentUploaderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -10,53 +10,61 @@ interface DocumentUploaderProps {
     themeColor: string;
 }
 
-const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever, successSetter}) => {
-
+const DocumentUploader: React.FC<DocumentUploaderProps> = ({
+    inputRetriever,
+    successSetter,
+}) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { /*uploadStatus,*/ uploadFile } = useFileUpload();
-    const {saveBinaryLocalChat} = useLocalChat();
+    const { saveBinaryLocalChat } = useLocalChat();
 
-
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const file = event.target.files?.[0];
         if (file) {
             const documentId = "saved-thumbnail-" + Date.now();
-            if (file.type === 'application/pdf') {
+            if (file.type === "application/pdf") {
                 inputRetriever({
                     id: documentId,
-                    type: 'document-input',
+                    type: "document-input",
                     isPdf: true,
-                    documentUrl: '',
+                    documentUrl: "",
                     documentName: file.name,
-                    status: UploadStatus.PROCESSING
+                    status: UploadStatus.PROCESSING,
                 });
-            } else if (file.type.startsWith('image/')) {
-                resizeImage(file, 100, 140, (resizedBase64) => {
+            } else if (file.type.startsWith("image/")) {
+                resizeImage(file, 100, 140, resizedBase64 => {
                     saveBinaryLocalChat(documentId, resizedBase64);
                     inputRetriever({
                         id: documentId,
-                        type: 'document-input',
+                        type: "document-input",
                         isPdf: false,
                         documentUrl: resizedBase64,
                         documentName: file.name,
-                        status: UploadStatus.PROCESSING
+                        status: UploadStatus.PROCESSING,
                     });
                 });
             }
             await uploadFile(file);
             successSetter(documentId);
-        };
-    }
+        }
+    };
 
-    const resizeImage = (file: File, width: number, height: number, callback: (resizedBase64: string) => void) => {
+    const resizeImage = (
+        file: File,
+        width: number,
+        height: number,
+        callback: (resizedBase64: string) => void
+    ) => {
         const reader = new FileReader();
         reader.onload = (event: ProgressEvent<FileReader>) => {
             const img = new Image();
             img.onload = () => {
-                const canvas = document.createElement('canvas');
+                const canvas = document.createElement("canvas");
                 canvas.width = width;
                 canvas.height = height;
-                const ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext("2d");
                 if (ctx) {
                     ctx.drawImage(img, 0, 0, width, height);
                     const resizedBase64 = canvas.toDataURL(file.type);
@@ -77,24 +85,23 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({inputRetriever, succ
             <button
                 style={{
                     border: `3px solid purple`,
-                    padding: '9px',
-                    color: 'purple',
-                    borderRadius: '25px',
-                    outline: 'none',
-                    marginRight: '1vw',
-                    height: '45px',
+                    padding: "9px",
+                    color: "purple",
+                    borderRadius: "25px",
+                    outline: "none",
+                    marginRight: "1vw",
+                    height: "45px",
                 }}
-                onClick={handleButtonClick}
-                >
-                <Upload color='purple' />
+                onClick={handleButtonClick}>
+                <Upload color="purple" />
             </button>
 
-            <input 
-                type="file" 
-                accept="application/pdf, image/*" 
-                style={{ display: 'none' }}
+            <input
+                type="file"
+                accept="application/pdf, image/*"
+                style={{ display: "none" }}
                 ref={fileInputRef}
-                onChange={handleFileChange} 
+                onChange={handleFileChange}
             />
         </div>
     );

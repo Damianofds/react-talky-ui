@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const DOCUMENT_UPLOAD_API_URL = import.meta.env.TALKY_DOCUMENT_UPLOAD_API_URL;
-const DOCUMENT_UPLOAD_FORM_DATA_KEY = 'document';
+const DOCUMENT_UPLOAD_FORM_DATA_KEY = "document";
 
 interface UploadStatus {
     progress: number;
@@ -24,7 +24,7 @@ const useFileUpload = () => {
 
         try {
             const response = await fetch(DOCUMENT_UPLOAD_API_URL, {
-                method: 'POST',
+                method: "POST",
                 body: formData,
             });
 
@@ -39,12 +39,11 @@ const useFileUpload = () => {
                 error: null,
                 fileUrl: data.fileUrl,
             });
-
         } catch (error) {
             setUploadStatus({
                 progress: 0,
                 success: false,
-                error: 'no error message present',
+                error: "no error message present",
                 fileUrl: null,
             });
         }

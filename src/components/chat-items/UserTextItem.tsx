@@ -5,7 +5,6 @@ interface TextItemProps {
 }
 
 const UserTextItem: React.FC<TextItemProps> = ({ words, themeColor }) => {
-
     return (
         <div key={""+Date.now}
             style={{
