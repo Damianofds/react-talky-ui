@@ -16,8 +16,8 @@ const UserAudioItem: React.FC<UserAudioItemProps> = ({ id, audioUrl, audioName, 
     <div key={id}  style={{
       textAlign: 'right'
     }}>
-      <audio style={{ border: `3px solid ${themeColor}`, borderRadius: '30px' }} src={audioUrl} controls />
-      <input type="hidden" src={audioName} />
+      <audio data-testid='user-audio' style={{ border: `3px solid ${themeColor}`, borderRadius: '30px' }} src={audioUrl} controls />
+      <input type="hidden" data-testid="user-audio-input" src={audioName} />
       <div>
         {status == UploadStatus.PROCESSING && <ElaboratingIcon color='red'/>}
         {status == UploadStatus.SUCCESS && <ElaborationSuccessIcon color='red'/>}

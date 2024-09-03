@@ -32,6 +32,7 @@ const ElaboratingIcon: React.FC<IconProps> = ({ width = '24px', height = '24px',
         width={width}
         height={height}
         viewBox="0 0 374.846 374.846"
+        data-testid='elaborating-icon'
       >
         <g>
           <path d="M326.147,267.326c4.168-6.754,12.875-9.094,19.869-5.336l5.83,3.135c3.635,1.955,6.305,5.32,7.379,9.305

@@ -23,23 +23,18 @@ interface UserDocumentItemProps {
         textAlign: 'right',
         
       }}>
-        {documentUrl && !isPdf && (
-            <figure>
-              <img src={document} alt="Thumbnail" style={{ 
+        <figure>
+          {!isPdf && (
+            <img src={document} alt="Document thumbnail" 
+              data-testid='document-thumbnail' 
+              style={{ 
                 width: 'auto',
                 height: '170px',
                 border: `3px solid ${themeColor}`,
-                borderRadius: '30px'
+                borderRadius: '30px',
               }} />
-              <figcaption>
-                {documentName}&nbsp;&nbsp;&nbsp;
-                {status == UploadStatus.PROCESSING && <ElaboratingIcon color='purple'/>}
-                {status == UploadStatus.SUCCESS && <ElaborationSuccessIcon color='purple'/>}
-              </figcaption>
-            </figure>
-        )}
-        {isPdf && (
-            <figure>
+          )}
+          {isPdf && (
               <div style={{
                 height: '170px',
                 marginLeft: 'auto',
@@ -47,13 +42,13 @@ interface UserDocumentItemProps {
               }}>
                 <PdfIcon width="100" height="200" color="red"/>
               </div>
-              <figcaption>{documentName}&nbsp;&nbsp;&nbsp;              
-                {status == UploadStatus.PROCESSING && <ElaboratingIcon color='purple'/>}
-                {status == UploadStatus.SUCCESS && <ElaborationSuccessIcon color='purple'/>}
-              </figcaption>
-            </figure>
-        )}
-        
+          )}
+          <figcaption>
+            {documentName}&nbsp;&nbsp;&nbsp;
+            {status == UploadStatus.PROCESSING && <ElaboratingIcon color='purple'/>}
+            {status == UploadStatus.SUCCESS && <ElaborationSuccessIcon color='purple'/>}
+          </figcaption>
+        </figure>
       </div>
     );
   };
