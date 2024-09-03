@@ -3,17 +3,17 @@ import "@testing-library/jest-dom";
 import { describe, test, beforeEach, afterEach, vi, expect } from "vitest";
 import ChatBox from "../components/ChatBox";
 import { ConversationContext } from "../components/ConversationContext";
-import useFetchTalk from "../hooks/useFetchTalk";
-import useLocalChat from "../hooks/useLocalChat";
+import useBotTalk from "../hooks/useBotTalk";
+import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import { TextInputItemConfig } from "../components/chat-items/ChatItemConfig";
 
-vi.mock("../hooks/useFetchTalk");
-vi.mock("../hooks/useLocalChat");
+vi.mock("../hooks/useBotTalk");
+vi.mock("../hooks/useLoadChatHistory");
 
 describe("ChatBox Component", () => {
-    const mockUseFetchTalk = useFetchTalk as ReturnType<typeof vi.fn>;
-    const mockUseLocalChat = useLocalChat as ReturnType<typeof vi.fn>;
-    const mockSaveLocalChatHistory = useLocalChat as ReturnType<typeof vi.fn>;
+    const mockUseBotTalk = useBotTalk as ReturnType<typeof vi.fn>;
+    const mockUseLoadChatHistoty = useLoadChatHistoty as ReturnType<typeof vi.fn>;
+    const mockSaveLocalChatHistory = useLoadChatHistoty as ReturnType<typeof vi.fn>;
 
     const defaultProps = {
         initTalkURL: "http://example.com",
@@ -35,12 +35,12 @@ describe("ChatBox Component", () => {
             console.log("saving local chat history...")
         );
 
-        mockUseFetchTalk.mockReturnValue({
+        mockUseBotTalk.mockReturnValue({
             talkCurrentItem: mockTalkCurrentItem,
             isLastItem: false,
         });
 
-        mockUseLocalChat.mockReturnValue({
+        mockUseLoadChatHistoty.mockReturnValue({
             loadLocalChat: vi.fn(() => []),
             saveLocalChatHistory: mockSaveLocalChatHistory,
         });
@@ -56,7 +56,7 @@ describe("ChatBox Component", () => {
     });
 
     test("loads initial talk and renders streamed chat item", async () => {
-        mockUseFetchTalk.mockReturnValueOnce({
+        mockUseBotTalk.mockReturnValueOnce({
             talkCurrentItem: mockTalkCurrentItem,
             isLastItem: false,
         });

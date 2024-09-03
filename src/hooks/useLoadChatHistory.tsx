@@ -1,6 +1,6 @@
 import { ChatItemConfig } from "../components/chat-items/ChatItemConfig";
 
-const useLocalChat = () => {
+const useLoadChatHistoty = () => {
     enum Storage {
         HISTORY = "chat-history",
         THUMBNAIL = "chat-thumbnail",
@@ -45,4 +45,4 @@ const useLocalChat = () => {
     };
 };
 
-export default useLocalChat;
+export default useLoadChatHistoty;

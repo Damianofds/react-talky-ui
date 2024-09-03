@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
 import Record from "./icons/Record";
-import useAudioUpload from "../hooks/useAudioUpload";
+import useUserAudioSubmit from "../hooks/useUserAudioSubmit";
 
 interface VoiceRecorderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -18,7 +18,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingTimeoutRef = useRef<number | null>(null);
-    const { /*uploadStatus,*/ uploadAudio } = useAudioUpload();
+    const { /*uploadStatus,*/ uploadAudio } = useUserAudioSubmit();
 
     const startRecording = async () => {
         try {

@@ -9,8 +9,8 @@ import UserAudioItem from "./chat-items/UserAudioItem";
 import ButtonItem from "./chat-items/ButtonItem";
 import UserTextItem from "./chat-items/UserTextItem";
 import StreamItem from "./chat-items/StreamItem";
-import useLocalChat from "../hooks/useLocalChat";
-import useFetchTalk from "../hooks/useFetchTalk";
+import useLoadChatHistoty from "../hooks/useLoadChatHistory";
+import useBotTalk from "../hooks/useBotTalk";
 import { ConversationContext } from "./ConversationContext";
 import ClearStorageButton from "./utils/ClearStorageButton";
 import OriginVisualizer from "./utils/OriginVisualizer";
@@ -33,8 +33,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     themeColor,
 }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
-    const { talkCurrentItem, isLastItem } = useFetchTalk(currentTalkURL);
-    const localChat = useLocalChat();
+    const { talkCurrentItem, isLastItem } = useBotTalk(currentTalkURL);
+    const localChat = useLoadChatHistoty();
     const [renderedChatItems, setRenderedChatItems] = useState<
         ChatItemConfig[]
     >([]);
@@ -45,7 +45,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         useState<boolean>(false);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
     const [origin, setOrigin] = useState<string>();
-    const { loadLocalChat, saveLocalChatHistory } = useLocalChat();
+    const { loadLocalChat, saveLocalChatHistory } = useLoadChatHistoty();
 
     const switchTalk = (newTalkURL: string) => {
         setCurrentTalkURL(newTalkURL);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const DOCUMENT_UPLOAD_API_URL = import.meta.env.TALKY_DOCUMENT_UPLOAD_API_URL;
-const DOCUMENT_UPLOAD_FORM_DATA_KEY = "document";
+const DOCUMENT_UPLOAD_API_URL = import.meta.env.TALKY_AUDIO_UPLOAD_API_URL;
+const DOCUMENT_UPLOAD_FORM_DATA_KEY = "audio1";
 
 interface UploadStatus {
     progress: number;
@@ -10,7 +10,7 @@ interface UploadStatus {
     fileUrl: string | null;
 }
 
-const useFileUpload = () => {
+const useUserAudioSubmit = () => {
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
         progress: 0,
         success: false,
@@ -18,7 +18,7 @@ const useFileUpload = () => {
         fileUrl: null,
     });
 
-    const uploadFile = async (file: File) => {
+    const uploadAudio = async (file: File) => {
         const formData = new FormData();
         formData.append(DOCUMENT_UPLOAD_FORM_DATA_KEY, file);
 
@@ -49,7 +49,7 @@ const useFileUpload = () => {
         }
     };
 
-    return { uploadStatus, uploadFile };
+    return { uploadStatus, uploadAudio };
 };
 
-export default useFileUpload;
+export default useUserAudioSubmit;

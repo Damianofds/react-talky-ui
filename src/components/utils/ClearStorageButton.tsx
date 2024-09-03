@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useLocalChat from "../../hooks/useLocalChat";
+import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
 
 interface ClearStorageButtonProps {
     color: string;
@@ -8,7 +8,7 @@ interface ClearStorageButtonProps {
 const ClearStorageButton: React.FC<ClearStorageButtonProps> = ({color}) => {
     
     const [isHovered, setIsHovered] = useState(false);
-    const {clearLocalChat} = useLocalChat();
+    const {clearLocalChat} = useLoadChatHistoty();
 
     const handleButtonClick = async () => {
         clearLocalChat();

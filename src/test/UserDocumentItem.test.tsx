@@ -4,7 +4,7 @@ import UserDocumentItem from "../components/chat-items/UserDocumentItem";
 import { UploadStatus } from "../components/chat-items/ChatItemConfig";
 import { describe, test, expect, vi } from "vitest";
 
-vi.mock("../hooks/useLocalChat", () => ({
+vi.mock("../hooks/useLoadChatHistory", () => ({
     default: () => ({
         getLocalChatEntry: vi.fn((id: string) => `localChatEntry-${id}`),
     }),

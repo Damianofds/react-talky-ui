@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import Upload from "./icons/Upload";
 import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
-import useFileUpload from "../hooks/useFileUpload";
-import useLocalChat from "../hooks/useLocalChat";
+import useUserDocumentSubmit from "../hooks/useUserDocumentSubmit";
+import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 
 interface DocumentUploaderProps {
     inputRetriever: (answer: ChatItemConfig) => void;
@@ -15,8 +15,8 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({
     successSetter,
 }) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const { /*uploadStatus,*/ uploadFile } = useFileUpload();
-    const { saveBinaryLocalChat } = useLocalChat();
+    const { /*uploadStatus,*/ uploadFile } = useUserDocumentSubmit();
+    const { saveBinaryLocalChat } = useLoadChatHistoty();
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>

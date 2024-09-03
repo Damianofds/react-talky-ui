@@ -4,7 +4,7 @@ import {
     StreamItemConfig,
 } from "../components/chat-items/ChatItemConfig";
 
-const useFetchTalk = (jsonUrl: string) => {
+const useBotTalk = (jsonUrl: string) => {
     const [conversation, setConversation] = useState<ChatItemConfig[]>([]);
     const [talkCurrentItem, setTalkCurrentItem] = useState<ChatItemConfig>();
     const [isLastItem, setLastItem] = useState<boolean>(false);
@@ -89,4 +89,4 @@ const useFetchTalk = (jsonUrl: string) => {
     return { talkCurrentItem, isLastItem };
 };
 
-export default useFetchTalk;
+export default useBotTalk;

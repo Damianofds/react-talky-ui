@@ -1,4 +1,4 @@
-import useLocalChat from "../../hooks/useLocalChat";
+import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
 import ElaboratingIcon from "../icons/ElaboratingIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
 import PdfIcon from "../icons/PDF";
@@ -21,7 +21,7 @@ const UserDocumentItem: React.FC<UserDocumentItemProps> = ({
     themeColor = "",
     status,
 }) => {
-    const { getLocalChatEntry } = useLocalChat();
+    const { getLocalChatEntry } = useLoadChatHistoty();
     const document = documentUrl
         ? documentUrl
         : getLocalChatEntry(id) || "undefined";
