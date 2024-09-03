@@ -1,5 +1,5 @@
 # react-talky-ui
-+ [![cov](https://damianofds.github.io/react-talky-ui/badges/coverage.svg)](https://github.com/damianofds/react-talky-ui/actions)
+[![cov](https://damianofds.github.io/react-talky-ui/badges/coverage.svg)](https://github.com/damianofds/react-talky-ui/actions)
 
 A `react` + `typescript` conversational UI for the web.
 
