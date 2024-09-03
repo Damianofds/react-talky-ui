@@ -32,7 +32,7 @@ This project is written in `Typescript`, it uses `React` and it is packaged with
 Import it in your project as dependency with:
 
 ```
-#~/my-ai-bot$ yarn add XXX
+#~/my-ai-bot$ yarn add react-talk-ui
 ```
 
 Or you can clone the repo, install, hot deploy locally, test, and build from source the project with:
