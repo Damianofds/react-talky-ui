@@ -1,4 +1,4 @@
-name: react-talk-ui CI
+name: react-talky-ui CI
 
 on:
   push:
