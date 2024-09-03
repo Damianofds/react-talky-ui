@@ -47,14 +47,14 @@ const ChatBox: React.FC<ChatBoxProps> = ({ initTalkURL, message, updateStatus, f
         if(talkCurrentItem.type == 'stream'){
             setStreamingStarted(() => true);
         }
-        if(talkCurrentItem.type == 'stream' && !talkCurrentItem.isCompleted){
+        if(talkCurrentItem.type == 'stream' && talkCurrentItem.isCompleted){
             setStreamingStarted(() => false);
-            if(!isLastItem){
+            if(isLastItem){
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([...renderedChatItems.slice(0,-1), talkCurrentItem]);
             }
         }
-        if(talkCurrentItem.type != 'stream'){ // TODO this branch was probably never tested cause we have only streams in static talks for now
+        if(talkCurrentItem.type != 'stream'){ // TODO this branch was never tested cause we have only streams in static talks for now
             if(isLastItem){
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([...renderedChatItems]);
