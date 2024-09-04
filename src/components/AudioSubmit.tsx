@@ -9,7 +9,7 @@ interface VoiceRecorderProps {
     themeColor: string;
 }
 
-const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
+const AudioSubmit: React.FC<VoiceRecorderProps> = ({
     inputRetriever,
     successSetter,
 }) => {
@@ -115,4 +115,4 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
     );
 };
 
-export default VoiceRecorder;
+export default AudioSubmit;

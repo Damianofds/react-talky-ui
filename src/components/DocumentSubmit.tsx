@@ -4,13 +4,13 @@ import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
 import useUserDocumentSubmit from "../hooks/useUserDocumentSubmit";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 
-interface DocumentUploaderProps {
+interface DocumentSubmitProps {
     inputRetriever: (answer: ChatItemConfig) => void;
     successSetter: (id: string) => void;
     themeColor: string;
 }
 
-const DocumentUploader: React.FC<DocumentUploaderProps> = ({
+const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
     inputRetriever,
     successSetter,
 }) => {
@@ -107,4 +107,4 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({
     );
 };
 
-export default DocumentUploader;
+export default DocumentSubmit;
