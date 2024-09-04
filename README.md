@@ -5,25 +5,15 @@ A `react` + `typescript` conversational UI for the web.
 
 ## ✨ Main features
 
-⬆️ **Document and Audio upload**
+⬆️ **Document and Audio upload** Provides UI element to upload unstructure content to your processing backend
 
-* Provides UI element to upload unstructure content to your processing backend
+👑 **Rich Static Chats** Configure and mix conversation tiles composed of UI elements and text
 
-👑 **Rich Static Chats**
+🤹 **Multiple backend** Mix the results of multiple backends in a single conversation
 
-* Configure and mix conversation tiles composed of UI elements and text
+👤 **Frontent user session** keep your conversation history 
 
-🤹 **Multiple backend**
-
-* Mix the results of multiple backends in a single conversation
-
-👤 **Frontent user session**
-
-* keep your conversation history 
-
-🏬 **Secure backend user session**
-
-* COMING SOON
+🏬 **Secure backend user session** COMING SOON
 
 # Development
 
