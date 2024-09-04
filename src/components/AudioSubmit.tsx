@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
+import { ChatEntryState, UploadStatus } from "./chat-entries/ChatEntryState";
 import Record from "./icons/Record";
 import useUserAudioSubmit from "../hooks/useUserAudioSubmit";
 
 interface VoiceRecorderProps {
-    setChatMessage: (answer: ChatItemConfig) => void;
+    setChatMessage: (answer: ChatEntryState) => void;
     setBotStatusUpdate: (id: string) => void;
     themeColor: string;
 }
@@ -75,7 +75,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                 const documentId = "init-" + Date.now();
                 setChatMessage({
                     id: documentId,
-                    type: "audio-input",
+                    type: "user-audio",
                     audioUrl: newAudioURL,
                     audioName: "recording-" + Date.now(),
                     status: UploadStatus.PROCESSING,

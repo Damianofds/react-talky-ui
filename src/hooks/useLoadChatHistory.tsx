@@ -1,4 +1,4 @@
-import { ChatItemConfig } from "../components/chat-items/ChatItemConfig";
+import { ChatEntryState } from "../components/chat-entries/ChatEntryState";
 
 const useLoadChatHistoty = () => {
     enum Storage {
@@ -17,7 +17,7 @@ const useLoadChatHistoty = () => {
         return isEmptyArray ? "" : savedComponents;
     };
 
-    const saveLocalChatHistory = (renderedChatItems: ChatItemConfig[]) => {
+    const saveLocalChatHistory = (renderedChatItems: ChatEntryState[]) => {
         localStorage.setItem(
             Storage.HISTORY,
             JSON.stringify([...renderedChatItems])

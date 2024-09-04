@@ -1,10 +1,10 @@
-interface AudioItemProps {
+interface BotAudioEntryProps {
     id: string;
     audioUrl: string;
     audioName: string;
 }
 
-const AudioItem: React.FC<AudioItemProps> = ({ id, audioUrl, audioName }) => {
+const BotAudioEntry: React.FC<BotAudioEntryProps> = ({ id, audioUrl, audioName }) => {
     return (
         <div key={id} style={{}}>
             <audio src={audioUrl} controls />
@@ -13,4 +13,4 @@ const AudioItem: React.FC<AudioItemProps> = ({ id, audioUrl, audioName }) => {
     );
 };
 
-export default AudioItem;
+export default BotAudioEntry;

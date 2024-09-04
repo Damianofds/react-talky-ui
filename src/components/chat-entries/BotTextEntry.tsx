@@ -1,9 +1,9 @@
-interface StreamItemProps {
+interface BotTextEntryProps {
     id: string;
     words: string;
 }
 
-const StreamItem: React.FC<StreamItemProps> = ({ words }) => {
+const BotTextEntry: React.FC<BotTextEntryProps> = ({ words }) => {
     return (
         <div
             style={{
@@ -16,4 +16,4 @@ const StreamItem: React.FC<StreamItemProps> = ({ words }) => {
     );
 };
 
-export default StreamItem;
+export default BotTextEntry;

@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import Upload from "./icons/Upload";
-import { ChatItemConfig, UploadStatus } from "./chat-items/ChatItemConfig";
+import { ChatEntryState, UploadStatus } from "./chat-entries/ChatEntryState";
 import useUserDocumentSubmit from "../hooks/useUserDocumentSubmit";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 
 interface DocumentSubmitProps {
-    setChatMessage: (answer: ChatItemConfig) => void;
+    setChatMessage: (answer: ChatEntryState) => void;
     setBotStatusUpdate: (id: string) => void;
     themeColor: string;
 }
@@ -27,7 +27,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
             if (file.type === "application/pdf") {
                 setChatMessage({
                     id: documentId,
-                    type: "document-input",
+                    type: "user-document",
                     isPdf: true,
                     documentUrl: "",
                     documentName: file.name,
@@ -38,7 +38,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                     saveBinaryLocalChat(documentId, resizedBase64);
                     setChatMessage({
                         id: documentId,
-                        type: "document-input",
+                        type: "user-document",
                         isPdf: false,
                         documentUrl: resizedBase64,
                         documentName: file.name,

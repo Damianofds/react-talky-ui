@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import {
-    ChatItemConfig,
-    StreamItemConfig,
-} from "../components/chat-items/ChatItemConfig";
+    BotTextEntryState,
+    ChatEntryState,
+} from "../components/chat-entries/ChatEntryState";
 
 const useBotTalk = (jsonUrl: string) => {
-    const [conversation, setConversation] = useState<ChatItemConfig[]>([]);
-    const [talkCurrentItem, setTalkCurrentItem] = useState<ChatItemConfig>();
+    const [conversation, setConversation] = useState<ChatEntryState[]>([]);
+    const [talkCurrentItem, setTalkCurrentItem] = useState<ChatEntryState>();
     const [isLastItem, setLastItem] = useState<boolean>(false);
 
     useEffect(() => {
@@ -15,7 +15,7 @@ const useBotTalk = (jsonUrl: string) => {
                 const response = await fetch(jsonUrl);
                 const data = await response.json();
                 const processedData = data.conversation.map(
-                    (item: ChatItemConfig) => {
+                    (item: ChatEntryState) => {
                         const millisec = Date.now();
                         const rnd = Math.random().toString(36);
                         const uniqueId = `${item.type}-${millisec}-${rnd}`;
@@ -47,18 +47,18 @@ const useBotTalk = (jsonUrl: string) => {
                     clearInterval(intervalId);
                 } else {
                     if (
-                        (conversation[itemCounter] as ChatItemConfig).type ==
-                        "stream"
+                        (conversation[itemCounter] as ChatEntryState).type ==
+                        "bot-text"
                     ) {
                         const streamItem = conversation[
                             itemCounter
-                        ] as StreamItemConfig;
+                        ] as BotTextEntryState;
                         const tokens = streamItem.text.split(" ");
                         if (tokenCounter <= tokens.length - 1) {
                             setTalkCurrentItem({
                                 id: conversation[itemCounter].id,
                                 text: tokens.slice(0, tokenCounter).join(" "),
-                                type: "stream",
+                                type: "bot-text",
                                 isCompleted: false,
                                 origin: "static",
                             });
@@ -67,7 +67,7 @@ const useBotTalk = (jsonUrl: string) => {
                             setTalkCurrentItem({
                                 id: conversation[itemCounter].id,
                                 text: tokens.join(" "),
-                                type: "stream",
+                                type: "bot-text",
                                 isCompleted: true,
                                 origin: "static",
                             });

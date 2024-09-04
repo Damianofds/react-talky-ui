@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import useRouteInputBoxValue from "../hooks/useUserMessageSubmit";
 import { CirclularStack, get } from "./utils/CircularStack";
-import { ChatItemConfig } from "./chat-items/ChatItemConfig";
+import { ChatEntryState } from "./chat-entries/ChatEntryState";
 import SandClock from "./icons/SandClock";
 import Send from "./icons/Send";
 
 interface MessageSubmitProps {
-    inputRetriever: (answer: ChatItemConfig) => void;
+    inputRetriever: (answer: ChatEntryState) => void;
     showBinarySubmitButtons: (showBinarySubmitButtons: boolean) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
@@ -48,9 +48,9 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
         if (event.key === "Enter" && inputValue != "") {
             setInput(inputValue);
             inputRetriever({
-                id: "init-" + Date.now(),
+                id: "user-text-" + Date.now(),
                 text: inputValue,
-                type: "text-input",
+                type: "user-text",
             });
             setIsLoading(true);
         }
@@ -82,9 +82,9 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
         } else {
             setInput(inputValue);
             inputRetriever({
-                id: "init-" + Date.now(),
+                id: "user-text-" + Date.now(),
                 text: inputValue,
-                type: "text-input",
+                type: "user-text",
             });
             setIsLoading(true);
         }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
-import { ChatItemConfig } from "./components/chat-items/ChatItemConfig";
+import { ChatEntryState } from "./components/chat-entries/ChatEntryState";
 import {
     CirclularStack,
     createCircularStack,
@@ -20,13 +20,13 @@ const TalkyUI: React.FC<TalkUIProps> = ({
     fontSize = "20px",
     themeColor = "#4ea699",
 }) => {
-    const [chatMessage, setChatMessage] = useState<ChatItemConfig>();
+    const [chatMessage, setChatMessage] = useState<ChatEntryState>();
     const [botStatusUpdate, setBotStatusUpdate] = useState<string>();
     const [chatMessageUserHistory, setChatMessageUserHistory] = useState<
         CirclularStack<string>
     >(createCircularStack(10));
 
-    if (chatMessage?.type == "text-input") {
+    if (chatMessage?.type == "user-text") {
         if (get(chatMessageUserHistory, 0) != chatMessage.text) {
             setChatMessageUserHistory(
                 push(chatMessageUserHistory, chatMessage.text)

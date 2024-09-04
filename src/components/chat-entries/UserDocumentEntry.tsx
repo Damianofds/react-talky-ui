@@ -2,9 +2,9 @@ import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
 import ElaboratingIcon from "../icons/ElaboratingIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
 import PdfIcon from "../icons/PDF";
-import { UploadStatus } from "./ChatItemConfig";
+import { UploadStatus } from "./ChatEntryState";
 
-interface UserDocumentItemProps {
+interface UserDocumentEntryProps {
     id: string;
     isPdf: boolean;
     documentUrl: string;
@@ -13,7 +13,7 @@ interface UserDocumentItemProps {
     status: UploadStatus;
 }
 
-const UserDocumentItem: React.FC<UserDocumentItemProps> = ({
+const UserDocumentEntry: React.FC<UserDocumentEntryProps> = ({
     id,
     isPdf,
     documentUrl,
@@ -70,4 +70,4 @@ const UserDocumentItem: React.FC<UserDocumentItemProps> = ({
     );
 };
 
-export default UserDocumentItem;
+export default UserDocumentEntry;

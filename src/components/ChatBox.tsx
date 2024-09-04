@@ -1,25 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-    BaseUploadItemConfig,
-    ChatItemConfig,
-    StreamItemConfig,
+    BotTextEntryState,
+    ChatEntryState,
+    UploadEntryState,
     UploadStatus,
-} from "./chat-items/ChatItemConfig";
-import UserAudioItem from "./chat-items/UserAudioItem";
-import ButtonItem from "./chat-items/ButtonItem";
-import UserTextItem from "./chat-items/UserTextItem";
-import StreamItem from "./chat-items/StreamItem";
+} from "./chat-entries/ChatEntryState";
+import UserAudioItem from "./chat-entries/UserAudioEntry";
+import ButtonItem from "./chat-entries/BotButtonEntry";
+import UserTextItem from "./chat-entries/UserTextEntry";
+import StreamItem from "./chat-entries/BotTextEntry";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
 import { ConversationContext } from "./ConversationContext";
 import ClearStorageButton from "./utils/ClearStorageButton";
 import OriginVisualizer from "./utils/OriginVisualizer";
-import AudioItem from "./chat-items/AudioItem";
-import UserDocumentItem from "./chat-items/UserDocumentItem";
+import AudioItem from "./chat-entries/BotAudioEntry";
+import UserDocumentItem from "./chat-entries/UserDocumentEntry";
 
 interface ChatBoxProps {
     initTalkURL: string;
-    chatMessage?: ChatItemConfig;
+    chatMessage?: ChatEntryState;
     updateStatus?: string | undefined;
     fontSize?: string;
     themeColor?: string;
@@ -36,7 +36,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     const { talkCurrentItem, isLastItem } = useBotTalk(currentTalkURL);
     const localChat = useLoadChatHistoty();
     const [renderedChatItems, setRenderedChatItems] = useState<
-        ChatItemConfig[]
+        ChatEntryState[]
     >([]);
     const [showLoader, setShowLoader] = useState(false);
     const chatBoxRef = useRef<HTMLDivElement>(null);
@@ -52,16 +52,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         setTalkSwitched(true);
     };
 
-    const loadStaticTalk = (talkCurrentItem: ChatItemConfig) => {
+    const loadStaticTalk = (talkCurrentItem: ChatEntryState) => {
         if (isStreamingStarted) {
             setRenderedChatItems(prev => [...prev.slice(0, -1)]);
         }
         setRenderedChatItems(prev => [...prev, talkCurrentItem]);
-        if (talkCurrentItem.type == "stream") {
-            setStreamingStarted(() => true);
+        if (talkCurrentItem.type == "bot-text") {
+            setStreamingStarted(true);
         }
-        if (talkCurrentItem.type == "stream" && talkCurrentItem.isCompleted) {
-            setStreamingStarted(() => false);
+        if (talkCurrentItem.type == "bot-text" && talkCurrentItem.isCompleted) {    
+            setStreamingStarted(false);
             if (isLastItem) {
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([
@@ -70,8 +70,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 ]);
             }
         }
-        if (talkCurrentItem.type != "stream") {
-            // TODO this branch was never tested cause we have only streams in static talks for now
+        if (talkCurrentItem.type != "bot-text") {        
             if (isLastItem) {
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([...renderedChatItems]);
@@ -81,8 +80,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 
     const handleAIMessage = () => {
         // TODO This condition really sucks
-        if (chatMessage && !((chatMessage as StreamItemConfig).text == "  undefined")) {
-            if (chatMessage.type == "stream") {
+        if (chatMessage && !((chatMessage as BotTextEntryState).text == "  undefined")) {
+            if (chatMessage.type == "bot-text") {
                 if (isStreamingStarted) {
                     setOrigin(chatMessage.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
@@ -153,8 +152,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     useEffect(() => {
         const messageIsNotEmpty =
             chatMessage &&
-            ((chatMessage as StreamItemConfig).text != "" ||
-                (chatMessage as BaseUploadItemConfig).status == "processing");
+            ((chatMessage as BotTextEntryState).text != "" ||
+                (chatMessage as UploadEntryState).status == "processing");
         if (messageIsNotEmpty) {
             setShowLoader(false);
             handleAIMessage();
@@ -171,9 +170,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         setShowLoader(true);
     }, [isChatBoxInitialized]);
 
-    const renderComponent = (component: ChatItemConfig) => {
+    const renderComponent = (component: ChatEntryState) => {
         switch (component.type) {
-            case "audio-input":
+            case "user-audio":
                 return (
                     <UserAudioItem
                         key={component.id}
@@ -184,7 +183,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         status={component.status}
                     />
                 );
-            case "audio":
+            case "bot-audio":
                 return (
                     <AudioItem
                         key={component.id}
@@ -193,7 +192,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         audioName={component.audioName}
                     />
                 );
-            case "stream":
+            case "bot-text":
                 return (
                     <StreamItem
                         key={component.id}
@@ -201,7 +200,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         words={component.text}
                     />
                 );
-            case "text-input":
+            case "user-text":
                 return (
                     <UserTextItem
                         key={component.id}
@@ -210,7 +209,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         themeColor={themeColor}
                     />
                 );
-            case "document-input":
+            case "user-document":
                 return (
                     <UserDocumentItem
                         key={component.id}
@@ -222,7 +221,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         status={component.status}
                     />
                 );
-            case "button":
+            case "bot-button":
                 return (
                     <ButtonItem
                         key={component.id}

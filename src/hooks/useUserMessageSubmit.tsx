@@ -34,8 +34,6 @@ const useRouteInputBoxValue = (inputBoxValue: string) => {
 
     const answer =
         currentChatRoute == "conversation" ? aiConversation : aiAnswer;
-    // console.log("--- answer");
-    // console.log(answer);
     return { answer, keywordRouting };
 };
 

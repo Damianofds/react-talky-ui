@@ -1,11 +1,11 @@
 {
 	"conversation": [
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "Enjoy listening 🎺🎶"
 		},
 		{
-			"type": "audio",
+			"type": "bot-audio",
 			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.01.mp3",
 			"audioName": "...able to play audio"
 		}

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { StreamItemConfig } from "../components/chat-items/ChatItemConfig";
+import { BotTextEntryState } from "../components/chat-entries/ChatEntryState";
 import { isPlaceholderSettingsValue } from "../components/utils/FunctionUtilities";
 
 const API_URL = import.meta.env.TALKY_QA_API_URL;
 
 const useFetchAIAnswer = (question: string) => {
-    const [aiAnswer, setAnswer] = useState<StreamItemConfig>({
+    const [aiAnswer, setAnswer] = useState<BotTextEntryState>({
         id: "qa-" + Date.now(),
         text: "",
-        type: "stream",
+        type: "bot-text",
         isCompleted: false,
         origin: "internal-qa",
     });
@@ -41,7 +41,7 @@ const useFetchAIAnswer = (question: string) => {
         setAnswer({
             id: "qa-" + Date.now(),
             text: "",
-            type: "stream",
+            type: "bot-text",
             isCompleted: false,
             origin: "internal-qa",
         });
@@ -54,7 +54,7 @@ const useFetchAIAnswer = (question: string) => {
                     setAnswer(prev => ({
                         id: "qa-" + Date.now(),
                         text: prev.text,
-                        type: "stream",
+                        type: "bot-text",
                         isCompleted: true,
                         origin: "internal-qa",
                     }));

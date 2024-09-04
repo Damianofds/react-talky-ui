@@ -5,7 +5,7 @@ import ChatBox from "../components/ChatBox";
 import { ConversationContext } from "../components/ConversationContext";
 import useBotTalk from "../hooks/useBotTalk";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
-import { TextInputItemConfig } from "../components/chat-items/ChatItemConfig";
+import { UserTextEntryState } from "../components/chat-entries/ChatEntryState";
 
 vi.mock("../hooks/useBotTalk");
 vi.mock("../hooks/useLoadChatHistory");
@@ -17,7 +17,7 @@ describe("ChatBox Component", () => {
 
     const defaultProps = {
         initTalkURL: "http://example.com",
-        message: undefined,
+        chatMessage: undefined,
         updateStatus: "",
         fontSize: "16px",
         themeColor: "#4ea699",
@@ -25,7 +25,7 @@ describe("ChatBox Component", () => {
 
     const mockTalkCurrentItem = {
         id: "stream-1",
-        type: "stream",
+        type: "bot-text",
         text: "Sample text",
         isCompleted: false,
     };
@@ -94,9 +94,9 @@ describe("ChatBox Component", () => {
     });
 
     test("handles AI messages and updates chat items accordingly", async () => {
-        const newMessage: TextInputItemConfig = {
+        const newMessage: UserTextEntryState = {
             id: "stream-2",
-            type: "text-input",
+            type: "user-text",
             text: "New AI message",
         };
 

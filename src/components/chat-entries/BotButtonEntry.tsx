@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { ConversationContext } from "../ConversationContext";
 
-interface ButtonItemProps {
+interface BotButtonEntryProps {
     id: string;
     conversationUrl: string;
     buttonLabel: string;
     themeColor?: string;
 }
 
-const ButtonItem: React.FC<ButtonItemProps> = ({
+const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
     id,
     conversationUrl,
     buttonLabel,
@@ -58,4 +58,4 @@ const ButtonItem: React.FC<ButtonItemProps> = ({
     );
 };
 
-export default ButtonItem;
+export default BotButtonEntry;

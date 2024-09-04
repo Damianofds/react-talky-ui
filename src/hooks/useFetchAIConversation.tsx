@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { useState } from "react";
-import { StreamItemConfig } from "../components/chat-items/ChatItemConfig";
+import { BotTextEntryState } from "../components/chat-entries/ChatEntryState";
 import {
     isPlaceholderSettingsValue,
     talkyDelay,
@@ -14,10 +14,10 @@ const openai = new OpenAI({
 });
 
 const useFetchAIConversation = (question: string) => {
-    const [aiConversation, setAnswer] = useState<StreamItemConfig>({
+    const [aiConversation, setAnswer] = useState<BotTextEntryState>({
         id: "conversation-" + Date.now(),
         text: "",
-        type: "stream",
+        type: "bot-text",
         isCompleted: false,
         origin: "gpt-4o-mini",
     });
@@ -39,7 +39,7 @@ const useFetchAIConversation = (question: string) => {
             setAnswer({
                 id: "conversation-" + Date.now(),
                 text: "",
-                type: "stream",
+                type: "bot-text",
                 isCompleted: false,
                 origin: "gpt-4o-mini",
             });
@@ -54,7 +54,7 @@ const useFetchAIConversation = (question: string) => {
             setAnswer(prev => ({
                 id: "conversation-" + Date.now(),
                 text: prev.text,
-                type: "stream",
+                type: "bot-text",
                 isCompleted: true,
                 origin: "gpt-4o-mini",
             }));

@@ -1,4 +1,4 @@
-import { ChatItemConfig } from "./chat-items/ChatItemConfig";
+import { ChatEntryState } from "./chat-entries/ChatEntryState";
 import { CirclularStack } from "./utils/CircularStack";
 import DocumentSubmit from "./DocumentSubmit";
 import MessageSubmit from "./MessageSubmit";
@@ -6,7 +6,7 @@ import AudioSubmit from "./AudioSubmit";
 import { useState } from "react";
 
 interface InputBoxProps {
-    setChatMessage: (answer: ChatItemConfig) => void;
+    setChatMessage: (answer: ChatEntryState) => void;
     setBotStatusUpdate: (id: string) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;

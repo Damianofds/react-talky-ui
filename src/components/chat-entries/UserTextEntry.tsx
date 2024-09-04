@@ -1,10 +1,10 @@
-interface TextItemProps {
+interface UserTextEntryProps {
     id: string;
     words: string;
     themeColor?: string
 }
 
-const UserTextItem: React.FC<TextItemProps> = ({ words, themeColor }) => {
+const UserTextEntry: React.FC<UserTextEntryProps> = ({ words, themeColor }) => {
     return (
         <div key={""+Date.now}
             style={{
@@ -26,4 +26,4 @@ const UserTextItem: React.FC<TextItemProps> = ({ words, themeColor }) => {
     );
 }
 
-export default UserTextItem;
+export default UserTextEntry;

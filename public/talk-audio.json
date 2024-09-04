@@ -1,29 +1,29 @@
 {
 	"conversation": [
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "Hello! this is the first text message"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "react-talk-ui is a conversational user interface"
 		},
 		{
-			"type": "audio",
+			"type": "bot-audio",
 			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.01.mp3",
 			"audioName": "...able to play audio"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "which mixes different strem of talk"
 		},
 		{
-			"type": "audio",
+			"type": "bot-audio",
 			"audioUrl": "https://d38nvwmjovqyq6.cloudfront.net/va90web25003/companions/Foundations%20of%20Rock/13.02.mp3",
 			"audioName": "... even 2 audio"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "is better chat or talk"
 		}
 	]

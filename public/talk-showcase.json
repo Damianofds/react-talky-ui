@@ -1,19 +1,19 @@
 {
 	"conversation": [
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "Hey there! I'm your personal assistant, I will memorize any data for you!"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "🗣️ record a voice note"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "📃 upload any of your document as pdf"
 		},
 		{
-			"type": "stream",
+			"type": "bot-text",
 			"text": "challenge me asking question of them 🎯"
 		}
 	]

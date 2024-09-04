@@ -1,8 +1,8 @@
 import ElaboratingIcon from "../icons/ElaboratingIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
-import { UploadStatus } from "./ChatItemConfig";
+import { UploadStatus } from "./ChatEntryState";
 
-interface UserAudioItemProps {
+interface UserAudioEntryProps {
     id: string;
     audioUrl: string;
     audioName: string;
@@ -10,7 +10,7 @@ interface UserAudioItemProps {
     status: UploadStatus;
 }
 
-const UserAudioItem: React.FC<UserAudioItemProps> = ({
+const UserAudioEntry: React.FC<UserAudioEntryProps> = ({
     id,
     audioUrl,
     audioName,
@@ -49,4 +49,4 @@ const UserAudioItem: React.FC<UserAudioItemProps> = ({
     );
 };
 
-export default UserAudioItem;
+export default UserAudioEntry;

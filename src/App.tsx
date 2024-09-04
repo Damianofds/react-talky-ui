@@ -19,8 +19,20 @@ function App() {
                     }}>
                     <TalkyUI
                         initTalkURL="/talk-showcase.json"
-                        //themeColor='red'
-                        // fontSize='15px'
+                    />
+                </div>
+                <br /><br /><br /><br /><br /><br />
+                <hr />
+                <div
+                    style={{
+                        width: "350px",
+                        height: "400px",
+                        margin: "0 auto"
+                    }}>
+                    <TalkyUI
+                        initTalkURL="/talk-audio.json"
+                        themeColor='orange'
+                        fontSize='10px'
                     />
                 </div>
             </div>

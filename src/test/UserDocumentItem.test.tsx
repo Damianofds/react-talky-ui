@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import UserDocumentItem from "../components/chat-items/UserDocumentItem";
-import { UploadStatus } from "../components/chat-items/ChatItemConfig";
+import UserDocumentItem from "../components/chat-entries/UserDocumentEntry";
+import { UploadStatus } from "../components/chat-entries/ChatEntryState";
 import { describe, test, expect, vi } from "vitest";
 
 vi.mock("../hooks/useLoadChatHistory", () => ({
