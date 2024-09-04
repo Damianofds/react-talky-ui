@@ -1,8 +1,8 @@
-import { ChatEntryState } from "./chat-entries/ChatEntryState";
+import { ChatEntryState } from "./chatbox-entries/ChatEntryState";
 import { CirclularStack } from "./utils/CircularStack";
-import DocumentSubmit from "./DocumentSubmit";
-import MessageSubmit from "./MessageSubmit";
-import AudioSubmit from "./AudioSubmit";
+import DocumentSubmit from "./inputbox-submits/DocumentSubmit";
+import MessageSubmit from "./inputbox-submits/MessageSubmit";
+import AudioSubmit from "./inputbox-submits/AudioSubmit";
 import { useState } from "react";
 
 interface InputBoxProps {

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Record: React.FC<IconProps> = ({
+const MicrophoneIcon: React.FC<IconProps> = ({
     width = "24px",
     height = "24px",
     color = "white",
@@ -26,4 +26,4 @@ const Record: React.FC<IconProps> = ({
     );
 };
 
-export default Record;
+export default MicrophoneIcon;

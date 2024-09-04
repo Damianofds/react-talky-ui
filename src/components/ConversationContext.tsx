@@ -1,9 +1,9 @@
 import { createContext } from "react";
 
-interface ConversationContextType {
-    switchConversation: (newConversationUrl: string) => void;
+interface BotTalkContextType {
+    switchBotTalk: (newTalkUrl: string) => void;
 }
 
-export const ConversationContext = createContext<ConversationContextType>({
-    switchConversation: () => {},
+export const BotTalkContext = createContext<BotTalkContextType>({
+    switchBotTalk: () => {},
 });

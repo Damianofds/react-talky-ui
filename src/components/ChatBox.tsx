@@ -4,18 +4,18 @@ import {
     ChatEntryState,
     UploadEntryState,
     UploadStatus,
-} from "./chat-entries/ChatEntryState";
-import UserAudioItem from "./chat-entries/UserAudioEntry";
-import ButtonItem from "./chat-entries/BotButtonEntry";
-import UserTextItem from "./chat-entries/UserTextEntry";
-import StreamItem from "./chat-entries/BotTextEntry";
+} from "./chatbox-entries/ChatEntryState";
+import UserAudioItem from "./chatbox-entries/UserAudioEntry";
+import ButtonItem from "./chatbox-entries/BotButtonEntry";
+import UserTextItem from "./chatbox-entries/UserTextEntry";
+import StreamItem from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
-import { ConversationContext } from "./ConversationContext";
+import { BotTalkContext } from "./ConversationContext";
 import ClearStorageButton from "./utils/ClearStorageButton";
 import OriginVisualizer from "./utils/OriginVisualizer";
-import AudioItem from "./chat-entries/BotAudioEntry";
-import UserDocumentItem from "./chat-entries/UserDocumentEntry";
+import AudioItem from "./chatbox-entries/BotAudioEntry";
+import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -237,9 +237,9 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     };
 
     return (
-        <ConversationContext.Provider
+        <BotTalkContext.Provider
             value={{
-                switchConversation: switchTalk,
+                switchBotTalk: switchTalk,
             }}>
             <div
                 ref={chatBoxRef}
@@ -286,7 +286,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     <ClearStorageButton color={themeColor || ""} />
                 </span>
             </div>
-        </ConversationContext.Provider>
+        </BotTalkContext.Provider>
     );
 };
 

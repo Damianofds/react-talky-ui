@@ -1,6 +1,6 @@
 import React from "react";
 
-const SandClock: React.FC<IconProps> = ({
+const SandClockIcon: React.FC<IconProps> = ({
     width = "24px",
     height = "24px",
     color = "white",
@@ -28,4 +28,4 @@ L15.3,20.3z"
     );
 };
 
-export default SandClock;
+export default SandClockIcon;

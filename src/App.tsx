@@ -9,7 +9,7 @@ function App() {
                 <div>A react/typescript conversational user interface</div>
                 <div>The frontend for your AI buddy 🦜</div>
                 <br />
-                <div
+                {/* <div
                     style={{
                         width: "80vw",
                         minWidth: "355px",
@@ -20,7 +20,7 @@ function App() {
                     <TalkyUI
                         initTalkURL="/talk-showcase.json"
                     />
-                </div>
+                </div> */}
                 <br /><br /><br /><br /><br /><br />
                 <hr />
                 <div

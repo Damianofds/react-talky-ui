@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import { useState } from "react";
-import { BotTextEntryState } from "../components/chat-entries/ChatEntryState";
+import { BotTextEntryState } from "../components/chatbox-entries/ChatEntryState";
 import {
     isPlaceholderSettingsValue,
     talkyDelay,

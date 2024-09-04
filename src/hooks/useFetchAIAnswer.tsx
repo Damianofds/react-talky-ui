@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BotTextEntryState } from "../components/chat-entries/ChatEntryState";
+import { BotTextEntryState } from "../components/chatbox-entries/ChatEntryState";
 import { isPlaceholderSettingsValue } from "../components/utils/FunctionUtilities";
 
 const API_URL = import.meta.env.TALKY_QA_API_URL;

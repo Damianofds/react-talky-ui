@@ -1,4 +1,4 @@
-import { ChatEntryState } from "../components/chat-entries/ChatEntryState";
+import { ChatEntryState } from "../components/chatbox-entries/ChatEntryState";
 
 const useLoadChatHistoty = () => {
     enum Storage {

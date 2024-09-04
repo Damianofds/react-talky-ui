@@ -2,10 +2,10 @@ import { render, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, test, beforeEach, afterEach, vi, expect } from "vitest";
 import ChatBox from "../components/ChatBox";
-import { ConversationContext } from "../components/ConversationContext";
+import { BotTalkContext } from "../components/ConversationContext";
 import useBotTalk from "../hooks/useBotTalk";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
-import { UserTextEntryState } from "../components/chat-entries/ChatEntryState";
+import { UserTextEntryState } from "../components/chatbox-entries/ChatEntryState";
 
 vi.mock("../hooks/useBotTalk");
 vi.mock("../hooks/useLoadChatHistory");
@@ -78,10 +78,10 @@ describe("ChatBox Component", () => {
         const mockSwitchConversation = vi.fn();
 
         render(
-            <ConversationContext.Provider
-                value={{ switchConversation: mockSwitchConversation }}>
+            <BotTalkContext.Provider
+                value={{ switchBotTalk: mockSwitchConversation }}>
                 <ChatBox {...defaultProps} />
-            </ConversationContext.Provider>
+            </BotTalkContext.Provider>
         );
 
         act(() => {

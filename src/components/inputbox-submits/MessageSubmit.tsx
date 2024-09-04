@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useRouteInputBoxValue from "../hooks/useUserMessageSubmit";
-import { CirclularStack, get } from "./utils/CircularStack";
-import { ChatEntryState } from "./chat-entries/ChatEntryState";
-import SandClock from "./icons/SandClock";
-import Send from "./icons/Send";
+import useRouteInputBoxValue from "../../hooks/useUserMessageSubmit";
+import { CirclularStack, get } from "../utils/CircularStack";
+import { ChatEntryState } from "../chatbox-entries/ChatEntryState";
+import SandClock from "../icons/SandClockIcon";
+import Send from "../icons/SendIcon";
 
 interface MessageSubmitProps {
     inputRetriever: (answer: ChatEntryState) => void;

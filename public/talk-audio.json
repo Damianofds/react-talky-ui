@@ -23,8 +23,9 @@
 			"audioName": "... even 2 audio"
 		},
 		{
-			"type": "bot-text",
-			"text": "is better chat or talk"
+			"type": "bot-button",
+            "conversationUrl": "/talk-option1.json",
+			"buttonLabel": "check this option"
 		}
 	]
 }

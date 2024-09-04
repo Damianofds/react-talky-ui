@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import UserAudioItem from "../components/chat-entries/UserAudioEntry";
-import { UploadStatus } from "../components/chat-entries/ChatEntryState";
+import UserAudioItem from "../components/chatbox-entries/UserAudioEntry";
+import { UploadStatus } from "../components/chatbox-entries/ChatEntryState";
 import { describe, expect, test } from "vitest";
 
 describe("UserAudioItem component", () => {

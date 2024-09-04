@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ButtonItem from "../components/chat-entries/BotButtonEntry";
-import { ConversationContext } from "../components/ConversationContext";
+import ButtonItem from "../components/chatbox-entries/BotButtonEntry";
+import { BotTalkContext } from "../components/ConversationContext";
 import "@testing-library/jest-dom";
 import { afterEach, describe, expect, test, vi } from "vitest";
 
@@ -16,10 +16,10 @@ describe("ButtonItem Component", () => {
 
     const renderWithContext = (props = defaultProps) => {
         return render(
-            <ConversationContext.Provider
-                value={{ switchConversation: mockSwitchConversation }}>
+            <BotTalkContext.Provider
+                value={{ switchBotTalk: mockSwitchConversation }}>
                 <ButtonItem {...props} />
-            </ConversationContext.Provider>
+            </BotTalkContext.Provider>
         );
     };
 

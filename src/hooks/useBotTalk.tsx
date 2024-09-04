@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
     BotTextEntryState,
     ChatEntryState,
-} from "../components/chat-entries/ChatEntryState";
+} from "../components/chatbox-entries/ChatEntryState";
 
 const useBotTalk = (jsonUrl: string) => {
     const [conversation, setConversation] = useState<ChatEntryState[]>([]);

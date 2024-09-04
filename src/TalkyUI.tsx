@@ -1,7 +1,7 @@
 import { useState } from "react";
 import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
-import { ChatEntryState } from "./components/chat-entries/ChatEntryState";
+import { ChatEntryState } from "./components/chatbox-entries/ChatEntryState";
 import {
     CirclularStack,
     createCircularStack,

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Send: React.FC<IconProps> = ({
+const SendIcon: React.FC<IconProps> = ({
     width = "24px",
     height = "24px",
     color = "white",
@@ -23,4 +23,4 @@ const Send: React.FC<IconProps> = ({
     );
 };
 
-export default Send;
+export default SendIcon;

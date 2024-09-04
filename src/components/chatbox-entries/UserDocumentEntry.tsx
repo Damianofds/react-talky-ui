@@ -1,7 +1,7 @@
 import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
 import ElaboratingIcon from "../icons/ElaboratingIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
-import PdfIcon from "../icons/PDF";
+import PdfIcon from "../icons/PDFIcon";
 import { UploadStatus } from "./ChatEntryState";
 
 interface UserDocumentEntryProps {

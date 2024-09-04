@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { ConversationContext } from "../ConversationContext";
+import { BotTalkContext } from "../ConversationContext";
 
 interface BotButtonEntryProps {
     id: string;
@@ -14,7 +14,7 @@ const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
     buttonLabel,
     themeColor = "#4ea699",
 }) => {
-    const { switchConversation } = useContext(ConversationContext);
+    const { switchBotTalk: switchConversation } = useContext(BotTalkContext);
     const [isFocused, setIsFocused] = useState(false);
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
