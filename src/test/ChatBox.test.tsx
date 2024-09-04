@@ -100,7 +100,7 @@ describe("ChatBox Component", () => {
             text: "New AI message",
         };
 
-        render(<ChatBox {...defaultProps} message={newMessage} />);
+        render(<ChatBox {...defaultProps} chatMessage={newMessage} />);
 
         expect(screen.getByText("New AI message")).toBeInTheDocument();
     });

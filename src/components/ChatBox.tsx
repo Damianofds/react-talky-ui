@@ -19,7 +19,7 @@ import UserDocumentItem from "./chat-items/UserDocumentItem";
 
 interface ChatBoxProps {
     initTalkURL: string;
-    message?: ChatItemConfig;
+    chatMessage?: ChatItemConfig;
     updateStatus?: string | undefined;
     fontSize?: string;
     themeColor?: string;
@@ -27,7 +27,7 @@ interface ChatBoxProps {
 
 const ChatBox: React.FC<ChatBoxProps> = ({
     initTalkURL,
-    message,
+    chatMessage,
     updateStatus,
     fontSize,
     themeColor,
@@ -80,24 +80,23 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     };
 
     const handleAIMessage = () => {
-        const item = message;
-        if (item && !((item as StreamItemConfig).text == "  undefined")) {
-            // TODO This really sucks
-            if (item.type == "stream") {
+        // TODO This condition really sucks
+        if (chatMessage && !((chatMessage as StreamItemConfig).text == "  undefined")) {
+            if (chatMessage.type == "stream") {
                 if (isStreamingStarted) {
-                    setOrigin(item.origin);
+                    setOrigin(chatMessage.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
                 }
-                setRenderedChatItems(prev => [...prev, item]);
+                setRenderedChatItems(prev => [...prev, chatMessage]);
                 saveLocalChatHistory(renderedChatItems);
-                if (item.isCompleted) {
+                if (chatMessage.isCompleted) {
                     setStreamingStarted(false);
                     setShowLoader(true);
                 } else {
                     setStreamingStarted(true);
                 }
             } else {
-                setRenderedChatItems(prev => [...prev, item]);
+                setRenderedChatItems(prev => [...prev, chatMessage]);
                 saveLocalChatHistory(renderedChatItems);
                 setStreamingStarted(false);
                 setShowLoader(true);
@@ -149,18 +148,18 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 
     useEffect(() => {
         setTimeout(scrollDownChat, 0);
-    }, [renderedChatItems, message]);
+    }, [renderedChatItems, chatMessage]);
 
     useEffect(() => {
         const messageIsNotEmpty =
-            message &&
-            ((message as StreamItemConfig).text != "" ||
-                (message as BaseUploadItemConfig).status == "processing");
+            chatMessage &&
+            ((chatMessage as StreamItemConfig).text != "" ||
+                (chatMessage as BaseUploadItemConfig).status == "processing");
         if (messageIsNotEmpty) {
             setShowLoader(false);
             handleAIMessage();
         }
-    }, [message]);
+    }, [chatMessage]);
 
     useEffect(() => {
         if (updateStatus) {

@@ -15,30 +15,22 @@ interface TalkUIProps {
     themeColor?: string;
 }
 
-export type MessageType = "input" | "stream";
-
 const TalkyUI: React.FC<TalkUIProps> = ({
     initTalkURL,
     fontSize = "20px",
     themeColor = "#4ea699",
 }) => {
-    const [inputBoxText, setInputBoxText] = useState<ChatItemConfig>();
-    const [entrySuccess, setEntrySuccess] = useState<string>();
-    const [inputBoxHistory, setInputBoxHistory] = useState<
+    const [chatMessage, setChatMessage] = useState<ChatItemConfig>();
+    const [botStatusUpdate, setBotStatusUpdate] = useState<string>();
+    const [chatMessageUserHistory, setChatMessageUserHistory] = useState<
         CirclularStack<string>
-    >(createCircularStack(5));
+    >(createCircularStack(10));
 
-    const setInputBoxContent = (msg: ChatItemConfig) => {
-        setInputBoxText(msg);
-    };
-
-    const setSuccess = (id: string) => {
-        setEntrySuccess(id);
-    };
-
-    if (inputBoxText?.type == "text-input") {
-        if (get(inputBoxHistory, 0) != inputBoxText.text) {
-            setInputBoxHistory(push(inputBoxHistory, inputBoxText.text));
+    if (chatMessage?.type == "text-input") {
+        if (get(chatMessageUserHistory, 0) != chatMessage.text) {
+            setChatMessageUserHistory(
+                push(chatMessageUserHistory, chatMessage.text)
+            );
         }
     }
 
@@ -46,15 +38,15 @@ const TalkyUI: React.FC<TalkUIProps> = ({
         <>
             <ChatBox
                 initTalkURL={initTalkURL}
-                message={inputBoxText}
+                chatMessage={chatMessage}
                 themeColor={themeColor}
                 fontSize={fontSize}
-                updateStatus={entrySuccess}
+                updateStatus={botStatusUpdate}
             />
             <InputBox
-                inputRetriever={setInputBoxContent}
-                successSetter={setSuccess}
-                inputBoxHistory={inputBoxHistory}
+                setChatMessage={setChatMessage}
+                setBotStatusUpdate={setBotStatusUpdate}
+                inputBoxHistory={chatMessageUserHistory}
                 conversationRouteKeyword="conversation"
                 qaRouteKeyword="embeddings"
                 themeColor={themeColor}

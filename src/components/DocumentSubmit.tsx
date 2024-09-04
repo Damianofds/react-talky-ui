@@ -5,14 +5,14 @@ import useUserDocumentSubmit from "../hooks/useUserDocumentSubmit";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 
 interface DocumentSubmitProps {
-    inputRetriever: (answer: ChatItemConfig) => void;
-    successSetter: (id: string) => void;
+    setChatMessage: (answer: ChatItemConfig) => void;
+    setBotStatusUpdate: (id: string) => void;
     themeColor: string;
 }
 
 const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
-    inputRetriever,
-    successSetter,
+    setChatMessage,
+    setBotStatusUpdate,
 }) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { /*uploadStatus,*/ uploadFile } = useUserDocumentSubmit();
@@ -25,7 +25,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
         if (file) {
             const documentId = "saved-thumbnail-" + Date.now();
             if (file.type === "application/pdf") {
-                inputRetriever({
+                setChatMessage({
                     id: documentId,
                     type: "document-input",
                     isPdf: true,
@@ -36,7 +36,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
             } else if (file.type.startsWith("image/")) {
                 resizeImage(file, 100, 140, resizedBase64 => {
                     saveBinaryLocalChat(documentId, resizedBase64);
-                    inputRetriever({
+                    setChatMessage({
                         id: documentId,
                         type: "document-input",
                         isPdf: false,
@@ -47,7 +47,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                 });
             }
             await uploadFile(file);
-            successSetter(documentId);
+            setBotStatusUpdate(documentId);
         }
     };
 

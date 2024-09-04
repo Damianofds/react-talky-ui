@@ -6,8 +6,8 @@ import AudioSubmit from "./AudioSubmit";
 import { useState } from "react";
 
 interface InputBoxProps {
-    inputRetriever: (answer: ChatItemConfig) => void;
-    successSetter: (id: string) => void;
+    setChatMessage: (answer: ChatItemConfig) => void;
+    setBotStatusUpdate: (id: string) => void;
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
     fontSize?: string;
@@ -16,8 +16,8 @@ interface InputBoxProps {
 }
 
 const InputBox: React.FC<InputBoxProps> = ({
-    inputRetriever,
-    successSetter,
+    setChatMessage,
+    setBotStatusUpdate,
     conversationRouteKeyword,
     qaRouteKeyword,
     fontSize,
@@ -31,7 +31,7 @@ const InputBox: React.FC<InputBoxProps> = ({
         <div>
             <div style={{ display: "flex", position: "relative" }}>
                 <MessageSubmit
-                    inputRetriever={inputRetriever}
+                    inputRetriever={setChatMessage}
                     inputBoxHistory={inputBoxHistory}
                     conversationRouteKeyword={conversationRouteKeyword}
                     qaRouteKeyword={qaRouteKeyword}
@@ -43,13 +43,13 @@ const InputBox: React.FC<InputBoxProps> = ({
                 {showBinarySubmitButtons && (
                     <>
                         <AudioSubmit
-                            inputRetriever={inputRetriever}
-                            successSetter={successSetter}
+                            setChatMessage={setChatMessage}
+                            setBotStatusUpdate={setBotStatusUpdate}
                             themeColor={themeColor}
                         />
                         <DocumentSubmit
-                            inputRetriever={inputRetriever}
-                            successSetter={successSetter}
+                            setChatMessage={setChatMessage}
+                            setBotStatusUpdate={setBotStatusUpdate}
                             themeColor={themeColor}
                         />
                     </>

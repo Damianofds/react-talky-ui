@@ -4,14 +4,14 @@ import Record from "./icons/Record";
 import useUserAudioSubmit from "../hooks/useUserAudioSubmit";
 
 interface VoiceRecorderProps {
-    inputRetriever: (answer: ChatItemConfig) => void;
-    successSetter: (id: string) => void;
+    setChatMessage: (answer: ChatItemConfig) => void;
+    setBotStatusUpdate: (id: string) => void;
     themeColor: string;
 }
 
 const AudioSubmit: React.FC<VoiceRecorderProps> = ({
-    inputRetriever,
-    successSetter,
+    setChatMessage,
+    setBotStatusUpdate,
 }) => {
     const [recording, setRecording] = useState<boolean>(false);
     const audioStreamRef = useRef<MediaStream | null>(null);
@@ -73,7 +73,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                     type: "audio/webm",
                 });
                 const documentId = "init-" + Date.now();
-                inputRetriever({
+                setChatMessage({
                     id: documentId,
                     type: "audio-input",
                     audioUrl: newAudioURL,
@@ -83,7 +83,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                 window.removeEventListener("mouseup", stopRecording);
                 window.removeEventListener("touchend", stopRecording);
                 await uploadAudio(audioFile);
-                successSetter(documentId);
+                setBotStatusUpdate(documentId);
             };
         }
     };
