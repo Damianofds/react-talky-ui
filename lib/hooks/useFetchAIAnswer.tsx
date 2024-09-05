@@ -5,8 +5,7 @@ import { isPlaceholderSettingsValue } from "../components/utils/FunctionUtilitie
 import { ConfigurationContext } from '../components/ConfigurationContext';
 
 const useFetchAIAnswer = (question: string) => {
-    const API_URL = useContext(ConfigurationContext).qaUrl;
-    console.log('API_URL - ' + API_URL);
+    const API_URL = useContext(ConfigurationContext).qaUrl || '';
     const [aiAnswer, setAnswer] = useState<BotTextEntryState>({
         id: "qa-" + Date.now(),
         text: "",

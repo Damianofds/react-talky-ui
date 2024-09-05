@@ -11,8 +11,7 @@ interface UploadStatus {
 }
 
 const useUserDocumentSubmit = () => {
-    const DOCUMENT_UPLOAD_API_URL = useContext(ConfigurationContext).documentUploadurl;
-    console.log('DOCUMENT_UPLOAD_API_URL - ' + DOCUMENT_UPLOAD_API_URL);
+    const DOCUMENT_UPLOAD_API_URL = useContext(ConfigurationContext).documentUploadurl || '';
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
         progress: 0,
         success: false,

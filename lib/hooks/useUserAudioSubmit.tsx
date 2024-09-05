@@ -11,8 +11,7 @@ interface UploadStatus {
 }
 
 const useUserAudioSubmit = () => {
-    const AUDIO_UPLOAD_API_URL = useContext(ConfigurationContext).audioUploadUrl;
-    console.log('AUDIO_UPLOAD_API_URL - ' + AUDIO_UPLOAD_API_URL);
+    const AUDIO_UPLOAD_API_URL = useContext(ConfigurationContext).audioUploadUrl || '';
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
         progress: 0,
         success: false,

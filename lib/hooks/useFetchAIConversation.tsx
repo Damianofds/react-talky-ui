@@ -10,8 +10,7 @@ import { ConfigurationContext } from "../components/ConfigurationContext";
 const TOKEN_DELAY = 100;
 
 const useFetchAIConversation = (question: string) => {
-    const OPENAI_API_KEY = useContext(ConfigurationContext).openaiKey;
-    console.log('OPENAI_API_KEY - ' + OPENAI_API_KEY);
+    const OPENAI_API_KEY = useContext(ConfigurationContext).openaiKey || '';
     const [aiConversation, setAnswer] = useState<BotTextEntryState>({
         id: "conversation-" + Date.now(),
         text: "",
