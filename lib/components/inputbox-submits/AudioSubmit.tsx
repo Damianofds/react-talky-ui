@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
 import Record from "../icons/MicrophoneIcon";
-import useUserAudioSubmit from "../../hooks/useUserAudioSubmit";
+import useUserAudioSubmit from "../../../lib/hooks/useUserAudioSubmit";
 
 interface VoiceRecorderProps {
     setChatMessage: (answer: ChatEntryState) => void;

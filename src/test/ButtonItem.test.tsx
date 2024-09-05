@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ButtonItem from "../components/chatbox-entries/BotButtonEntry";
-import { BotTalkContext } from "../components/ConversationContext";
+import ButtonItem from "../../lib/components/chatbox-entries/BotButtonEntry";
+import { BotTalkContext } from "../../lib/components/BotTalkContext";
 import "@testing-library/jest-dom";
 import { afterEach, describe, expect, test, vi } from "vitest";
 

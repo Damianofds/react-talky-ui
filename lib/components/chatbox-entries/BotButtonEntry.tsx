@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { BotTalkContext } from "../ConversationContext";
+import { BotTalkContext } from "../BotTalkContext";
 
 interface BotButtonEntryProps {
     id: string;

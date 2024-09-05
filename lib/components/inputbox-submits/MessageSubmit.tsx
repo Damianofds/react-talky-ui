@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useRouteInputBoxValue from "../../hooks/useUserMessageSubmit";
+import useRouteInputBoxValue from "../../../lib/hooks/useUserMessageSubmit";
 import { CirclularStack, get } from "../utils/CircularStack";
 import { ChatEntryState } from "../chatbox-entries/ChatEntryState";
 import SandClock from "../icons/SandClockIcon";

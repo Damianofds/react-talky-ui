@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
+import useLoadChatHistoty from "../../../lib/hooks/useLoadChatHistory";
 
 interface ClearStorageButtonProps {
     color: string;

@@ -11,7 +11,7 @@ import UserTextItem from "./chatbox-entries/UserTextEntry";
 import StreamItem from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
-import { BotTalkContext } from "./ConversationContext";
+import { BotTalkContext } from "./BotTalkContext";
 import ClearStorageButton from "./utils/ClearStorageButton";
 import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";

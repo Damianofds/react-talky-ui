@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
 import Upload from "../icons/FileUploadIcon";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
-import useUserDocumentSubmit from "../../hooks/useUserDocumentSubmit";
-import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
+import useUserDocumentSubmit from "../../../lib/hooks/useUserDocumentSubmit";
+import useLoadChatHistoty from "../../../lib/hooks/useLoadChatHistory";
 
 interface DocumentSubmitProps {
     setChatMessage: (answer: ChatEntryState) => void;

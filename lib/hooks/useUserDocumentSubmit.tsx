@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ConfigurationContext } from "../components/ConfigurationContext";
 
-const DOCUMENT_UPLOAD_API_URL = import.meta.env.TALKY_DOCUMENT_UPLOAD_API_URL;
 const DOCUMENT_UPLOAD_FORM_DATA_KEY = "document";
 
 interface UploadStatus {
@@ -11,6 +11,8 @@ interface UploadStatus {
 }
 
 const useUserDocumentSubmit = () => {
+    const DOCUMENT_UPLOAD_API_URL = useContext(ConfigurationContext).documentUploadurl;
+    console.log('DOCUMENT_UPLOAD_API_URL - ' + DOCUMENT_UPLOAD_API_URL);
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
         progress: 0,
         success: false,

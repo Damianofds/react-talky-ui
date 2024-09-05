@@ -1,25 +1,28 @@
 import OpenAI from "openai";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BotTextEntryState } from "../components/chatbox-entries/ChatEntryState";
 import {
     isPlaceholderSettingsValue,
     talkyDelay,
 } from "../components/utils/FunctionUtilities";
-const OPENAI_API_KEY = import.meta.env.TALKY_OPENAI_API_KEY;
+import { ConfigurationContext } from "../components/ConfigurationContext";
 
 const TOKEN_DELAY = 100;
-const openai = new OpenAI({
-    apiKey: OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-});
 
 const useFetchAIConversation = (question: string) => {
+    const OPENAI_API_KEY = useContext(ConfigurationContext).openaiKey;
+    console.log('OPENAI_API_KEY - ' + OPENAI_API_KEY);
     const [aiConversation, setAnswer] = useState<BotTextEntryState>({
         id: "conversation-" + Date.now(),
         text: "",
         type: "bot-text",
         isCompleted: false,
         origin: "gpt-4o-mini",
+    });
+
+    const openai = new OpenAI({
+        apiKey: OPENAI_API_KEY,
+        dangerouslyAllowBrowser: true,
     });
 
     const fetchAIConversation = async () => {

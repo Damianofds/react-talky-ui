@@ -1,14 +1,14 @@
 import { render, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, test, beforeEach, afterEach, vi, expect } from "vitest";
-import ChatBox from "../components/ChatBox";
-import { BotTalkContext } from "../components/ConversationContext";
-import useBotTalk from "../hooks/useBotTalk";
-import useLoadChatHistoty from "../hooks/useLoadChatHistory";
-import { UserTextEntryState } from "../components/chatbox-entries/ChatEntryState";
+import ChatBox from "../../lib/components/ChatBox";
+import { BotTalkContext } from "../../lib/components/BotTalkContext";
+import useBotTalk from "../../lib/hooks/useBotTalk";
+import useLoadChatHistoty from "../../lib/hooks/useLoadChatHistory";
+import { UserTextEntryState } from "../../lib/components/chatbox-entries/ChatEntryState";
 
-vi.mock("../hooks/useBotTalk");
-vi.mock("../hooks/useLoadChatHistory");
+vi.mock("../../lib/hooks/useBotTalk");
+vi.mock("../../lib/hooks/useLoadChatHistory");
 
 describe("ChatBox Component", () => {
     const mockUseBotTalk = useBotTalk as ReturnType<typeof vi.fn>;

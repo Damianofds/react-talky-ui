@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ConfigurationContext } from "../components/ConfigurationContext";
 
-const DOCUMENT_UPLOAD_API_URL = import.meta.env.TALKY_AUDIO_UPLOAD_API_URL;
-const DOCUMENT_UPLOAD_FORM_DATA_KEY = "audio1";
+const AUDIO_UPLOAD_FORM_DATA_KEY = "audio1";
 
 interface UploadStatus {
     progress: number;
@@ -11,6 +11,8 @@ interface UploadStatus {
 }
 
 const useUserAudioSubmit = () => {
+    const AUDIO_UPLOAD_API_URL = useContext(ConfigurationContext).audioUploadUrl;
+    console.log('AUDIO_UPLOAD_API_URL - ' + AUDIO_UPLOAD_API_URL);
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
         progress: 0,
         success: false,
@@ -20,10 +22,10 @@ const useUserAudioSubmit = () => {
 
     const uploadAudio = async (file: File) => {
         const formData = new FormData();
-        formData.append(DOCUMENT_UPLOAD_FORM_DATA_KEY, file);
+        formData.append(AUDIO_UPLOAD_FORM_DATA_KEY, file);
 
         try {
-            const response = await fetch(DOCUMENT_UPLOAD_API_URL, {
+            const response = await fetch(AUDIO_UPLOAD_API_URL, {
                 method: "POST",
                 body: formData,
             });

@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import InputBox from "../components/InputBox";
+import InputBox from "../../lib/components/InputBox";
 import "@testing-library/jest-dom";
-import { createCircularStack } from "../components/utils/CircularStack";
+import { createCircularStack } from "../../lib/components/utils/CircularStack";
 
-vi.mock("../components/inputbox-submits/MessageSubmit", () => ({
+vi.mock("../../lib/components/inputbox-submits/MessageSubmit", () => ({
   default: ({ inputRetriever }: any) => (
     <button onClick={() => inputRetriever({ id: "123", text: "message" })}>
       MessageSubmit
@@ -12,7 +12,7 @@ vi.mock("../components/inputbox-submits/MessageSubmit", () => ({
   ),
 }));
 
-vi.mock("../components/inputbox-submits/AudioSubmit", () => ({
+vi.mock("../../lib/components/inputbox-submits/AudioSubmit", () => ({
   default: ({ setChatMessage }: any) => (
     <button onClick={() => setChatMessage({ id: "456", text: "audio" })}>
       AudioSubmit
@@ -20,7 +20,7 @@ vi.mock("../components/inputbox-submits/AudioSubmit", () => ({
   ),
 }));
 
-vi.mock("../components/inputbox-submits/DocumentSubmit", () => ({
+vi.mock("../../lib/components/inputbox-submits/DocumentSubmit", () => ({
   default: ({ setChatMessage }: any) => (
     <button onClick={() => setChatMessage({ id: "789", text: "document" })}>
       DocumentSubmit
