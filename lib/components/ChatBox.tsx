@@ -12,7 +12,6 @@ import StreamItem from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
 import { BotTalkContext } from "./BotTalkContext";
-import ClearStorageButton from "./utils/ClearStorageButton";
 import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
@@ -281,9 +280,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         marginLeft: "5%",
                     }}>
                     <OriginVisualizer origin={origin || "N/A"} />
-                </span>
-                <span style={{ width: "100px", textAlign: "left" }}>
-                    <ClearStorageButton color={themeColor || ""} />
                 </span>
             </div>
         </BotTalkContext.Provider>

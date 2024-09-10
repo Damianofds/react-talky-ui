@@ -1,5 +1,6 @@
 import "./App.css";
 import TalkyUI from "../lib/TalkyUI";
+import ClearStorageButton from "../lib/components/utils/ClearStorageButton";
 
 const backendConfig = {
     openaiKey: import.meta.env.TALKY_OPENAI_API_KEY,
@@ -16,6 +17,9 @@ function App() {
                 <div>A react/typescript conversational user interface</div>
                 <div>The frontend for your AI buddy 🦜</div>
                 <br />
+                <span style={{ width: "100px", textAlign: "left" }}>
+                    <ClearStorageButton color={"#000000"} />
+                </span>
                 <div
                     style={{
                         width: "80vw",
