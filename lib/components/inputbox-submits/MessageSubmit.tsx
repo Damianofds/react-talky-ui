@@ -47,6 +47,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
     const handleKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter" && inputValue != "") {
             setInput(inputValue);
+            setInputValue("");
             inputRetriever({
                 id: "user-text-" + Date.now(),
                 text: inputValue,
@@ -81,6 +82,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
             keywordRouting(input, conversationRouteKeyword, qaRouteKeyword);
         } else {
             setInput(inputValue);
+            setInputValue("");
             inputRetriever({
                 id: "user-text-" + Date.now(),
                 text: inputValue,
@@ -94,8 +96,8 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
         if (answer) {
             inputRetriever(answer);
         }
-        setIsLoading(false);
         setInputValue("");
+        setIsLoading(false);
         showBinarySubmitButtons(true);
     }, [answer]);
 
@@ -113,7 +115,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
                 onChange={handleInputChange}
                 onFocus={handleOnFocus}
                 disabled={isLoading}
-                placeholder="Type your question!"
+                placeholder={isLoading ? "waiting for response..." : "Type your question!"}
                 onKeyDown={handleKeyPressed}
                 style={{
                     border: "3px solid #ccc",
@@ -130,7 +132,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
                     paddingLeft: "20px",
                 }}
             />
-            {inputValue && (
+            {(inputValue || isLoading) && (
                 <div style={{ position: "relative", width: "50px" }}>
                     <button
                         onClick={processInput}
