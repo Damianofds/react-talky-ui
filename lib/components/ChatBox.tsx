@@ -8,13 +8,14 @@ import {
 import UserAudioItem from "./chatbox-entries/UserAudioEntry";
 import ButtonItem from "./chatbox-entries/BotButtonEntry";
 import UserTextItem from "./chatbox-entries/UserTextEntry";
-import StreamItem from "./chatbox-entries/BotTextEntry";
+import BotTextEntry from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistoty from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
 import { BotTalkContext } from "./BotTalkContext";
 import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
+import Spacer from "./utils/Spacer";
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -184,51 +185,67 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 );
             case "bot-audio":
                 return (
+                    <div>
+                    <Spacer />
                     <AudioItem
                         key={component.id}
                         id={component.id}
                         audioUrl={component.audioUrl}
                         audioName={component.audioName}
                     />
+                    <Spacer />
+                </div>
                 );
             case "bot-text":
                 return (
-                    <StreamItem
-                        key={component.id}
-                        id={component.id}
-                        words={component.text}
-                    />
+                    <div>
+                        <BotTextEntry
+                            key={component.id}
+                            id={component.id}
+                            words={component.text}
+                        />
+                        <Spacer />
+                    </div>
                 );
             case "user-text":
                 return (
-                    <UserTextItem
-                        key={component.id}
-                        id={component.id}
-                        words={component.text}
-                        themeColor={themeColor}
-                    />
+                    <div>
+                        <UserTextItem
+                            key={component.id}
+                            id={component.id}
+                            words={component.text}
+                            themeColor={themeColor}
+                        />
+                        <Spacer />
+                    </div>
                 );
             case "user-document":
                 return (
-                    <UserDocumentItem
-                        key={component.id}
-                        id={component.id}
-                        isPdf={component.isPdf}
-                        documentUrl={component.documentUrl}
-                        documentName={component.documentName}
-                        themeColor={themeColor}
-                        status={component.status}
-                    />
+                    <div>
+                        <UserDocumentItem
+                            key={component.id}
+                            id={component.id}
+                            isPdf={component.isPdf}
+                            documentUrl={component.documentUrl}
+                            documentName={component.documentName}
+                            themeColor={themeColor}
+                            status={component.status}
+                        />
+                        <Spacer />
+                    </div>
                 );
             case "bot-button":
                 return (
-                    <ButtonItem
-                        key={component.id}
-                        id={component.id}
-                        conversationUrl={component.conversationUrl}
-                        buttonLabel={component.buttonLabel}
-                        themeColor={themeColor}
-                    />
+                    <div>
+                        <ButtonItem
+                            key={component.id}
+                            id={component.id}
+                            conversationUrl={component.conversationUrl}
+                            buttonLabel={component.buttonLabel}
+                            themeColor={themeColor}
+                        />
+                        <Spacer />
+                    </div>
                 );
             default:
                 return null;
