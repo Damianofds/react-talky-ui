@@ -14,6 +14,7 @@ const UserTextEntry: React.FC<UserTextEntryProps> = ({ words, themeColor }) => {
                 style={{
                             textAlign: 'left',
                             marginLeft: '35%',
+                            marginRight:'3%',
                             backgroundColor: themeColor || '#4ea699',
                             borderRadius: '20px',
                             padding: '10px',

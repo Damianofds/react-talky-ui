@@ -25,13 +25,25 @@ Import it in your project as dependency with:
 #~/my-ai-bot$ yarn add react-talk-ui
 ```
 
-Or you can clone the repo, install, hot deploy locally, test, and build from source the project with:
+Or you can clone the repo, install the dependencies, run with hot deploy, and test the project with:
 
 ```
 #~/react-talky-ui$ yarn install
 #~/react-talky-ui$ yarn dev
-#~/react-talky-ui$ yarn test --coverage
+#~/react-talky-ui$ yarn test --coverage //creates coverage report in repo root
 #~/react-talky-ui$ yarn build
+```
+
+Build the code as external components library (what you get from npm)
+
+```
+#~/react-talky-ui$ yarn build
+```
+
+Build the code as a demo app (what you see when running yarn dev)
+
+```
+#~/react-talky-ui$ yarn demo
 ```
 
 # Showcase

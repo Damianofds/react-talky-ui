@@ -142,13 +142,13 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
                             paddingLeft: "9px",
                             paddingRight: "9px",
                             marginRight: "1vw",
-                            border: `3px solid ${themeColor}`,
+                            border: isLoading ? `3px solid gray` : `3px solid ${themeColor}`,
                             borderRadius: "25px",
                             outline: "none",
                         }}
                         title="or press enter">
                         {isLoading ? (
-                            <SandClock color={themeColor} />
+                            <SandClock color='gray' />
                         ) : (
                             <Send color={themeColor} />
                         )}

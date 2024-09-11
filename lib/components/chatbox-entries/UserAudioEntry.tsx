@@ -22,6 +22,7 @@ const UserAudioEntry: React.FC<UserAudioEntryProps> = ({
             key={id}
             style={{
                 textAlign: "right",
+                marginRight:'3%',
             }}>
             <audio
                 data-testid="user-audio"
@@ -39,10 +40,10 @@ const UserAudioEntry: React.FC<UserAudioEntryProps> = ({
             />
             <div>
                 {status == UploadStatus.PROCESSING && (
-                    <ElaboratingIcon color="red" />
+                    <ElaboratingIcon color="grey" />
                 )}
                 {status == UploadStatus.SUCCESS && (
-                    <ElaborationSuccessIcon color="red" />
+                    <ElaborationSuccessIcon color={themeColor} />
                 )}
             </div>
         </div>

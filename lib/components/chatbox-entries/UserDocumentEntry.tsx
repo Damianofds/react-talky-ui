@@ -31,8 +31,9 @@ const UserDocumentEntry: React.FC<UserDocumentEntryProps> = ({
             key={id}
             style={{
                 textAlign: "right",
+                marginRight:'3%',
             }}>
-            <figure>
+            {/* <figure> */}
                 {!isPdf && (
                     <img
                         src={document}
@@ -56,16 +57,15 @@ const UserDocumentEntry: React.FC<UserDocumentEntryProps> = ({
                         <PdfIcon width="100" height="200" color="red" />
                     </div>
                 )}
-                <figcaption>
-                    {documentName}&nbsp;&nbsp;&nbsp;
+                <div style={{fontSize: '.6em'}}>
+                    <div>{documentName}{' '}<br/></div>
                     {status == UploadStatus.PROCESSING && (
-                        <ElaboratingIcon color="purple" />
+                        <ElaboratingIcon color="grey" />
                     )}
                     {status == UploadStatus.SUCCESS && (
-                        <ElaborationSuccessIcon color="purple" />
+                        <ElaborationSuccessIcon color={themeColor} />
                     )}
-                </figcaption>
-            </figure>
+                </div>
         </div>
     );
 };

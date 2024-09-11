@@ -84,16 +84,15 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
         <div>
             <button
                 style={{
-                    border: `3px solid purple`,
+                    border: `3px solid blue`,
                     padding: "9px",
-                    color: "purple",
                     borderRadius: "25px",
                     outline: "none",
                     marginRight: "1vw",
                     height: "45px",
                 }}
                 onClick={handleButtonClick}>
-                <Upload color="purple" />
+                <Upload color="blue" />
             </button>
 
             <input
