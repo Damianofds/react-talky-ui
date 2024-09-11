@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
 import Record from "../icons/MicrophoneIcon";
 import useUserAudioSubmit from "../../../lib/hooks/useUserAudioSubmit";
@@ -19,6 +19,22 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingTimeoutRef = useRef<number | null>(null);
     const { /*uploadStatus,*/ uploadAudio } = useUserAudioSubmit();
+
+    const [isPermissionGranted, setIsPermissionGranted] = useState<"granted" | "denied" | "prompt">("prompt");
+
+    const checkMicrophonePermission = async () => {
+        try {
+            const permissionStatus = await navigator.permissions.query({ name: "microphone" as PermissionName });
+            setIsPermissionGranted(permissionStatus.state);
+
+            // Listen for changes in permission status (optional)
+            permissionStatus.onchange = () => {
+                setIsPermissionGranted(permissionStatus.state);
+            };
+        } catch (error) {
+            console.error("Error checking microphone permissions:", error);
+        }
+    };
 
     const startRecording = async () => {
         try {
@@ -42,15 +58,24 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
             window.addEventListener("mouseup", stopRecording);
             window.addEventListener("touchend", stopRecording);
         } catch (err) {
-            alert("mic doesn't work :(");
+            alert("The Microphone doesn't work :(");
             console.error("Error accessing microphone:", err);
         }
     };
 
     const handleMouseDown = () => {
-        recordingTimeoutRef.current = window.setTimeout(() => {
-            startRecording();
-        }, 100);
+        if(isPermissionGranted == "granted"){
+            recordingTimeoutRef.current = window.setTimeout(() => {
+                startRecording();
+            }, 100);
+        } else if (isPermissionGranted == "prompt") {
+            navigator.mediaDevices.getUserMedia({
+                audio: true,
+            });
+        } else{
+            alert("You need to allow the browser to use the microphone");
+        }
+        
     };
 
     const stopRecording = () => {
@@ -87,6 +112,10 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
             };
         }
     };
+
+    useEffect(() => {
+        checkMicrophonePermission();
+    }, []);
 
     return (
         <div style={{ position: "relative", width: "50px" }}>
