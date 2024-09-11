@@ -1,5 +1,5 @@
 {
-  "name": "react-talky-ui-tmp",
+  "name": "react-talky-ui",
   "private": false,
   "type": "module",
   "main": "dist/main.js",
@@ -50,5 +50,5 @@
   "dependencies": {
     "openai": "^4.58.1"
   },
-  "version": "0.0.4"
+  "version": "0.0.1"
 }
