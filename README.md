@@ -15,9 +15,7 @@ A `react` + `typescript` conversational UI for the web.
 
 🏬 **Secure backend user session** COMING SOON
 
-# Development
-
-This project is written in `Typescript`, it uses `React` and it is packaged with `Vite`.
+# Use it as library
 
 Import it in your project as dependency with:
 
@@ -25,7 +23,28 @@ Import it in your project as dependency with:
 #~/my-ai-bot$ yarn add react-talk-ui
 ```
 
-Or you can clone the repo, install the dependencies, run with hot deploy, and test the project with:
+then place the `TalkyUI` component wherever you prefer in your app
+
+```
+import TalkyUI from "../lib/TalkyUI";
+
+<TalkyUI initTalkURL={...}
+    fontSize={...}
+    themeColor={...}
+    backendConfiguration={...}>
+```
+
+## Next.js apps
+
+The entire library need to be reexported as 'client' to have client side rendering.
+
+TODO -> Add example
+
+# Development
+
+This project is written in `Typescript`, it uses `React` and it is packaged with `Vite`.
+
+Clone the repo, install the dependencies, run with hot deploy, and test the project with:
 
 ```
 #~/react-talky-ui$ yarn install
