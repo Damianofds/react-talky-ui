@@ -60,7 +60,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         if (talkCurrentItem.type == "bot-text") {
             setStreamingStarted(true);
         }
-        if (talkCurrentItem.type == "bot-text" && talkCurrentItem.isCompleted) {    
+        if (talkCurrentItem.type == "bot-text" && talkCurrentItem.isCompleted) {
             setStreamingStarted(false);
             if (isLastItem) {
                 setChatBoxInitialized(true);
@@ -70,7 +70,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 ]);
             }
         }
-        if (talkCurrentItem.type != "bot-text") {        
+        if (talkCurrentItem.type != "bot-text") {
             if (isLastItem) {
                 setChatBoxInitialized(true);
                 saveLocalChatHistory([...renderedChatItems]);
@@ -80,7 +80,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 
     const handleAIMessage = () => {
         // TODO This condition really sucks
-        if (chatMessage && !((chatMessage as BotTextEntryState).text == "  undefined")) {
+        if (
+            chatMessage &&
+            !((chatMessage as BotTextEntryState).text == "  undefined")
+        ) {
             if (chatMessage.type == "bot-text") {
                 if (isStreamingStarted) {
                     setOrigin(chatMessage.origin);
@@ -174,33 +177,35 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         switch (component.type) {
             case "user-audio":
                 return (
-                    <UserAudioItem
-                        key={component.id}
-                        id={component.id}
-                        audioUrl={component.audioUrl}
-                        audioName={component.audioName}
-                        themeColor={themeColor || ""}
-                        status={component.status}
-                    />
+                    <div key={component.id}>
+                        <Spacer />
+                        <UserAudioItem
+                            key={component.id}
+                            id={component.id}
+                            audioUrl={component.audioUrl}
+                            audioName={component.audioName}
+                            themeColor={themeColor || ""}
+                            status={component.status}
+                        />
+                        <Spacer />
+                    </div>
                 );
             case "bot-audio":
                 return (
-                    <div>
-                    <Spacer />
-                    <AudioItem
-                        key={component.id}
-                        id={component.id}
-                        audioUrl={component.audioUrl}
-                        audioName={component.audioName}
-                    />
-                    <Spacer />
-                </div>
+                    <div key={component.id}>
+                        <Spacer />
+                        <AudioItem
+                            id={component.id}
+                            audioUrl={component.audioUrl}
+                            audioName={component.audioName}
+                        />
+                        <Spacer />
+                    </div>
                 );
             case "bot-text":
                 return (
-                    <div>
+                    <div key={component.id}>
                         <BotTextEntry
-                            key={component.id}
                             id={component.id}
                             words={component.text}
                         />
@@ -209,9 +214,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 );
             case "user-text":
                 return (
-                    <div>
+                    <div key={component.id}>
                         <UserTextItem
-                            key={component.id}
                             id={component.id}
                             words={component.text}
                             themeColor={themeColor}
@@ -221,9 +225,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 );
             case "user-document":
                 return (
-                    <div>
+                    <div key={component.id}>
                         <UserDocumentItem
-                            key={component.id}
                             id={component.id}
                             isPdf={component.isPdf}
                             documentUrl={component.documentUrl}
@@ -236,9 +239,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 );
             case "bot-button":
                 return (
-                    <div>
+                    <div key={component.id}>
                         <ButtonItem
-                            key={component.id}
                             id={component.id}
                             conversationUrl={component.conversationUrl}
                             buttonLabel={component.buttonLabel}
