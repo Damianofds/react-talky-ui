@@ -28,33 +28,31 @@ const InputBox: React.FC<InputBoxProps> = ({
         useState(true);
 
     return (
-        <div>
-            <div style={{ display: "flex", position: "relative" }}>
-                <MessageSubmit
-                    inputRetriever={setChatMessage}
-                    inputBoxHistory={inputBoxHistory}
-                    conversationRouteKeyword={conversationRouteKeyword}
-                    qaRouteKeyword={qaRouteKeyword}
-                    fontSize={fontSize}
-                    themeColor={themeColor}
-                    showBinarySubmitButtons={
-                        setShowBinarySubmitButtons
-                    }></MessageSubmit>
-                {showBinarySubmitButtons && (
-                    <>
-                        <AudioSubmit
-                            setChatMessage={setChatMessage}
-                            setBotStatusUpdate={setBotStatusUpdate}
-                            themeColor={themeColor}
-                        />
-                        <DocumentSubmit
-                            setChatMessage={setChatMessage}
-                            setBotStatusUpdate={setBotStatusUpdate}
-                            themeColor={themeColor}
-                        />
-                    </>
-                )}
-            </div>
+        <div style={{ display: "flex", position: "relative", height: "20%" }}>
+            <MessageSubmit
+                inputRetriever={setChatMessage}
+                inputBoxHistory={inputBoxHistory}
+                conversationRouteKeyword={conversationRouteKeyword}
+                qaRouteKeyword={qaRouteKeyword}
+                fontSize={fontSize}
+                themeColor={themeColor}
+                showBinarySubmitButtons={
+                    setShowBinarySubmitButtons
+                }></MessageSubmit>
+            {showBinarySubmitButtons && (
+                <>
+                    <AudioSubmit
+                        setChatMessage={setChatMessage}
+                        setBotStatusUpdate={setBotStatusUpdate}
+                        themeColor={themeColor}
+                    />
+                    <DocumentSubmit
+                        setChatMessage={setChatMessage}
+                        setBotStatusUpdate={setBotStatusUpdate}
+                        themeColor={themeColor}
+                    />
+                </>
+            )}
         </div>
     );
 };

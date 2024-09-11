@@ -4,9 +4,13 @@ interface BotAudioEntryProps {
     audioName: string;
 }
 
-const BotAudioEntry: React.FC<BotAudioEntryProps> = ({ id, audioUrl, audioName }) => {
+const BotAudioEntry: React.FC<BotAudioEntryProps> = ({
+    id,
+    audioUrl,
+    audioName,
+}) => {
     return (
-        <div key={id} style={{}}>
+        <div key={id} style={{ textAlign: "left", marginLeft: "20px" }}>
             <audio src={audioUrl} controls />
             <input type="hidden" src={audioName} />
         </div>

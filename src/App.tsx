@@ -25,15 +25,13 @@ function App() {
                         width: "80vw",
                         minWidth: "355px",
                         maxWidth: "800px",
-                        height: "35vh",
-                        minHeight: "350px",
+                        height: "60vh",
                     }}>
                     <TalkyUI
                         initTalkURL="/talk-showcase.json"
                         backendConfiguration={backendConfig}
                     />
                 </div>
-                <br /><br /><br /><br /><br /><br />
                 <hr />
                 <div
                     style={{

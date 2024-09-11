@@ -9,6 +9,7 @@ const BotTextEntry: React.FC<BotTextEntryProps> = ({ words }) => {
             style={{
                 padding: "0.1vh 0.1vw 0.1vh 0.1vw",
                 paddingLeft: "20px",
+                textAlign: "left"
             }}
             key={"" + Date.now}>
             {words == "" ? "|" : words}

@@ -262,12 +262,10 @@ const ChatBox: React.FC<ChatBoxProps> = ({
             <div
                 ref={chatBoxRef}
                 style={{
-                    height: "100%",
+                    height: "80%",
                     overflowY: "auto",
-                    textAlign: "left",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "flex-end",
                     fontSize: fontSize,
                 }}>
                 <div style={{ maxHeight: "100%" }}>
@@ -275,7 +273,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         renderComponent(component)
                     )}
                     {showLoader && (
-                        <div>
+                        <div style={{ textAlign: "left" }}>
                             <div
                                 style={{ backgroundColor: themeColor }}
                                 className="pulsing-cursor"
