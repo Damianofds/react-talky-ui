@@ -5,8 +5,8 @@ import ClearStorageButton from "../lib/components/utils/ClearStorageButton";
 const backendConfig = {
     openaiKey: import.meta.env.TALKY_OPENAI_API_KEY,
     qaUrl: import.meta.env.TALKY_QA_API_URL,
-    audioUploadUrl: import.meta.env.TALKY_DOCUMENT_UPLOAD_API_URL,
-    documentUploadurl: import.meta.env.TALKY_AUDIO_UPLOAD_API_URL,
+    audioUploadUrl: import.meta.env.TALKY_AUDIO_UPLOAD_API_URL,
+    documentUploadurl: import.meta.env.TALKY_DOCUMENT_UPLOAD_API_URL,
 }
 
 function App() {
