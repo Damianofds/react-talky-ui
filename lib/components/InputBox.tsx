@@ -1,4 +1,4 @@
-import { ChatEntryState } from "./chatbox-entries/ChatEntryState";
+import { ChatEntryState, UploadStatus } from "./chatbox-entries/ChatEntryState";
 import { CirclularStack } from "./utils/CircularStack";
 import DocumentSubmit from "./inputbox-submits/DocumentSubmit";
 import MessageSubmit from "./inputbox-submits/MessageSubmit";
@@ -7,7 +7,11 @@ import { useState } from "react";
 
 interface InputBoxProps {
     setChatMessage: (answer: ChatEntryState) => void;
-    setBotStatusUpdate: (id: string) => void;
+    setBotStatusUpdate: (update: {
+        entryId: string;
+        outcome: UploadStatus;
+    }) => void;
+
     conversationRouteKeyword: string;
     qaRouteKeyword: string;
     fontSize?: string;

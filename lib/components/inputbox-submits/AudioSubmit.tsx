@@ -5,7 +5,11 @@ import useUserAudioSubmit from "../../../lib/hooks/useUserAudioSubmit";
 
 interface VoiceRecorderProps {
     setChatMessage: (answer: ChatEntryState) => void;
-    setBotStatusUpdate: (id: string) => void;
+    setBotStatusUpdate: (update: {
+        entryId: string;
+        outcome: UploadStatus;
+    }) => void;
+
     themeColor: string;
 }
 
@@ -108,7 +112,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                 window.removeEventListener("mouseup", stopRecording);
                 window.removeEventListener("touchend", stopRecording);
                 await uploadAudio(audioFile);
-                setBotStatusUpdate(documentId);
+                setBotStatusUpdate({entryId: documentId, outcome: UploadStatus.SUCCESS});
             };
         }
     };

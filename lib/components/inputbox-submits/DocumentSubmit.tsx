@@ -6,7 +6,11 @@ import useLoadChatHistoty from "../../../lib/hooks/useLoadChatHistory";
 
 interface DocumentSubmitProps {
     setChatMessage: (answer: ChatEntryState) => void;
-    setBotStatusUpdate: (id: string) => void;
+    setBotStatusUpdate: (update: {
+        entryId: string;
+        outcome: UploadStatus;
+    }) => void;
+
     themeColor: string;
 }
 
@@ -47,7 +51,13 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                 });
             }
             await uploadFile(file);
-            setBotStatusUpdate(documentId);
+            const outcome =
+                uploadStatus.httpStatusCode &&
+                uploadStatus.httpStatusCode < 300 &&
+                uploadStatus.httpStatusCode > 199
+                    ? UploadStatus.SUCCESS
+                    : UploadStatus.FAILURE;
+            setBotStatusUpdate({entryId: documentId, outcome: outcome});
         }
     };
 

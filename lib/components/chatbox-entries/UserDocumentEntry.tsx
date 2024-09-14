@@ -1,5 +1,6 @@
 import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
 import ElaboratingIcon from "../icons/ElaboratingIcon";
+import ElaborationFailureIcon from "../icons/ElaborationFailureIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
 import PdfIcon from "../icons/PDFIcon";
 import { UploadStatus } from "./ChatEntryState";
@@ -64,6 +65,9 @@ const UserDocumentEntry: React.FC<UserDocumentEntryProps> = ({
                     )}
                     {status == UploadStatus.SUCCESS && (
                         <ElaborationSuccessIcon color={themeColor} />
+                    )}
+                    {status == UploadStatus.FAILURE && (
+                        <ElaborationFailureIcon color={"red"} />
                     )}
                 </div>
         </div>

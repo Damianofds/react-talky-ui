@@ -1,7 +1,10 @@
 import { useState } from "react";
 import InputBox from "./components/InputBox";
 import ChatBox from "./components/ChatBox";
-import { ChatEntryState } from "./components/chatbox-entries/ChatEntryState";
+import {
+    ChatEntryState,
+    UploadStatus,
+} from "./components/chatbox-entries/ChatEntryState";
 import {
     CirclularStack,
     createCircularStack,
@@ -14,22 +17,25 @@ interface TalkUIProps {
     initTalkURL: string;
     fontSize?: string;
     themeColor?: string;
-    backendConfiguration:{
+    backendConfiguration: {
         openaiKey?: string;
         qaUrl?: string;
         audioUploadUrl?: string;
         documentUploadurl?: string;
-    }
+    };
 }
 
 const TalkyUI: React.FC<TalkUIProps> = ({
     initTalkURL,
     fontSize = "20px",
     themeColor = "#4ea699",
-    backendConfiguration
+    backendConfiguration,
 }) => {
     const [chatMessage, setChatMessage] = useState<ChatEntryState>();
-    const [botStatusUpdate, setBotStatusUpdate] = useState<string>();
+    const [botStatusUpdate, setBotStatusUpdate] = useState<{
+        entryId: string;
+        outcome: UploadStatus;
+    }>();
     const [chatMessageUserHistory, setChatMessageUserHistory] = useState<
         CirclularStack<string>
     >(createCircularStack(10));
@@ -48,8 +54,8 @@ const TalkyUI: React.FC<TalkUIProps> = ({
                 value={{
                     openaiKey: backendConfiguration.openaiKey,
                     qaUrl: backendConfiguration.qaUrl,
-                    audioUploadUrl:backendConfiguration.audioUploadUrl,
-                    documentUploadurl:backendConfiguration.documentUploadurl,
+                    audioUploadUrl: backendConfiguration.audioUploadUrl,
+                    documentUploadurl: backendConfiguration.documentUploadurl,
                 }}>
                 <ChatBox
                     initTalkURL={initTalkURL}

@@ -21,7 +21,7 @@ import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
 interface ChatBoxProps {
     initTalkURL: string;
     chatMessage?: ChatEntryState;
-    updateStatus?: string | undefined;
+    updateStatus?: {entryId: string, outcome: UploadStatus};
     fontSize?: string;
     themeColor?: string;
 }
@@ -107,12 +107,12 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         }
     };
 
-    const updateEntryStatus = (id: string) => {
+    const updateEntryStatus = (id: string, outcome: UploadStatus) => {
         const updatedRenderedChatItems = renderedChatItems.map(item => {
             if (item.id === id) {
                 return {
                     ...item,
-                    status: UploadStatus.SUCCESS,
+                    status: outcome,
                 };
             }
             return item;
@@ -166,7 +166,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 
     useEffect(() => {
         if (updateStatus) {
-            updateEntryStatus(updateStatus);
+            updateEntryStatus(updateStatus.entryId, updateStatus.outcome);
         }
     }, [updateStatus]);
 
