@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Upload from "../icons/FileUploadIcon";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
 import useUserDocumentSubmit from "../../../lib/hooks/useUserDocumentSubmit";
@@ -15,7 +15,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
     setBotStatusUpdate,
 }) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const { /*uploadStatus,*/ uploadFile } = useUserDocumentSubmit();
+    const { uploadStatus, uploadFile } = useUserDocumentSubmit();
     const { saveBinaryLocalChat } = useLoadChatHistoty();
 
     const handleFileChange = async (
@@ -79,6 +79,18 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
     const handleButtonClick = () => {
         fileInputRef.current?.click();
     };
+
+    useEffect(() => {
+        if(uploadStatus.httpStatusCode){
+            setChatMessage({
+                id: Math.random+"",
+                type: "bot-text-streaming",
+                text: uploadStatus.message || "",
+                isCompleted: true,
+                origin: "",
+            });
+        }
+    }, [uploadStatus]);
 
     return (
         <div>

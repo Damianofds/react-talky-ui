@@ -18,7 +18,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingTimeoutRef = useRef<number | null>(null);
-    const { /*uploadStatus,*/ uploadAudio } = useUserAudioSubmit();
+    const { uploadStatus, uploadAudio } = useUserAudioSubmit();
 
     const [isPermissionGranted, setIsPermissionGranted] = useState<"granted" | "denied" | "prompt">("prompt");
 

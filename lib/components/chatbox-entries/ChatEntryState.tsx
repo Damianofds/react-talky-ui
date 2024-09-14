@@ -6,7 +6,8 @@ export interface BaseChatEntryState {
         | "bot-button"
         | "user-text"
         | "user-audio"
-        | "user-document";
+        | "user-document"
+        | "bot-text-streaming";
 }
 
 export interface UploadEntryState extends BaseChatEntryState {
@@ -27,6 +28,13 @@ export interface BotButtonEntryState extends BaseChatEntryState {
 
 export interface BotTextEntryState extends BaseChatEntryState {
     type: "bot-text";
+    text: string;
+    isCompleted: boolean;
+    origin: string;
+}
+
+export interface BotTextStreamingEntryState extends BaseChatEntryState {
+    type: "bot-text-streaming";
     text: string;
     isCompleted: boolean;
     origin: string;
@@ -62,4 +70,5 @@ export type ChatEntryState =
     | BotTextEntryState
     | UserTextEntryState
     | UserAudioEntryState
-    | UserDocumentEntryState;
+    | UserDocumentEntryState
+    | BotTextStreamingEntryState;

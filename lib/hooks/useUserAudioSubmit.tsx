@@ -1,22 +1,15 @@
 import { useContext, useState } from "react";
 import { ConfigurationContext } from "../components/ConfigurationContext";
+import { UploadStatus } from "./utils/UploadStatus";
 
 const AUDIO_UPLOAD_FORM_DATA_KEY = "audio1";
-
-interface UploadStatus {
-    progress: number;
-    success: boolean;
-    error: string | null;
-    fileUrl: string | null;
-}
 
 const useUserAudioSubmit = () => {
     const AUDIO_UPLOAD_API_URL = useContext(ConfigurationContext).audioUploadUrl || '';
     const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
-        progress: 0,
-        success: false,
-        error: null,
-        fileUrl: null,
+        statusCode: 'initialized',
+        httpStatusCode: null,
+        message: ""
     });
 
     const uploadAudio = async (file: File) => {
@@ -35,17 +28,15 @@ const useUserAudioSubmit = () => {
 
             const data = await response.json();
             setUploadStatus({
-                progress: 100,
-                success: true,
-                error: null,
-                fileUrl: data.fileUrl,
+                statusCode: data.statusCode,
+                httpStatusCode: null,
+                message: data.statusText
             });
         } catch (error) {
             setUploadStatus({
-                progress: 0,
-                success: false,
-                error: "no error message present",
-                fileUrl: null,
+                statusCode: 'client-error',
+                httpStatusCode: null,
+                message: ""+error
             });
         }
     };

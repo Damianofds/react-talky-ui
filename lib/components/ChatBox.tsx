@@ -16,6 +16,7 @@ import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
 import Spacer from "./utils/Spacer";
+import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -206,6 +207,16 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 return (
                     <div key={component.id}>
                         <BotTextEntry
+                            id={component.id}
+                            words={component.text}
+                        />
+                        <Spacer />
+                    </div>
+                );
+            case "bot-text-streaming":
+                return (
+                    <div key={component.id}>
+                        <BotTextStreamingEntry
                             id={component.id}
                             words={component.text}
                         />
