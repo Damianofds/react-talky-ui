@@ -5,7 +5,7 @@ import ChatBox from "../../lib/components/ChatBox";
 import { BotTalkContext } from "../../lib/components/BotTalkContext";
 import useBotTalk from "../../lib/hooks/useBotTalk";
 import useLoadChatHistoty from "../../lib/hooks/useLoadChatHistory";
-import { UserTextEntryState } from "../../lib/components/chatbox-entries/ChatEntryState";
+import { UploadStatus, UserTextEntryState } from "../../lib/components/chatbox-entries/ChatEntryState";
 
 vi.mock("../../lib/hooks/useBotTalk");
 vi.mock("../../lib/hooks/useLoadChatHistory");
@@ -18,7 +18,7 @@ describe("ChatBox Component", () => {
     const defaultProps = {
         initTalkURL: "http://example.com",
         chatMessage: undefined,
-        updateStatus: "",
+        updateStatus: {entryId: "1", outcome: UploadStatus.PROCESSING},
         fontSize: "16px",
         themeColor: "#4ea699",
     };
