@@ -108,17 +108,19 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     };
 
     const updateEntryStatus = (id: string, outcome: UploadStatus) => {
-        const updatedRenderedChatItems = renderedChatItems.map(item => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    status: outcome,
-                };
-            }
-            return item;
+        setRenderedChatItems(prev => {
+            const updatedChatItems = prev.map(item => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        status: outcome,
+                    };
+                }
+                return item;
+            });
+            saveLocalChatHistory(updatedChatItems);
+            return updatedChatItems;
         });
-        setRenderedChatItems(updatedRenderedChatItems);
-        saveLocalChatHistory(updatedRenderedChatItems);
     };
 
     const loadFromHistoryOrInitTalk = () => {
