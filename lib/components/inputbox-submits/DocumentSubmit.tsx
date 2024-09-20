@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Upload from "../icons/FileUploadIcon";
-import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
+import {
+    ChatEntryState,
+    UploadStatus,
+} from "../chatbox-entries/ChatEntryState";
 import useUserDocumentSubmit from "../../../lib/hooks/useUserDocumentSubmit";
 import useLoadChatHistoty from "../../../lib/hooks/useLoadChatHistory";
 
@@ -50,14 +53,17 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                     });
                 });
             }
-            await uploadFile(file);
+
+            const uploadResult = await uploadFile(file);
+
             const outcome =
-                uploadStatus.httpStatusCode &&
-                uploadStatus.httpStatusCode < 300 &&
-                uploadStatus.httpStatusCode > 199
+                uploadResult.httpStatusCode &&
+                uploadResult.httpStatusCode >= 200 &&
+                uploadResult.httpStatusCode < 300
                     ? UploadStatus.SUCCESS
                     : UploadStatus.FAILURE;
-            setBotStatusUpdate({entryId: documentId, outcome: outcome});
+            console.log(uploadResult.httpStatusCode);
+            setBotStatusUpdate({ entryId: documentId, outcome: outcome });
         }
     };
 
@@ -91,9 +97,9 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
     };
 
     useEffect(() => {
-        if(uploadStatus.httpStatusCode){
+        if (uploadStatus.httpStatusCode) {
             setChatMessage({
-                id: Math.random+"",
+                id: Math.random + "",
                 type: "bot-text-streaming",
                 text: uploadStatus.message || "",
                 isCompleted: true,
