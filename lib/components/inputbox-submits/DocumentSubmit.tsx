@@ -5,7 +5,7 @@ import {
     UploadStatus,
 } from "../chatbox-entries/ChatEntryState";
 import useUserDocumentSubmit from "../../../lib/hooks/useUserDocumentSubmit";
-import useLoadChatHistoty from "../../../lib/hooks/useLoadChatHistory";
+import useLoadChatHistory from "../../../lib/hooks/useLoadChatHistory";
 
 interface DocumentSubmitProps {
     setChatMessage: (answer: ChatEntryState) => void;
@@ -23,7 +23,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
 }) => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { uploadStatus, uploadFile } = useUserDocumentSubmit();
-    const { saveBinaryLocalChat } = useLoadChatHistoty();
+    const { saveBinaryLocalChat } = useLoadChatHistory();
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -62,7 +62,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                 uploadResult.httpStatusCode < 300
                     ? UploadStatus.SUCCESS
                     : UploadStatus.FAILURE;
-            console.log(uploadResult.httpStatusCode);
+
             setBotStatusUpdate({ entryId: documentId, outcome: outcome });
         }
     };

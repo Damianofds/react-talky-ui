@@ -9,7 +9,7 @@ import UserAudioItem from "./chatbox-entries/UserAudioEntry";
 import ButtonItem from "./chatbox-entries/BotButtonEntry";
 import UserTextItem from "./chatbox-entries/UserTextEntry";
 import BotTextEntry from "./chatbox-entries/BotTextEntry";
-import useLoadChatHistoty from "../hooks/useLoadChatHistory";
+import useLoadChatHistory from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
 import { BotTalkContext } from "./BotTalkContext";
 import OriginVisualizer from "./utils/OriginVisualizer";
@@ -35,7 +35,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const { talkCurrentItem, isLastItem } = useBotTalk(currentTalkURL);
-    const localChat = useLoadChatHistoty();
+    const localChat = useLoadChatHistory();
     const [renderedChatItems, setRenderedChatItems] = useState<
         ChatEntryState[]
     >([]);
@@ -46,7 +46,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         useState<boolean>(false);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
     const [origin, setOrigin] = useState<string>();
-    const { loadLocalChat, saveLocalChatHistory } = useLoadChatHistoty();
+    const { loadLocalChat, saveLocalChatHistory } = useLoadChatHistory();
 
     const switchTalk = (newTalkURL: string) => {
         setCurrentTalkURL(newTalkURL);

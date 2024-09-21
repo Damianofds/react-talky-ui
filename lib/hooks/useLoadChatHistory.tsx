@@ -1,6 +1,6 @@
 import { ChatEntryState } from "../components/chatbox-entries/ChatEntryState";
 
-const useLoadChatHistoty = () => {
+const useLoadChatHistory = () => {
     enum Storage {
         HISTORY = "chat-history",
         THUMBNAIL = "chat-thumbnail",
@@ -45,4 +45,4 @@ const useLoadChatHistoty = () => {
     };
 };
 
-export default useLoadChatHistoty;
+export default useLoadChatHistory;

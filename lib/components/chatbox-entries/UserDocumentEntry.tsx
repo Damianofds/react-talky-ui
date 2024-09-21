@@ -1,4 +1,4 @@
-import useLoadChatHistoty from "../../hooks/useLoadChatHistory";
+import useLoadChatHistory from "../../hooks/useLoadChatHistory";
 import ElaboratingIcon from "../icons/ElaboratingIcon";
 import ElaborationFailureIcon from "../icons/ElaborationFailureIcon";
 import ElaborationSuccessIcon from "../icons/ElaborationSuccessIcon";
@@ -22,7 +22,7 @@ const UserDocumentEntry: React.FC<UserDocumentEntryProps> = ({
     themeColor = "",
     status,
 }) => {
-    const { getLocalChatEntry } = useLoadChatHistoty();
+    const { getLocalChatEntry } = useLoadChatHistory();
     const document = documentUrl
         ? documentUrl
         : getLocalChatEntry(id) || "undefined";

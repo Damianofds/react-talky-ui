@@ -4,7 +4,7 @@ import { describe, test, beforeEach, afterEach, vi, expect } from "vitest";
 import ChatBox from "../../lib/components/ChatBox";
 import { BotTalkContext } from "../../lib/components/BotTalkContext";
 import useBotTalk from "../../lib/hooks/useBotTalk";
-import useLoadChatHistoty from "../../lib/hooks/useLoadChatHistory";
+import useLoadChatHistory from "../../lib/hooks/useLoadChatHistory";
 import { UploadStatus, UserTextEntryState } from "../../lib/components/chatbox-entries/ChatEntryState";
 
 vi.mock("../../lib/hooks/useBotTalk");
@@ -12,8 +12,8 @@ vi.mock("../../lib/hooks/useLoadChatHistory");
 
 describe("ChatBox Component", () => {
     const mockUseBotTalk = useBotTalk as ReturnType<typeof vi.fn>;
-    const mockUseLoadChatHistoty = useLoadChatHistoty as ReturnType<typeof vi.fn>;
-    const mockSaveLocalChatHistory = useLoadChatHistoty as ReturnType<typeof vi.fn>;
+    const mockUseLoadChatHistoty = useLoadChatHistory as ReturnType<typeof vi.fn>;
+    const mockSaveLocalChatHistory = useLoadChatHistory as ReturnType<typeof vi.fn>;
 
     const defaultProps = {
         initTalkURL: "http://example.com",
