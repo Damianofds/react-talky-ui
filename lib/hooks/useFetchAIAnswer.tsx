@@ -62,7 +62,7 @@ const useFetchAIAnswer = (question: string) => {
                 } else {
                     setAnswer(prev => ({
                         ...prev,
-                        text: prev.text + " " + textArray[counter],
+                        text: prev.text + " " + (textArray[counter] || ""),
                     }));
                     counter++;
                 }

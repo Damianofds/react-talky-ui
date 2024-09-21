@@ -100,8 +100,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                 } else {
                     setStreamingStarted(true);
                 }
-            }
-            if (chatMessage.type == "bot-text-streaming") {
+            } else if (chatMessage.type == "bot-text-streaming") {
                 setRenderedChatItems(prev => {
                     saveLocalChatHistory([...prev, chatMessage]);
                     return [...prev, { ...chatMessage, isCompleted: false }];
