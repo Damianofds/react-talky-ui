@@ -3,26 +3,32 @@ import React, { useState, useEffect } from "react";
 interface BotTextStreamingEntryProps {
     id: string;
     words: string;
+    isCompleted: boolean;
 }
 
-const BotTextStreamingEntry: React.FC<BotTextStreamingEntryProps> = ({ words }) => {
+const BotTextStreamingEntry: React.FC<BotTextStreamingEntryProps> = ({ words, isCompleted }) => {
     const [displayedWords, setDisplayedWords] = useState<string[]>([]);
     const [index, Incrementindex] = useState(0);
     const wordArray = words.split(" ");
 
     useEffect(() => {
-        if (wordArray.length === 0) return;
+        if (wordArray.length === 0) {
+            return;
+        }
+        if (isCompleted) {
+            setDisplayedWords(wordArray);
+        }
+        else{
+            const interval = setInterval(() => {
+                setDisplayedWords((prevWords) => [...prevWords, wordArray[index]]);
+                Incrementindex(index+1);
 
-        const interval = setInterval(() => {
-            setDisplayedWords((prevWords) => [...prevWords, wordArray[index]]);
-            Incrementindex(index+1);
-
-            if (index >= wordArray.length) {
-                clearInterval(interval);
-            }
-        }, 100);
-
-        return () => clearInterval(interval);
+                if (index >= wordArray.length) {
+                    clearInterval(interval);
+                }
+            }, 100);
+            return () => clearInterval(interval);
+        }
     }, [index]);
 
     return (

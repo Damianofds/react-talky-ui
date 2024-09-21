@@ -89,15 +89,31 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     setOrigin(chatMessage.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
                 }
-                setRenderedChatItems((prev) => {const newState = [...prev, chatMessage]; saveLocalChatHistory(newState); return newState});
+                setRenderedChatItems(prev => {
+                    const newState = [...prev, chatMessage];
+                    saveLocalChatHistory(newState);
+                    return newState;
+                });
                 if (chatMessage.isCompleted) {
                     setStreamingStarted(false);
                     setShowLoader(true);
                 } else {
                     setStreamingStarted(true);
                 }
+            }
+            if (chatMessage.type == "bot-text-streaming") {
+                setRenderedChatItems(prev => {
+                    saveLocalChatHistory([...prev, chatMessage]);
+                    return [...prev, { ...chatMessage, isCompleted: false }];
+                });
+                setStreamingStarted(false);
+                setShowLoader(true);
             } else {
-                setRenderedChatItems((prev) => {const newState = [...prev, chatMessage]; saveLocalChatHistory(newState); return newState});
+                setRenderedChatItems(prev => {
+                    const newState = [...prev, chatMessage];
+                    saveLocalChatHistory(newState);
+                    return newState;
+                });
                 setStreamingStarted(false);
                 setShowLoader(true);
             }
@@ -218,6 +234,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         <BotTextStreamingEntry
                             id={component.id}
                             words={component.text}
+                            isCompleted={component.isCompleted}
                         />
                         <Spacer />
                     </div>
