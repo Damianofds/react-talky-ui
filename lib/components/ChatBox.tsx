@@ -35,7 +35,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 }) => {
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const { talkCurrentItem, isLastItem } = useBotTalk(currentTalkURL);
-    const localChat = useLoadChatHistory();
     const [renderedChatItems, setRenderedChatItems] = useState<
         ChatEntryState[]
     >([]);
@@ -90,8 +89,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     setOrigin(chatMessage.origin);
                     setRenderedChatItems(prev => [...prev.slice(0, -1)]);
                 }
-                setRenderedChatItems(prev => [...prev, chatMessage]);
-                saveLocalChatHistory(renderedChatItems);
+                setRenderedChatItems((prev) => {const newState = [...prev, chatMessage]; saveLocalChatHistory(newState); return newState});
                 if (chatMessage.isCompleted) {
                     setStreamingStarted(false);
                     setShowLoader(true);
@@ -99,8 +97,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     setStreamingStarted(true);
                 }
             } else {
-                setRenderedChatItems(prev => [...prev, chatMessage]);
-                saveLocalChatHistory(renderedChatItems);
+                setRenderedChatItems((prev) => {const newState = [...prev, chatMessage]; saveLocalChatHistory(newState); return newState});
                 setStreamingStarted(false);
                 setShowLoader(true);
             }
@@ -125,7 +122,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
 
     const loadFromHistoryOrInitTalk = () => {
         const previousChatPresent =
-            !isChatBoxInitialized && localChat && loadLocalChat().length > 0;
+            !isChatBoxInitialized  && loadLocalChat().length > 0;
         if (previousChatPresent) {
             console.log("Loading user chat history...");
             setRenderedChatItems(JSON.parse(loadLocalChat()));
