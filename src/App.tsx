@@ -32,20 +32,6 @@ function App() {
                         backendConfiguration={backendConfig}
                     />
                 </div>
-                <hr />
-                <div
-                    style={{
-                        width: "350px",
-                        height: "400px",
-                        margin: "0 auto"
-                    }}>
-                    <TalkyUI
-                        initTalkURL="/talk-audio.json"
-                        themeColor='orange'
-                        fontSize='10px'
-                        backendConfiguration={backendConfig}
-                    />
-                </div>
             </div>
         </>
     );
