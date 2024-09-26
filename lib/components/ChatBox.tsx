@@ -17,6 +17,7 @@ import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
 import Spacer from "./utils/Spacer";
 import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
+import styles from "../index.module.css";
 
 interface ChatBoxProps {
     initTalkURL: string;
@@ -302,7 +303,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         <div style={{ textAlign: "left" }}>
                             <div
                                 style={{ backgroundColor: themeColor }}
-                                className="pulsing-cursor"
+                                className={styles.pulsingCursor}
                             />
                             <br />
                         </div>

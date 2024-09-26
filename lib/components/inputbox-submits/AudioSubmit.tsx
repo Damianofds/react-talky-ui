@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
 import Record from "../icons/MicrophoneIcon";
 import useUserAudioSubmit from "../../../lib/hooks/useUserAudioSubmit";
+import styles from "../../index.module.css";
 
 interface VoiceRecorderProps {
     setChatMessage: (answer: ChatEntryState) => void;
@@ -124,7 +125,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
     return (
         <div style={{ position: "relative", width: "50px" }}>
             <button
-                className={recording ? "pulsing-record-button" : ""}
+                className={recording ? styles.pulsingRecordButton : ""}
                 style={{
                     position: "absolute",
                     left: "0%",
