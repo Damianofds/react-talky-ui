@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Upload from "../icons/FileUploadIcon";
 import {
     ChatEntryState,
@@ -6,6 +6,7 @@ import {
 } from "../chatbox-entries/ChatEntryState";
 import useUserDocumentSubmit from "../../../lib/hooks/useUserDocumentSubmit";
 import useLoadChatHistory from "../../../lib/hooks/useLoadChatHistory";
+import { BotTalkContext } from "../../components/BotTalkContext";
 
 interface DocumentSubmitProps {
     setChatMessage: (answer: ChatEntryState) => void;
@@ -24,6 +25,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const { uploadStatus, uploadFile } = useUserDocumentSubmit();
     const { saveBinaryLocalChat } = useLoadChatHistory();
+    const { switchBotTalk: switchConversation } = useContext(BotTalkContext);
 
     const handleFileChange = async (
         event: React.ChangeEvent<HTMLInputElement>
@@ -62,6 +64,10 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                 uploadResult.httpStatusCode < 300
                     ? UploadStatus.SUCCESS
                     : UploadStatus.FAILURE;
+
+            if(outcome == UploadStatus.SUCCESS){
+                switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/654e04ca-1f1c-4d9d-97de-d0187c8d03e5/documents/' + uploadResult.message + '/formats/talk1');
+            }
 
             setBotStatusUpdate({ entryId: documentId, outcome: outcome });
         }

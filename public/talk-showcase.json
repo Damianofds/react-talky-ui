@@ -15,6 +15,11 @@
 		{
 			"type": "bot-text",
 			"text": "challenge me asking question of them 🎯"
+		},
+        {
+			"type": "bot-button",
+            "conversationUrl": "/talk-option1.json",
+			"buttonLabel": "Play 🎹"
 		}
 	]
 }

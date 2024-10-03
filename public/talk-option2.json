@@ -11,6 +11,11 @@
 		{
 			"type": "bot-text",
 			"text": "just type something 👇"
+		},
+        {
+			"type": "bot-button",
+            "conversationUrl": "/talk-option3.json",
+			"buttonLabel": "Play Again 📻"
 		}
 	]
 }

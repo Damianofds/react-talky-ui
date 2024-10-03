@@ -33,8 +33,6 @@ const useUserDocumentSubmit = () => {
                 message: responseText,
             };
 
-            setUploadStatus(statusUpdate);
-
             return statusUpdate;
         } catch (error) {
             const errorStatus = {

@@ -12,6 +12,7 @@ import {
     get,
 } from "./components/utils/CircularStack";
 import { ConfigurationContext } from "./components/ConfigurationContext";
+import { BotTalkContext } from "./components/BotTalkContext";
 
 interface TalkUIProps {
     initTalkURL: string;
@@ -39,6 +40,8 @@ const TalkyUI: React.FC<TalkUIProps> = ({
     const [chatMessageUserHistory, setChatMessageUserHistory] = useState<
         CirclularStack<string>
     >(createCircularStack(10));
+    const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
+    const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
 
     if (chatMessage?.type == "user-text") {
         if (get(chatMessageUserHistory, 0) != chatMessage.text) {
@@ -48,33 +51,44 @@ const TalkyUI: React.FC<TalkUIProps> = ({
         }
     }
 
+    const switchTalk = (newTalkURL: string) => {
+        setCurrentTalkURL(newTalkURL);
+        setTalkSwitched(true);
+    };
+
     return (
         <>
-            <ConfigurationContext.Provider
+            <BotTalkContext.Provider
                 value={{
-                    openaiKey: backendConfiguration.openaiKey,
-                    qaUrl: backendConfiguration.qaUrl,
-                    audioUploadUrl: backendConfiguration.audioUploadUrl,
-                    documentUploadurl: backendConfiguration.documentUploadurl,
+                    switchBotTalk: switchTalk,
                 }}>
-                <ChatBox
-                    initTalkURL={initTalkURL}
-                    chatMessage={chatMessage}
-                    themeColor={themeColor}
-                    fontSize={fontSize}
-                    updateStatus={botStatusUpdate}
-                />
-                <InputBox
-                    setChatMessage={setChatMessage}
-                    setBotStatusUpdate={setBotStatusUpdate}
-                    inputBoxHistory={chatMessageUserHistory}
-                    conversationRouteKeyword="conversation"
-                    qaRouteKeyword="embeddings"
-                    themeColor={themeColor}
-                    fontSize={fontSize}
-                />
-                <br />
-            </ConfigurationContext.Provider>
+                <ConfigurationContext.Provider
+                    value={{
+                        openaiKey: backendConfiguration.openaiKey,
+                        qaUrl: backendConfiguration.qaUrl,
+                        audioUploadUrl: backendConfiguration.audioUploadUrl,
+                        documentUploadurl: backendConfiguration.documentUploadurl,
+                    }}>
+                    <ChatBox
+                        currentTalkURL={currentTalkURL}
+                        isTalkSwitched={isTalkSwitched}
+                        chatMessage={chatMessage}
+                        themeColor={themeColor}
+                        fontSize={fontSize}
+                        updateStatus={botStatusUpdate}
+                    />
+                    <InputBox
+                        setChatMessage={setChatMessage}
+                        setBotStatusUpdate={setBotStatusUpdate}
+                        inputBoxHistory={chatMessageUserHistory}
+                        conversationRouteKeyword="conversation"
+                        qaRouteKeyword="embeddings"
+                        themeColor={themeColor}
+                        fontSize={fontSize}
+                    />
+                    <br />
+                </ConfigurationContext.Provider>
+            </BotTalkContext.Provider>
         </>
     );
 };

@@ -11,7 +11,6 @@ import UserTextItem from "./chatbox-entries/UserTextEntry";
 import BotTextEntry from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistory from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
-import { BotTalkContext } from "./BotTalkContext";
 import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
@@ -20,7 +19,8 @@ import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
 import styles from "../index.module.css";
 
 interface ChatBoxProps {
-    initTalkURL: string;
+    currentTalkURL: string;
+    isTalkSwitched: boolean;
     chatMessage?: ChatEntryState;
     updateStatus?: {entryId: string, outcome: UploadStatus};
     fontSize?: string;
@@ -28,13 +28,13 @@ interface ChatBoxProps {
 }
 
 const ChatBox: React.FC<ChatBoxProps> = ({
-    initTalkURL,
+    currentTalkURL,
+    isTalkSwitched,
     chatMessage,
     updateStatus,
     fontSize,
     themeColor,
 }) => {
-    const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const { talkCurrentItem, isLastItem } = useBotTalk(currentTalkURL);
     const [renderedChatItems, setRenderedChatItems] = useState<
         ChatEntryState[]
@@ -44,14 +44,8 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] =
         useState<boolean>(false);
-    const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
     const [origin, setOrigin] = useState<string>();
     const { loadLocalChat, saveLocalChatHistory } = useLoadChatHistory();
-
-    const switchTalk = (newTalkURL: string) => {
-        setCurrentTalkURL(newTalkURL);
-        setTalkSwitched(true);
-    };
 
     const loadStaticTalk = (talkCurrentItem: ChatEntryState) => {
         if (isStreamingStarted) {
@@ -161,12 +155,22 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     };
 
     useEffect(() => {
-        loadFromHistoryOrInitTalk();
-    }, [talkCurrentItem]);
-
-    useEffect(() => {
         setTimeout(scrollDownChat, 0);
     }, [renderedChatItems, chatMessage]);
+
+    useEffect(() => {
+        if (updateStatus) {
+            updateEntryStatus(updateStatus.entryId, updateStatus.outcome);
+        }
+    }, [updateStatus]);
+
+    useEffect(() => {
+        setShowLoader(true);
+    }, [isChatBoxInitialized]);
+
+    useEffect(() => {
+        loadFromHistoryOrInitTalk();
+    }, [talkCurrentItem]);
 
     useEffect(() => {
         const messageIsNotEmpty =
@@ -178,16 +182,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({
             handleAIMessage();
         }
     }, [chatMessage]);
-
-    useEffect(() => {
-        if (updateStatus) {
-            updateEntryStatus(updateStatus.entryId, updateStatus.outcome);
-        }
-    }, [updateStatus]);
-
-    useEffect(() => {
-        setShowLoader(true);
-    }, [isChatBoxInitialized]);
 
     const renderComponent = (component: ChatEntryState) => {
         switch (component.type) {
@@ -282,10 +276,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     };
 
     return (
-        <BotTalkContext.Provider
-            value={{
-                switchBotTalk: switchTalk,
-            }}>
+        <>
             <div
                 ref={chatBoxRef}
                 style={{
@@ -326,7 +317,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     <OriginVisualizer origin={origin || "N/A"} />
                 </span>
             </div>
-        </BotTalkContext.Provider>
+        </>
     );
 };
 
