@@ -285,6 +285,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                     display: "flex",
                     flexDirection: "column",
                     fontSize: fontSize,
+                    textAlign: "center",
                 }}>
                 <div style={{ maxHeight: "100%" }}>
                     {renderedChatItems.map(component =>

@@ -21,7 +21,6 @@ const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
     };
 
     return (
-        <span key={id}>
             <button
                 style={{
                     fontFamily: "inherit",
@@ -46,7 +45,6 @@ const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
                 }>
                 {buttonLabel}
             </button>
-        </span>
     );
 };
 
