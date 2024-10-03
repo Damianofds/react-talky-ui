@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { BotTalkContext } from "../BotTalkContext";
 
 interface BotButtonEntryProps {
@@ -15,30 +15,26 @@ const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
     themeColor = "#4ea699",
 }) => {
     const { switchBotTalk: switchConversation } = useContext(BotTalkContext);
-    const [isFocused, setIsFocused] = useState(false);
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
         switchConversation(conversationUrl);
-    };
-
-    const handleFocus: React.FocusEventHandler<HTMLButtonElement> = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur: React.FocusEventHandler<HTMLButtonElement> = () => {
-        setIsFocused(false);
     };
 
     return (
         <span key={id}>
             <button
                 style={{
+                    fontFamily: "inherit",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    borderRadius: "25px",
+                    padding: "0.6em 1.2em",
+                    fontSize: "1em",
+                    fontWeight: "500",
                     marginTop: "1vh",
                     marginBottom: "1vh",
                     marginRight: "1vw",
-                    border: isFocused
-                        ? `2px solid ${themeColor}`
-                        : "2px solid transparent",
+                    border: `2px solid gray`,
                     transition: "border-color 0.3s ease-in-out",
                 }}
                 onClick={handleClick}
@@ -46,12 +42,8 @@ const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
                     (e.currentTarget.style.borderColor = themeColor)
                 }
                 onMouseLeave={e =>
-                    (e.currentTarget.style.borderColor = isFocused
-                        ? themeColor
-                        : "transparent")
-                }
-                onFocus={handleFocus}
-                onBlur={handleBlur}>
+                    (e.currentTarget.style.borderColor = "gray")
+                }>
                 {buttonLabel}
             </button>
         </span>
