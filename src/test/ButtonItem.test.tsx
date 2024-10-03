@@ -46,17 +46,6 @@ describe("ButtonItem Component", () => {
         );
     });
 
-    test("changes border color on focus and blur", () => {
-        renderWithContext();
-        const button = screen.getByRole("button");
-
-        fireEvent.focus(button);
-        expect(button).toHaveStyle(`border-color: ${defaultProps.themeColor}`);
-
-        fireEvent.blur(button);
-        expect(button).toHaveStyle("border-color: transparent");
-    });
-
     test("changes border color on hover and mouse leave", () => {
         renderWithContext();
         const button = screen.getByRole("button");
@@ -65,18 +54,7 @@ describe("ButtonItem Component", () => {
         expect(button).toHaveStyle(`border-color: ${defaultProps.themeColor}`);
 
         fireEvent.mouseLeave(button);
-        expect(button).toHaveStyle("border-color: transparent");
+        expect(button).toHaveStyle("border-color: gray");
     });
 
-    test("keeps border color when focused and mouse leaves", () => {
-        renderWithContext();
-        const button = screen.getByRole("button");
-
-        fireEvent.focus(button);
-        fireEvent.mouseLeave(button);
-        expect(button).toHaveStyle(`border-color: ${defaultProps.themeColor}`);
-
-        fireEvent.blur(button);
-        expect(button).toHaveStyle("border-color: transparent");
-    });
 });

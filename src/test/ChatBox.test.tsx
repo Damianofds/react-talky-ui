@@ -16,7 +16,8 @@ describe("ChatBox Component", () => {
     const mockSaveLocalChatHistory = useLoadChatHistory as ReturnType<typeof vi.fn>;
 
     const defaultProps = {
-        initTalkURL: "http://example.com",
+        currentTalkURL: "http://example.com",
+        isTalkSwitched: false,
         chatMessage: undefined,
         updateStatus: {entryId: "1", outcome: UploadStatus.PROCESSING},
         fontSize: "16px",
