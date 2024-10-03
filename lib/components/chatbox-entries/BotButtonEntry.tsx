@@ -9,7 +9,6 @@ interface BotButtonEntryProps {
 }
 
 const BotButtonEntry: React.FC<BotButtonEntryProps> = ({
-    id,
     conversationUrl,
     buttonLabel,
     themeColor = "#4ea699",
