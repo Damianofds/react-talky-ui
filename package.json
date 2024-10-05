@@ -50,5 +50,5 @@
   "dependencies": {
     "openai": "^4.58.1"
   },
-  "version": "0.0.32"
+  "version": "0.0.33"
 }
