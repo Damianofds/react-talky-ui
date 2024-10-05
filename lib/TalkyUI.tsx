@@ -13,6 +13,7 @@ import {
 } from "./components/utils/CircularStack";
 import { ConfigurationContext } from "./components/ConfigurationContext";
 import { BotTalkContext } from "./components/BotTalkContext";
+import UserSession from "./components/UserSession";
 
 interface TalkUIProps {
     initTalkURL: string;
@@ -77,6 +78,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({
                         fontSize={fontSize}
                         updateStatus={botStatusUpdate}
                     />
+                    <UserSession />
                     <InputBox
                         setChatMessage={setChatMessage}
                         setBotStatusUpdate={setBotStatusUpdate}

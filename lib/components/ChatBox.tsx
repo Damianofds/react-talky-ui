@@ -315,7 +315,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         textAlign: "left",
                         marginLeft: "5%",
                     }}>
-                    <OriginVisualizer origin={origin || "N/A"} />
+                    {/* <OriginVisualizer origin={origin || "N/A"} /> */}
                 </span>
             </div>
         </>

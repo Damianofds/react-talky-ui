@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { ConfigurationContext } from "../components/ConfigurationContext";
 import { UploadStatus } from "./utils/UploadStatus";
+import { UUID } from "crypto";
 
 const DOCUMENT_UPLOAD_FORM_DATA_KEY = "document";
 
@@ -17,12 +18,13 @@ const useUserDocumentSubmit = () => {
         message: "Document upload request initialized",
     });
 
-    const uploadFile = async (file: File): Promise<UploadResponse> => {
+    const uploadFile = async (file: File, userId: UUID): Promise<UploadResponse> => {
         const formData = new FormData();
         formData.append(DOCUMENT_UPLOAD_FORM_DATA_KEY, file);
 
+        const userDocumentUploadUrl = DOCUMENT_UPLOAD_API_URL.replace(":user-id", userId);
         try {
-            const response = await fetch(DOCUMENT_UPLOAD_API_URL, {
+            const response = await fetch(userDocumentUploadUrl, {
                 method: "POST",
                 body: formData,
             });
