@@ -11,7 +11,6 @@ import UserTextItem from "./chatbox-entries/UserTextEntry";
 import BotTextEntry from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistory from "../hooks/useLoadChatHistory";
 import useBotTalk from "../hooks/useBotTalk";
-import OriginVisualizer from "./utils/OriginVisualizer";
 import AudioItem from "./chatbox-entries/BotAudioEntry";
 import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
 import Spacer from "./utils/Spacer";
@@ -44,7 +43,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
     const [isStreamingStarted, setStreamingStarted] = useState<boolean>(false);
     const [isChatBoxInitialized, setChatBoxInitialized] =
         useState<boolean>(false);
-    const [origin, setOrigin] = useState<string>();
+    const [,setOrigin] = useState<string>();
     const { loadLocalChat, saveLocalChatHistory } = useLoadChatHistory();
 
     const loadStaticTalk = (talkCurrentItem: ChatEntryState) => {
@@ -315,7 +314,6 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                         textAlign: "left",
                         marginLeft: "5%",
                     }}>
-                    {/* <OriginVisualizer origin={origin || "N/A"} /> */}
                 </span>
             </div>
         </>
