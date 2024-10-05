@@ -53,7 +53,7 @@ describe("ChatBox Component", () => {
 
     test("renders ChatBox component and displays chat items", () => {
         render(<ChatBox {...defaultProps} />);
-        expect(screen.getByText("static-talk")).toBeInTheDocument();
+        expect(screen.getByText("Sample text")).toBeInTheDocument();
     });
 
     test("loads initial talk and renders streamed chat item", async () => {

@@ -3,7 +3,12 @@ export const USER_WITHOUT_SESSION = '{"userId": "anon", "userName": "anon"}'
 
 const useUserSession = () => {
     const loadUserSession = () => {
-        return JSON.parse(localStorage.getItem("user-session") || USER_WITHOUT_SESSION);
+        if(typeof window !== 'undefined'){
+            return JSON.parse(localStorage.getItem("user-session") || USER_WITHOUT_SESSION);
+        }
+        else{
+            return JSON.parse(USER_WITHOUT_SESSION);
+        }
     };
 
     const createBackendUserSession = async () => {
