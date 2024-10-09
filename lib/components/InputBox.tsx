@@ -32,7 +32,7 @@ const InputBox: React.FC<InputBoxProps> = ({
         useState(true);
 
     return (
-        <div style={{ display: "flex", position: "relative", height: "20%" }}>
+        <div style={{ display: "flex", position: "relative" }}>
             <MessageSubmit
                 inputRetriever={setChatMessage}
                 inputBoxHistory={inputBoxHistory}

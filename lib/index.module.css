@@ -6,6 +6,7 @@ a {
 
 a:hover {
     color: #7f2cdd;
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar {
