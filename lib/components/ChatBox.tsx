@@ -6,7 +6,7 @@ import {
     UploadStatus,
 } from "./chatbox-entries/ChatEntryState";
 import UserAudioItem from "./chatbox-entries/UserAudioEntry";
-import ButtonItem from "./chatbox-entries/BotButtonEntry";
+import BotButtonEntry from "./chatbox-entries/BotButtonEntry";
 import UserTextItem from "./chatbox-entries/UserTextEntry";
 import BotTextEntry from "./chatbox-entries/BotTextEntry";
 import useLoadChatHistory from "../hooks/useLoadChatHistory";
@@ -16,6 +16,7 @@ import UserDocumentItem from "./chatbox-entries/UserDocumentEntry";
 import Spacer from "./utils/Spacer";
 import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
 import styles from "../index.module.css";
+import BotActionButtonEntry from "./chatbox-entries/BotActionButtonEntry";
 
 interface ChatBoxProps {
     currentTalkURL: string;
@@ -260,9 +261,22 @@ const ChatBox: React.FC<ChatBoxProps> = ({
             case "bot-button":
                 return (
                     <div key={component.id}>
-                        <ButtonItem
+                        <BotButtonEntry
                             id={component.id}
                             conversationUrl={component.conversationUrl}
+                            buttonLabel={component.buttonLabel}
+                            themeColor={themeColor}
+                        />
+                        <Spacer />
+                    </div>
+                );
+            case "bot-action-button":
+                return (
+                    <div key={component.id}>
+                        <BotActionButtonEntry
+                            id={component.id}
+                            actionUrl={component.actionUrl}
+                            actionMethod={component.actionMethod}
                             buttonLabel={component.buttonLabel}
                             themeColor={themeColor}
                         />
