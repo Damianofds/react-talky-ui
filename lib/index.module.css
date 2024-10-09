@@ -1,3 +1,13 @@
+a {
+    font-weight: 500;
+    color: #3cb18a;
+    text-decoration: inherit;
+}
+
+a:hover {
+    color: #7f2cdd;
+}
+
 ::-webkit-scrollbar {
     width: 12px;
 }

@@ -32,9 +32,9 @@ const UserSession: React.FC<UserSessionProps> = () => {
     return (
         <div style={{ marginLeft: "0px" }}>
             you are <a onClick={handleButtonClick}>@
-            <pre style={{ display: "inline", padding: "2px", margin: "0" }}>
+            <span style={{ padding: "2px" }}>
                 {userSessionName}
-            </pre></a>
+            </span></a>
         </div>
     );
 };
