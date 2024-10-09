@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { ChatEntryState, UploadStatus } from "../chatbox-entries/ChatEntryState";
 import Record from "../icons/MicrophoneIcon";
 import useUserAudioSubmit from "../../../lib/hooks/useUserAudioSubmit";
 import styles from "../../index.module.css";
+import { BotTalkContext } from "../../components/BotTalkContext";
+import useUserSession from "../../hooks/useLoadUserSession";
+
 
 interface VoiceRecorderProps {
     setChatMessage: (answer: ChatEntryState) => void;
@@ -24,7 +27,8 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
     const audioChunksRef = useRef<Blob[]>([]);
     const recordingTimeoutRef = useRef<number | null>(null);
     const { /*uploadStatus,*/ uploadAudio } = useUserAudioSubmit();
-
+    const { switchBotTalk: switchConversation } = useContext(BotTalkContext);
+    const { loadUserSession } = useUserSession();
     const [isPermissionGranted, setIsPermissionGranted] = useState<"granted" | "denied" | "prompt">("prompt");
 
     const checkMicrophonePermission = async () => {
@@ -112,7 +116,18 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                 });
                 window.removeEventListener("mouseup", stopRecording);
                 window.removeEventListener("touchend", stopRecording);
-                await uploadAudio(audioFile);
+                const userSession = loadUserSession();
+                const uploadResult = await uploadAudio(audioFile, userSession.userId);
+                const outcome =
+                    uploadResult.httpStatusCode &&
+                    uploadResult.httpStatusCode >= 200 &&
+                    uploadResult.httpStatusCode < 300
+                        ? UploadStatus.SUCCESS
+                        : UploadStatus.FAILURE;
+                
+                if(outcome == UploadStatus.SUCCESS){
+                    switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/' + userSession.userId + '/audios/' + uploadResult.message + '/formats/talk1');
+                }
                 setBotStatusUpdate({entryId: documentId, outcome: UploadStatus.SUCCESS});
             };
         }

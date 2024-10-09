@@ -12,12 +12,12 @@ const useUserAudioSubmit = () => {
         message: ""
     });
 
-    const uploadAudio = async (file: File) => {
+    const uploadAudio = async (file: File, userId: string | undefined) => {
         const formData = new FormData();
         formData.append(AUDIO_UPLOAD_FORM_DATA_KEY, file);
 
         try {
-            const response = await fetch(AUDIO_UPLOAD_API_URL, {
+            const response = await fetch(AUDIO_UPLOAD_API_URL.replace(":user-id", userId || ""), {
                 method: "POST",
                 body: formData,
             });
@@ -26,12 +26,11 @@ const useUserAudioSubmit = () => {
                 throw new Error(`Failed to upload: ${response.statusText}`);
             }
 
-            const data = await response.json();
-            setUploadStatus({
-                statusCode: data.statusCode,
-                httpStatusCode: null,
-                message: data.statusText
-            });
+            const data = await response.text();
+            return {
+                httpStatusCode: response.status,
+                message: data,
+            };
         } catch (error) {
             setUploadStatus({
                 statusCode: 'client-error',
@@ -39,6 +38,10 @@ const useUserAudioSubmit = () => {
                 message: ""+error
             });
         }
+        return {
+            httpStatusCode: 400,
+            message: 'Request failed',
+        };
     };
 
     return { uploadStatus, uploadAudio };
