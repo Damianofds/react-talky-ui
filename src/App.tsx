@@ -13,13 +13,15 @@ function App() {
     return (
         <>
             <div className="App">
-                <h1>react-talky-ui </h1>
-                <div>A react/typescript conversational user interface</div>
-                <div>The frontend for your AI buddy 🦜</div>
-                <br />
-                <span style={{ width: "100px", textAlign: "left" }}>
-                    <ClearStorageButton color={"#000000"} />
-                </span>
+                <div style={{textAlign:"center"}}>
+                    <h1>react-talky-ui </h1>
+                    <div>A react/typescript conversational user interface</div>
+                    <div>The frontend for your AI buddy 🦜</div>
+                    <br />
+                    <span style={{ width: "100px", textAlign: "left" }}>
+                        <ClearStorageButton color={"#000000"} />
+                    </span>
+                </div>
                 <div
                     style={{
                         width: "80vw",

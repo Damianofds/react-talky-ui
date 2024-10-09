@@ -5,7 +5,7 @@ interface SpacerProps {
 const Spacer: React.FC<SpacerProps> = ({ }) => {
     return (
         <div style={{
-            height:'0.3em',
+            height:'1em',
             display:'block',
             backgroundColor:'transparent'
         }}>

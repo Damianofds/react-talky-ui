@@ -30,7 +30,7 @@ const UserSession: React.FC<UserSessionProps> = () => {
     };
 
     return (
-        <div style={{ marginLeft: "0px" }}>
+        <div style={{ marginLeft: "5%" }}>
             you are <a onClick={handleButtonClick}>@
             <span style={{ padding: "2px" }}>
                 {userSessionName}

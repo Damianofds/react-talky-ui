@@ -8,7 +8,7 @@ const useRouteInputBoxValue = (inputBoxValue: string) => {
     const { aiAnswer, fetchAIAnswer } = useFetchAIAnswer(inputBoxValue);
     const [currentChatRoute, setCurrentChatRoute] = useState<
         "conversation" | "qa"
-    >("qa");
+    >("conversation");
 
     const keywordRouting = (
         text: string,
