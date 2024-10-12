@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { BotTextEntryState } from "../components/chatbox-entries/ChatEntryState";
 import { isPlaceholderSettingsValue } from "../components/utils/FunctionUtilities";
-
 import { ConfigurationContext } from '../components/ConfigurationContext';
+import useUserSession from "../hooks/useLoadUserSession";
 
 const useFetchAIAnswer = (question: string) => {
     const API_URL = useContext(ConfigurationContext).qaUrl || '';
@@ -14,6 +14,7 @@ const useFetchAIAnswer = (question: string) => {
         origin: "internal-qa",
     });
     const [text, setText] = useState("");
+    const { loadUserSession } = useUserSession();
 
     const fetchAIAnswer = async () => {
         if (isPlaceholderSettingsValue(API_URL)) {
@@ -23,7 +24,7 @@ const useFetchAIAnswer = (question: string) => {
                 text: "I'm sorry but the Q&A backend service is not set for this demo :(",
             }));
         } else {
-            fetch(API_URL, {
+            fetch(API_URL.replace(":user-id", loadUserSession().userId || ""), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
