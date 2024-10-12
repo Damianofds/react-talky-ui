@@ -22,10 +22,9 @@ const useUserSession = () => {
     };
 
     const deleteBackendUserSession = async (actionUrl: string) => {
-        fetch(actionUrl + loadUserSession().userId, {
+        await fetch(actionUrl + loadUserSession().userId, {
             method: "DELETE",
         })
-            .then(response => response.json())
             .catch(error =>
                 console.error("Error fetching conversations:", error)
             );

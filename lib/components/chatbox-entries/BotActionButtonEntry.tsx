@@ -17,8 +17,9 @@ const BotActionButtonEntry: React.FC<BotActionButtonEntryProps> = ({
     const { deleteBackendUserSession } = useUserSession();
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-        deleteBackendUserSession(actionUrl);
-        window.location.reload();
+        deleteBackendUserSession(actionUrl).then(() =>
+            window.location.reload()
+        );
     };
 
     return (
