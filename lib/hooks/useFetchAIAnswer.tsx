@@ -24,7 +24,7 @@ const useFetchAIAnswer = (question: string) => {
                 text: "I'm sorry but the Q&A backend service is not set for this demo :(",
             }));
         } else {
-            fetch(API_URL.replace(":user-id", loadUserSession().userId || ""), {
+            fetch(API_URL.replace(":user-id", loadUserSession()?.userId || "anon"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -117,7 +117,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                 window.removeEventListener("mouseup", stopRecording);
                 window.removeEventListener("touchend", stopRecording);
                 const userSession = loadUserSession();
-                const uploadResult = await uploadAudio(audioFile, userSession.userId);
+                const uploadResult = await uploadAudio(audioFile, userSession?.userId);
                 const outcome =
                     uploadResult.httpStatusCode &&
                     uploadResult.httpStatusCode >= 200 &&
@@ -126,7 +126,7 @@ const AudioSubmit: React.FC<VoiceRecorderProps> = ({
                         : UploadStatus.FAILURE;
                 
                 if(outcome == UploadStatus.SUCCESS){
-                    switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/' + userSession.userId + '/audios/' + uploadResult.message + '/formats/talk1');
+                    switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/' + userSession?.userId + '/audios/' + uploadResult.message + '/formats/talk1');
                 }
                 setBotStatusUpdate({entryId: documentId, outcome: UploadStatus.SUCCESS});
             };

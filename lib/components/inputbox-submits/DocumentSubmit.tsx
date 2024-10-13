@@ -59,7 +59,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
             }
 
             const userSession = loadUserSession();
-            const uploadResult = await uploadFile(file, userSession.userId);
+            const uploadResult = await uploadFile(file, userSession?.userId);
 
             const outcome =
                 uploadResult.httpStatusCode &&
@@ -69,7 +69,7 @@ const DocumentSubmit: React.FC<DocumentSubmitProps> = ({
                     : UploadStatus.FAILURE;
             
             if(outcome == UploadStatus.SUCCESS){
-                switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/' + userSession.userId + '/documents/' + uploadResult.message + '/formats/talk1');
+                switchConversation('https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/' + userSession?.userId + '/documents/' + uploadResult.message + '/formats/talk1');
             }
 
             setBotStatusUpdate({ entryId: documentId, outcome: outcome });
