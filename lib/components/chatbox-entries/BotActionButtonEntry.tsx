@@ -11,7 +11,6 @@ interface BotActionButtonEntryProps {
 const BotActionButtonEntry: React.FC<BotActionButtonEntryProps> = ({
     actionUrl,
     buttonLabel,
-    themeColor = "#4ea699",
 }) => {
 
     const { deleteUserSession } = useUserSession();
