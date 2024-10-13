@@ -7,23 +7,29 @@ interface UserSessionProps {}
 const UserSession: React.FC<UserSessionProps> = () => {
     const [userSessionId, setUserSessionId] = useState('');
     const [userSessionName, setUserSessionName] = useState('');
-    const [isSessionInitialized, setSessionInitialized] = useState(false);
-    const { loadUserSession, createBackendUserSession } = useUserSession();
+    const { loadUserSession, createUserSession, validateUserSession } = useUserSession();
     const { switchBotTalk: switchConversation } = useContext(BotTalkContext);
-    
-    const userSession = loadUserSession();
-    if (JSON.stringify(userSession) === '{}' && !isSessionInitialized) {
-        setSessionInitialized(true);
-        console.log("creating session")
-        createBackendUserSession();
-    }
 
     useEffect(() => {
-        console.log("loading user session")
-        const userSession1 = loadUserSession();
-        setUserSessionId(userSession1.userId || 'anon');
-        setUserSessionName(userSession1.userName || ""+Math.random());
-    },[userSessionName]);
+        const handleSession = async () => {
+            console.log("loading user session");    
+            let userSession = loadUserSession();
+            if(userSession && userSession.userId){
+                const isValidSession = await validateUserSession(userSession.userId);
+                if(!isValidSession){
+                    window.location.reload();
+                    return;
+                }
+            }
+            else{
+                await createUserSession();
+                userSession = loadUserSession();
+            }
+            setUserSessionId(userSession?.userId || 'anon');
+            setUserSessionName(userSession?.userName || "ioio");
+        }
+        handleSession();
+    },[]);
 
     const handleButtonClick = () => {
         switchConversation("https://n8n.orose.gold/webhook/4a0882d1-da22-402c-886e-729a01cf0ccd/users/" + userSessionId);

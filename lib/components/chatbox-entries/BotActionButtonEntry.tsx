@@ -14,10 +14,10 @@ const BotActionButtonEntry: React.FC<BotActionButtonEntryProps> = ({
     themeColor = "#4ea699",
 }) => {
 
-    const { deleteBackendUserSession } = useUserSession();
+    const { deleteUserSession } = useUserSession();
 
     const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-        deleteBackendUserSession(actionUrl).then(() =>
+        deleteUserSession(actionUrl).then(() =>
             window.location.reload()
         );
     };
