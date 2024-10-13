@@ -83,8 +83,8 @@ const TalkyUI: React.FC<TalkUIProps> = ({
                         setChatMessage={setChatMessage}
                         setBotStatusUpdate={setBotStatusUpdate}
                         inputBoxHistory={chatMessageUserHistory}
-                        conversationRouteKeyword="conversation"
-                        qaRouteKeyword="embeddings"
+                        conversationRouteKeyword="gogollm"
+                        qaRouteKeyword="gogodb"
                         themeColor={themeColor}
                         fontSize={fontSize}
                     />
