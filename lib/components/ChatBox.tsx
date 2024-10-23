@@ -17,6 +17,7 @@ import Spacer from "./utils/Spacer";
 import BotTextStreamingEntry from "./chatbox-entries/BotTextStreamingEntry";
 import styles from "../index.module.css";
 import BotActionButtonEntry from "./chatbox-entries/BotActionButtonEntry";
+import BotDropdownEntry from "./chatbox-entries/BotDropdownEntry";
 
 interface ChatBoxProps {
     currentTalkURL: string;
@@ -279,6 +280,15 @@ const ChatBox: React.FC<ChatBoxProps> = ({
                             actionMethod={component.actionMethod}
                             buttonLabel={component.buttonLabel}
                             themeColor={themeColor}
+                        />
+                        <Spacer />
+                    </div>
+                );
+            case "bot-dropdown":
+                return (
+                    <div key={component.id}>
+                        <BotDropdownEntry
+                            id={component.id}
                         />
                         <Spacer />
                     </div>

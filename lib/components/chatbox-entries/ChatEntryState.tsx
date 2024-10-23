@@ -8,7 +8,8 @@ export interface BaseChatEntryState {
         | "user-audio"
         | "user-document"
         | "bot-text-streaming"
-        | "bot-action-button";
+        | "bot-action-button"
+        | "bot-dropdown";
 }
 
 export interface UploadEntryState extends BaseChatEntryState {
@@ -32,6 +33,10 @@ export interface BotActionButtonEntryState extends BaseChatEntryState {
     actionUrl: string;
     actionMethod: "POST" | "DELETE"
     buttonLabel: string;
+}
+
+export interface BotDropdownEntryState extends BaseChatEntryState {
+    type: "bot-dropdown";
 }
 
 export interface BotTextEntryState extends BaseChatEntryState {
@@ -80,4 +85,5 @@ export type ChatEntryState =
     | UserAudioEntryState
     | UserDocumentEntryState
     | BotTextStreamingEntryState
-    | BotActionButtonEntryState;
+    | BotActionButtonEntryState
+    | BotDropdownEntryState;
