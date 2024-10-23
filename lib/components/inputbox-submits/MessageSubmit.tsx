@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useRouteInputBoxValue from "../../../lib/hooks/useUserMessageSubmit";
 import { CirclularStack, get } from "../utils/CircularStack";
 import { ChatEntryState } from "../chatbox-entries/ChatEntryState";
 import SandClock from "../icons/SandClockIcon";
 import Send from "../icons/SendIcon";
+import { BotTalkContext } from "../BotTalkContext";
+import { NEW_NOTE_PLACEHOLDER } from "../chatbox-entries/BotDropdownEntry";
 
 interface MessageSubmitProps {
     inputRetriever: (answer: ChatEntryState) => void;
@@ -13,6 +15,7 @@ interface MessageSubmitProps {
     fontSize?: string;
     themeColor?: string;
     inputBoxHistory: CirclularStack<string>;
+    questionFromUI: string;
 }
 
 const MessageSubmit: React.FC<MessageSubmitProps> = ({
@@ -23,7 +26,9 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
     fontSize,
     themeColor = "#000000",
     inputBoxHistory,
+    questionFromUI,
 }) => {
+    const { setInputBoxQuestion: setInputBoxQuestion } = useContext(BotTalkContext);
     const [inputValue, setInputValue] = useState("");
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +37,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
         useState(0);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputBoxQuestion("");
         setInputValue(event.target.value);
         showBinarySubmitButtons(!!!event.target.value);
     };
@@ -107,15 +113,28 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
         }
     }, [isLoading]);
 
+    useEffect(() => {
+        if(questionFromUI){
+            showBinarySubmitButtons(false);
+        }
+    }, [questionFromUI]);
+
+    let placeholderFromUI ='Type your question!';
+    if(questionFromUI == NEW_NOTE_PLACEHOLDER){
+        questionFromUI = '';
+        placeholderFromUI = 'Write the new note name...';
+    }
+    placeholderFromUI = isLoading ? "waiting for response..." : placeholderFromUI;
+
     return (
         <>
             <input
                 type="text"
-                value={inputValue}
+                value={questionFromUI || inputValue}
                 onChange={handleInputChange}
                 onFocus={handleOnFocus}
                 disabled={isLoading}
-                placeholder={isLoading ? "waiting for response..." : "Type your question!"}
+                placeholder={placeholderFromUI}
                 onKeyDown={handleKeyPressed}
                 style={{
                     border: "3px solid #ccc",
@@ -132,7 +151,7 @@ const MessageSubmit: React.FC<MessageSubmitProps> = ({
                     paddingLeft: "20px",
                 }}
             />
-            {(inputValue || isLoading) && (
+            {(inputValue || questionFromUI || isLoading) && (
                 <div style={{ position: "relative", width: "50px" }}>
                     <button
                         onClick={processInput}

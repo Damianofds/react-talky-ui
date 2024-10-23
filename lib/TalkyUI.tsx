@@ -43,6 +43,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({
     >(createCircularStack(10));
     const [currentTalkURL, setCurrentTalkURL] = useState(initTalkURL);
     const [isTalkSwitched, setTalkSwitched] = useState<boolean>(false);
+    const [questionFromUI, setQuestionFromUI] = useState('');
 
     if (chatMessage?.type == "user-text") {
         if (get(chatMessageUserHistory, 0) != chatMessage.text) {
@@ -62,6 +63,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({
             <BotTalkContext.Provider
                 value={{
                     switchBotTalk: switchTalk,
+                    setInputBoxQuestion: setQuestionFromUI,
                 }}>
                 <ConfigurationContext.Provider
                     value={{
@@ -87,6 +89,7 @@ const TalkyUI: React.FC<TalkUIProps> = ({
                         qaRouteKeyword="gogodb"
                         themeColor={themeColor}
                         fontSize={fontSize}
+                        questionFromUI={questionFromUI}
                     />
                     <br />
                 </ConfigurationContext.Provider>

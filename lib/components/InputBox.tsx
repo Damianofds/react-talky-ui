@@ -17,6 +17,7 @@ interface InputBoxProps {
     fontSize?: string;
     themeColor?: string;
     inputBoxHistory: CirclularStack<string>;
+    questionFromUI: string;
 }
 
 const InputBox: React.FC<InputBoxProps> = ({
@@ -27,6 +28,7 @@ const InputBox: React.FC<InputBoxProps> = ({
     fontSize,
     themeColor = "#000000",
     inputBoxHistory,
+    questionFromUI,
 }) => {
     const [showBinarySubmitButtons, setShowBinarySubmitButtons] =
         useState(true);
@@ -42,7 +44,8 @@ const InputBox: React.FC<InputBoxProps> = ({
                 themeColor={themeColor}
                 showBinarySubmitButtons={
                     setShowBinarySubmitButtons
-                }></MessageSubmit>
+                }
+                questionFromUI={questionFromUI}></MessageSubmit>
             {showBinarySubmitButtons && (
                 <>
                     <AudioSubmit
