@@ -69,7 +69,7 @@ const ChatBox: React.FC<ChatBoxProps> = ({
         if (talkCurrentItem.type != "bot-text") {
             if (isLastItem) {
                 setChatBoxInitialized(true);
-                saveLocalChatHistory([...renderedChatItems]);
+                saveLocalChatHistory([...renderedChatItems, talkCurrentItem]);
             }
         }
     };
